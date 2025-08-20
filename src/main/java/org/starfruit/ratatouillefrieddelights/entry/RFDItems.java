@@ -5,7 +5,7 @@ import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import net.minecraft.world.item.Item;
 
 public class RFDItems {
-    public static final ItemEntry<Item> FRENCH_FIRED = RatatouilleFriedDelights.REGISTRATE.item("french_fired", Item::new).register();
+    public static final ItemEntry<Item> FRENCH_FRIED = RatatouilleFriedDelights.REGISTRATE.item("french_fried", Item::new).register();
 
     public static void register() {}
 }

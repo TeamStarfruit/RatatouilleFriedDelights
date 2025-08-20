@@ -33,7 +33,7 @@ import org.starfruit.ratatouillefrieddelights.entry.*;
 public class RatatouilleFriedDelights {
     public static final String MOD_ID = "ratatouille_fried_delights";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(Ratatouille.MOD_ID)
+    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(RatatouilleFriedDelights.MOD_ID)
             .defaultCreativeTab((ResourceKey<CreativeModeTab>) null)
             .setTooltipModifierFactory(item ->
                     new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
