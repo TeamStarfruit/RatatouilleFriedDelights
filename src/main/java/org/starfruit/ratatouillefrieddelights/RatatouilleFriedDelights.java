@@ -26,6 +26,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import org.starfruit.ratatouillefrieddelights.entry.*;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(RatatouilleFriedDelights.MOD_ID)
@@ -44,6 +45,8 @@ public class RatatouilleFriedDelights {
         REGISTRATE.registerEventListeners(modEventBus);
         modEventBus.addListener(this::commonSetup);
         NeoForge.EVENT_BUS.register(this);
+
+        RFDItems.register();
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
