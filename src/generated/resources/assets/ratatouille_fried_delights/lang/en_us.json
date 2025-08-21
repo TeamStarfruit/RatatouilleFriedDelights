@@ -1,3 +1,10 @@
 {
-  "item.ratatouille_fried_delights.french_fried": "French Fried"
+  "item.ratatouille_fried_delights.french_fries": "French Fries",
+  "ratatouille_fried_delights.configuration.items": "Item List",
+  "ratatouille_fried_delights.configuration.logDirtBlock": "Log Dirt Block",
+  "ratatouille_fried_delights.configuration.magicNumber": "Magic Number",
+  "ratatouille_fried_delights.configuration.magicNumberIntroduction": "Magic Number Text",
+  "ratatouille_fried_delights.configuration.section.ratatouille_fried_delights.common.toml": "Ratatouille Fried Delights Configs",
+  "ratatouille_fried_delights.configuration.section.ratatouille_fried_delights.common.toml.title": "Ratatouille Fried Delights Configs",
+  "ratatouille_fried_delights.configuration.title": "Ratatouille Fried Delights Configs"
 }

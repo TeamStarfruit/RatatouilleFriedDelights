@@ -8,8 +8,10 @@ import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.fml.ModLoadingContext;
 import org.forsteri.ratatouille.Ratatouille;
+import org.forsteri.ratatouille.data.recipe.RatatouilleDataGen;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -26,6 +28,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import org.starfruit.ratatouillefrieddelights.data.RFDDataGen;
 import org.starfruit.ratatouillefrieddelights.entry.*;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -49,6 +52,8 @@ public class RatatouilleFriedDelights {
         RFDItems.register();
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        modEventBus.addListener(EventPriority.HIGHEST, RFDDataGen::gatherDataHighPriority);
+        modEventBus.addListener(EventPriority.LOWEST, RFDDataGen::gatherData);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
