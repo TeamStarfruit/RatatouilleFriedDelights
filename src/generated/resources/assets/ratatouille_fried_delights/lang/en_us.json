@@ -6,5 +6,6 @@
   "ratatouille_fried_delights.configuration.magicNumberIntroduction": "Magic Number Text",
   "ratatouille_fried_delights.configuration.section.ratatouille_fried_delights.common.toml": "Ratatouille Fried Delights Configs",
   "ratatouille_fried_delights.configuration.section.ratatouille_fried_delights.common.toml.title": "Ratatouille Fried Delights Configs",
-  "ratatouille_fried_delights.configuration.title": "Ratatouille Fried Delights Configs"
+  "ratatouille_fried_delights.configuration.title": "Ratatouille Fried Delights Configs",
+  "itemGroup.ratatouille_fried_delights.base": "Create: Ratatouille"
 }

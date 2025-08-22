@@ -47,6 +47,7 @@ public class RatatouilleFriedDelights {
         ModLoadingContext modLoadingContext = ModLoadingContext.get();
         REGISTRATE.registerEventListeners(modEventBus);
         modEventBus.addListener(this::commonSetup);
+        RFDCreativeModeTabs.register(modEventBus);
         NeoForge.EVENT_BUS.register(this);
 
         RFDItems.register();
