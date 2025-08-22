@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ratatouille_fried_delights:item/original_recipe_chicken_leg"
+  }
+}

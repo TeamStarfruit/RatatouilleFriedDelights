@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ratatouille_fried_delights:item/fried_apple_pie"
+  }
+}
