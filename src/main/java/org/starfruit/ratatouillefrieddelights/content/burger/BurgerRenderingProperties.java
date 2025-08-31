@@ -12,22 +12,22 @@ public class BurgerRenderingProperties {
     static {
         BURGER_RENDERING_PROPERTIES.put(
                 RFDItems.BOTTOM_BURGER_BUN.get(),
-                Couple.create(2, 2)
+                Couple.create(2, 3)
         );
 
         BURGER_RENDERING_PROPERTIES.put(
                 RFDItems.HAMBURGER_PATTY.get(),
-                Couple.create(1, 2)
+                Couple.create(2, 2)
         );
 
         BURGER_RENDERING_PROPERTIES.put(
                 RFDItems.CHEESE_SLICE.get(),
-                Couple.create(3, 3)
+                Couple.create(5, 0)
         );
 
         BURGER_RENDERING_PROPERTIES.put(
                 RFDItems.SHREDDED_LETTUCE.get(),
-                Couple.create(2, 1)
+                Couple.create(1, 2)
         );
 
         BURGER_RENDERING_PROPERTIES.put(
