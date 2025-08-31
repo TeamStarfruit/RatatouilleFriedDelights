@@ -10,14 +10,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.fml.ModLoadingContext;
-import org.forsteri.ratatouille.Ratatouille;
-import org.forsteri.ratatouille.data.recipe.RatatouilleDataGen;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -26,7 +23,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.starfruit.ratatouillefrieddelights.data.RFDDataGen;
 import org.starfruit.ratatouillefrieddelights.entry.*;
@@ -51,6 +47,8 @@ public class RatatouilleFriedDelights {
         NeoForge.EVENT_BUS.register(this);
 
         RFDItems.register();
+        RFDDataComponents.register(modEventBus);
+        RFDRecipeTypes.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
         modEventBus.addListener(EventPriority.HIGHEST, RFDDataGen::gatherDataHighPriority);

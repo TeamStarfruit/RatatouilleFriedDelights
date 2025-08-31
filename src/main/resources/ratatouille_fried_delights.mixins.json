@@ -2,7 +2,9 @@
   "required": true,
   "package": "org.starfruit.ratatouillefrieddelights.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": [
+    "BurgerRecipeMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   },

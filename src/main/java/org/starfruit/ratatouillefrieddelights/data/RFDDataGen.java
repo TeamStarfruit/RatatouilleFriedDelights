@@ -2,14 +2,17 @@ package org.starfruit.ratatouillefrieddelights.data;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.simibubi.create.foundation.data.TagGen;
 import com.simibubi.create.foundation.utility.FilesHelper;
 import com.tterrag.registrate.providers.ProviderType;
-import net.createmod.ponder.foundation.PonderIndex;
+import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
+import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -32,6 +35,24 @@ public class RFDDataGen {
             provideDefaultLang("en_us", langConsumer);
             providePonderLang(langConsumer);
         });
+
+        RatatouilleFriedDelights.REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, RFDDataGen::genItemTags);
+    }
+
+    private static void genItemTags(RegistrateTagsProvider<Item> provIn) {
+        TagGen.CreateTagsProvider<Item> prov = new TagGen.CreateTagsProvider<>(provIn, Item::builtInRegistryHolder);
+
+        prov.tag(RFDTags.AllItemTags.BURGER_BASE.tag)
+                .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag);
+
+        prov.tag(RFDTags.AllItemTags.BURGER_TOPPINGS.tag)
+                .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag);
+
+        for (RFDTags.AllItemTags tag : RFDTags.AllItemTags.values()) {
+            if (tag.alwaysDatagen) {
+                prov.getOrCreateRawBuilder(tag.tag);
+            }
+        }
     }
 
     private static void provideDefaultLang(String fileName, BiConsumer<String, String> consumer) {

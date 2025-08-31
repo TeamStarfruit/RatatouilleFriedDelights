@@ -6,8 +6,11 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterItemDecorationsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import org.starfruit.ratatouillefrieddelights.content.burger.BurgerRenderer;
+import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = RatatouilleFriedDelights.MOD_ID, dist = Dist.CLIENT)
@@ -26,5 +29,10 @@ public class RatatouilleFriedDelightsClient {
         // Some client setup code
 //        RatatouilleFriedDelights.LOGGER.info("HELLO FROM CLIENT SETUP");
 //        RatatouilleFriedDelights.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+    }
+
+    @SubscribeEvent
+    public static void registerItemDecorations(RegisterItemDecorationsEvent event) {
+        event.register(RFDItems.BURGER, BurgerRenderer.DECORATOR);
     }
 }
