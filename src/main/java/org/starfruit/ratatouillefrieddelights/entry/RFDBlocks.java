@@ -26,7 +26,7 @@ public class RFDBlocks {
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), AssetLookup.partialBaseModel(ctx, prov)))
             .item()
             .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/continuous_fryer/item")))
-            .transform(customItemModel())
+            .build()
             .register();
 
     public static void register() {
