@@ -49,6 +49,7 @@ public class RatatouilleFriedDelights {
         RFDItems.register();
         RFDDataComponents.register(modEventBus);
         RFDRecipeTypes.register(modEventBus);
+        RFDBlocks.register();
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
         modEventBus.addListener(EventPriority.HIGHEST, RFDDataGen::gatherDataHighPriority);
