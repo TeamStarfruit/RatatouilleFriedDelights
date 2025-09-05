@@ -8,9 +8,8 @@ import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.Continuou
 public class RFDBlockEntityTypes {
 
     public static final BlockEntityEntry<ContinuousFryerBlockEntity> CONTINUOUS_FRYER = RatatouilleFriedDelights.REGISTRATE
-            .<ContinuousFryerBlockEntity>blockEntity(
-                    "continuous_fryer",
-                    ContinuousFryerBlockEntity::new)
+            .blockEntity(
+                    "continuous_fryer", ContinuousFryerBlockEntity::new)
             .validBlocks(RFDBlocks.CONTINUOUS_FRYER)
             .renderer(() -> ContinuousFryerRenderer::new)
             .register();
