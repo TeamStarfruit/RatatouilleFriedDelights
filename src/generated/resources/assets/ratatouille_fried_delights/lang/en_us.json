@@ -1,5 +1,12 @@
 {
+  "block.ratatouille_fried_delights.cola_leaves": "Cola Leaves",
+  "block.ratatouille_fried_delights.cola_log": "Cola Log",
+  "block.ratatouille_fried_delights.cola_planks": "Cola Planks",
+  "block.ratatouille_fried_delights.cola_sapling": "Cola Sapling",
+  "block.ratatouille_fried_delights.cola_wood": "Cola Wood",
   "block.ratatouille_fried_delights.continuous_fryer": "Continuous Fryer",
+  "block.ratatouille_fried_delights.stripped_cola_log": "Stripped Cola Log",
+  "block.ratatouille_fried_delights.stripped_cola_wood": "Stripped Cola Wood",
   "item.ratatouille_fried_delights.bottom_burger_bun": "Bottom Burger Bun",
   "item.ratatouille_fried_delights.burger": "Burger",
   "item.ratatouille_fried_delights.burger_bun": "Burger Bun",
