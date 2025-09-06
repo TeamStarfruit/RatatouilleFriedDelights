@@ -5,6 +5,7 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.material.MapColor;
+import org.forsteri.ratatouille.Ratatouille;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.cola_tree.RFDFlammableRotatedPillarBlock;
 import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.ContinuousFryerBlock;
@@ -95,9 +96,12 @@ public class RFDBlocks {
             RatatouilleFriedDelights.REGISTRATE
                     .block("cola_sapling", props -> new SaplingBlock(RFDTreeGrowers.COLA_TREE, props))
                     .initialProperties(() -> Blocks.OAK_SAPLING) // 拷贝属性
+                    .blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.standardModel(c, p)))
                     .properties(p -> p.strength(2.0F).sound(SoundType.CHERRY_SAPLING))
-                    .transform(axeOnly())
                     .item()
+                    .model(
+                            (c, p) ->
+                                    p.generated(c, p.modLoc("block/" + p.name(c))))
                     .build()
                     .register();
 
