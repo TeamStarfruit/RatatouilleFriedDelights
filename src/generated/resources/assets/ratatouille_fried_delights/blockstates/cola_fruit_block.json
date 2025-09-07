@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "ratatouille_fried_delights:block/cola_fruit/cola_fruit_block_stage0"
+    },
+    "age=1": {
+      "model": "ratatouille_fried_delights:block/cola_fruit/cola_fruit_block_stage1"
+    },
+    "age=2": {
+      "model": "ratatouille_fried_delights:block/cola_fruit/cola_fruit_block_stage2"
+    }
+  }
+}

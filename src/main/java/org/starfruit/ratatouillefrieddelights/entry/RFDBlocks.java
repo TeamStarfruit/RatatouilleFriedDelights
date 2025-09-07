@@ -4,14 +4,25 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.SharedProperties;
+import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import org.forsteri.ratatouille.Ratatouille;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
+import org.starfruit.ratatouillefrieddelights.content.cola_fruit.ColaFruitBlock;
 import org.starfruit.ratatouillefrieddelights.content.cola_tree.RFDFlammableRotatedPillarBlock;
 import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.ContinuousFryerBlock;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
@@ -123,6 +134,42 @@ public class RFDBlocks {
                                     p.generated(c, p.modLoc("block/" + p.name(c))))
                     .build()
                     .register();
+
+    public static final BlockEntry<ColaFruitBlock> COLA_FRUIT_BLOCK =
+            RatatouilleFriedDelights.REGISTRATE
+                    .block("cola_fruit_block", ColaFruitBlock::new)
+                    .initialProperties(() -> Blocks.COCOA)
+                    .properties(p -> p.noCollission().randomTicks())
+                    .blockstate((ctx, prov) -> {
+                        prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
+                            int age = state.getValue(ColaFruitBlock.AGE);
+                            return ConfiguredModel.builder()
+                                    .modelFile(prov.models().getExistingFile(prov.modLoc("block/cola_fruit/cola_fruit_block_stage" + age)))
+                                    .build();
+                        });
+                    })
+                    .loot((lt, block) -> {
+                        LootItemCondition.Builder ripe = LootItemBlockStatePropertyCondition
+                                .hasBlockStateProperties(block)
+                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                        .hasProperty(ColaFruitBlock.AGE, 2));
+
+                        lt.add(block,
+                                LootTable.lootTable().withPool(
+                                        LootPool.lootPool()
+                                                .when(ripe)
+                                                .add(LootItem.lootTableItem(RFDItems.COLA_FRUITS.get())
+                                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))
+                                                )
+                                )
+                        );
+                    })
+                    .item()
+                    .model((c, p) ->
+                                    p.generated(c, p.modLoc("block/cola_fruit/" + p.name(c))))
+                    .build()
+                    .register();
+
 
     public static void register() {
     }
