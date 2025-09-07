@@ -1,6 +1,9 @@
 package org.starfruit.ratatouillefrieddelights.entry;
 
 import com.tterrag.registrate.util.entry.ItemEntry;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.food.FoodProperties;
 import org.forsteri.ratatouille.Ratatouille;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import net.minecraft.world.item.Item;
@@ -12,7 +15,14 @@ public class RFDItems {
         Ratatouille.REGISTRATE.setCreativeTab(RFDCreativeModeTabs.BASE_CREATIVE_TAB);
     }
 
-    public static final ItemEntry<ColaFruitItem> COLA_FRUITS = RatatouilleFriedDelights.REGISTRATE.item("cola_fruits", ColaFruitItem::new).register();
+    public static final ItemEntry<ColaFruitItem> COLA_FRUITS = RatatouilleFriedDelights.REGISTRATE.item("cola_fruits", ColaFruitItem::new)
+            .properties(p -> p.food(new FoodProperties.Builder().nutrition(2)
+            .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 100, 0), 0.75f) // 200t=10s, amplifier 0=I, 概率75%
+            .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 0), 1.0f) // 15秒 速度I
+            .alwaysEdible()                  // 饱腹时也能吃
+            .fast()                       // “快速吃掉”
+            .saturationModifier(1F)
+            .build())).register();
     public static final ItemEntry<Item> FRENCH_FRIES = RatatouilleFriedDelights.REGISTRATE.item("french_fries", Item::new).register();
     public static final ItemEntry<Item> RAW_POTATO_STICK = RatatouilleFriedDelights.REGISTRATE.item("raw_potato_stick", Item::new).register();
     public static final ItemEntry<Item> ORIGINAL_RECIPE_CHICKEN_LEG = RatatouilleFriedDelights.REGISTRATE.item("original_recipe_chicken_leg", Item::new).register();

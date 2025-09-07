@@ -16,6 +16,8 @@ import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
+import org.starfruit.ratatouillefrieddelights.data.recipe.RFDRecipeProvider;
+import org.starfruit.ratatouillefrieddelights.data.recipe.RFDStandardRecipeGen;
 import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
 import org.starfruit.ratatouillefrieddelights.worldgen.*;
 
@@ -102,12 +104,12 @@ public class RFDDataGen {
                 )
         );
 
-//        generator.addProvider(event.includeServer(), new RatatouilleStandardRecipeGen(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new RFDStandardRecipeGen(output, lookupProvider));
 //        generator.addProvider(event.includeServer(), new RatatouilleSequencedAssemblyRecipeGen(output, lookupProvider));
 
 
         if (event.includeServer()) {
-//            RatatouilleRecipeProvider.registerAllProcessing(generator, output, lookupProvider);
+            RFDRecipeProvider.registerAllProcessing(generator, output, lookupProvider);
         }
     }
 }

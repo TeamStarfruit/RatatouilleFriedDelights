@@ -27,6 +27,7 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.starfruit.ratatouillefrieddelights.data.RFDDataGen;
 import net.neoforged.neoforge.registries.RegisterEvent;
 import org.starfruit.ratatouillefrieddelights.entry.*;
+import org.starfruit.ratatouillefrieddelights.worldgen.tree.deco.RFDTreeDecoratorTypes;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(RatatouilleFriedDelights.MOD_ID)
@@ -56,6 +57,8 @@ public class RatatouilleFriedDelights {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
         modEventBus.addListener(EventPriority.HIGHEST, RFDDataGen::gatherDataHighPriority);
         modEventBus.addListener(EventPriority.LOWEST, RFDDataGen::gatherData);
+
+        RFDTreeDecoratorTypes.register(modEventBus);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

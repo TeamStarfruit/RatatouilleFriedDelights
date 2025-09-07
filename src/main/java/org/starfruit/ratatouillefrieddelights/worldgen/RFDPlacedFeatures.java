@@ -37,7 +37,7 @@ public class RFDPlacedFeatures {
                         Util.make(new ArrayList<PlacementModifier>(), list -> {
                             // 展开 VegetationPlacements 提供的修饰器
                             list.addAll(VegetationPlacements.treePlacement(
-                                    PlacementUtils.countExtra(3, 0.1f, 2),
+                                    PlacementUtils.countExtra(2, 0.05f, 1),
                                     RFDBlocks.COLA_SAPLING.get()));
 
                             // 再额外加你需要的检查

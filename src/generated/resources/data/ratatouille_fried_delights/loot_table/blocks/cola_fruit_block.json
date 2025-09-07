@@ -30,6 +30,35 @@
         }
       ],
       "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "block": "ratatouille_fried_delights:cola_fruit_block",
+            "condition": "minecraft:block_state_property",
+            "properties": {
+              "age": "2"
+            }
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "ratatouille_fried_delights:cola_fruits"
+        }
+      ],
+      "rolls": 1.0
     }
   ],
   "random_sequence": "ratatouille_fried_delights:blocks/cola_fruit_block"

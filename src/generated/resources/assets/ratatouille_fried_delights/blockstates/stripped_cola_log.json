@@ -1,7 +1,16 @@
 {
   "variants": {
-    "": {
+    "axis=x": {
+      "model": "ratatouille_fried_delights:block/stripped_cola_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
       "model": "ratatouille_fried_delights:block/stripped_cola_log"
+    },
+    "axis=z": {
+      "model": "ratatouille_fried_delights:block/stripped_cola_log_horizontal",
+      "x": 90
     }
   }
 }

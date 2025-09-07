@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_column",
+  "parent": "minecraft:block/cube_column_horizontal",
   "textures": {
     "end": "ratatouille_fried_delights:block/stripped_cola_log_end",
     "side": "ratatouille_fried_delights:block/stripped_cola_log_side"

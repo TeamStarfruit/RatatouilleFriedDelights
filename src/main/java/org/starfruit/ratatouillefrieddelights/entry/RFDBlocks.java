@@ -10,14 +10,17 @@ import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.vehicle.Minecart;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import org.forsteri.ratatouille.Ratatouille;
@@ -59,46 +62,66 @@ public class RFDBlocks {
                     .blockstate((c, p) -> p.axisBlock(c.getEntry())) //原木state注册
                     .transform(axeOnly())
                     .item()
+                    .tag(ItemTags.LOGS)
+                    .tag(ItemTags.LOGS_THAT_BURN)
                     .build()
                     .register();
 
     public static final BlockEntry<RFDFlammableRotatedPillarBlock> COLA_WOOD =
             RatatouilleFriedDelights.REGISTRATE
                     .block("cola_wood", RFDFlammableRotatedPillarBlock::new)
+                    .tag(BlockTags.LOGS)
+                    .tag(BlockTags.LOGS_THAT_BURN)
+                    .tag(BlockTags.OVERWORLD_NATURAL_LOGS)
                     .initialProperties(() -> Blocks.OAK_WOOD) // 拷贝属性
                     .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // 可以额外改
                     .transform(axeOnly())
                     .item()
+                    .tag(ItemTags.LOGS)
+                    .tag(ItemTags.LOGS_THAT_BURN)
                     .build()
                     .register();
 
     public static final BlockEntry<RFDFlammableRotatedPillarBlock> STRIPPED_COLA_LOG =
             RatatouilleFriedDelights.REGISTRATE
                     .block("stripped_cola_log", RFDFlammableRotatedPillarBlock::new)
+                    .tag(BlockTags.LOGS)
+                    .tag(BlockTags.LOGS_THAT_BURN)
+                    .tag(BlockTags.OVERWORLD_NATURAL_LOGS)
                     .initialProperties(() -> Blocks.OAK_LOG) // 拷贝属性
                     .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // 可以额外改
+                    .blockstate((c, p) -> p.axisBlock(c.getEntry())) //原木state注册
                     .transform(axeOnly())
                     .item()
+                    .tag(ItemTags.LOGS)
+                    .tag(ItemTags.LOGS_THAT_BURN)
                     .build()
                     .register();
 
     public static final BlockEntry<RFDFlammableRotatedPillarBlock> STRIPPED_COLA_WOOD =
             RatatouilleFriedDelights.REGISTRATE
                     .block("stripped_cola_wood", RFDFlammableRotatedPillarBlock::new)
+                    .tag(BlockTags.LOGS)
+                    .tag(BlockTags.LOGS_THAT_BURN)
+                    .tag(BlockTags.OVERWORLD_NATURAL_LOGS)
                     .initialProperties(() -> Blocks.OAK_WOOD) // 拷贝属性
                     .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // 可以额外改
                     .transform(axeOnly())
                     .item()
+                    .tag(ItemTags.LOGS)
+                    .tag(ItemTags.LOGS_THAT_BURN)
                     .build()
                     .register();
 
     public static final BlockEntry<RFDFlammableRotatedPillarBlock> COLA_PLANKS =
             RatatouilleFriedDelights.REGISTRATE
                     .block("cola_planks", RFDFlammableRotatedPillarBlock::new)
+                    .tag(BlockTags.PLANKS)
                     .initialProperties(() -> Blocks.OAK_PLANKS) // 拷贝属性
                     .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // 可以额外改
                     .transform(axeOnly())
                     .item()
+                    .tag(ItemTags.PLANKS)
                     .build()
                     .register();
 
@@ -125,6 +148,7 @@ public class RFDBlocks {
     public static final BlockEntry<SaplingBlock> COLA_SAPLING =
             RatatouilleFriedDelights.REGISTRATE
                     .block("cola_sapling", props -> new SaplingBlock(RFDTreeGrowers.COLA_TREE, props))
+                    .tag(BlockTags.SAPLINGS)
                     .initialProperties(() -> Blocks.OAK_SAPLING) // 拷贝属性
                     .blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.standardModel(c, p)))
                     .properties(p -> p.strength(2.0F).sound(SoundType.CHERRY_SAPLING))
@@ -152,18 +176,29 @@ public class RFDBlocks {
                         LootItemCondition.Builder ripe = LootItemBlockStatePropertyCondition
                                 .hasBlockStateProperties(block)
                                 .setProperties(StatePropertiesPredicate.Builder.properties()
-                                        .hasProperty(ColaFruitBlock.AGE, 2));
+                                        .hasProperty(ColaFruitBlock.AGE, 2)); // 成熟：AGE=2
 
                         lt.add(block,
-                                LootTable.lootTable().withPool(
-                                        LootPool.lootPool()
-                                                .when(ripe)
-                                                .add(LootItem.lootTableItem(RFDItems.COLA_FRUITS.get())
-                                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))
-                                                )
-                                )
+                                LootTable.lootTable()
+                                        // 成熟：掉 2~4 个
+                                        .withPool(
+                                                LootPool.lootPool()
+                                                        .when(ripe)
+                                                        .add(LootItem.lootTableItem(RFDItems.COLA_FRUITS.get())
+                                                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))
+                                                        )
+                                        )
+                                        // 未成熟：固定掉 1 个
+                                        .withPool(
+                                                LootPool.lootPool()
+                                                        .when(InvertedLootItemCondition.invert(ripe))
+                                                        .add(LootItem.lootTableItem(RFDItems.COLA_FRUITS.get())
+                                                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
+                                                        )
+                                        )
                         );
                     })
+
                     .item()
                     .model((c, p) ->
                                     p.generated(c, p.modLoc("block/cola_fruit/" + p.name(c))))

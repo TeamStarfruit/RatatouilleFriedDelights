@@ -1,7 +1,13 @@
 {
   "type": "minecraft:tree",
   "config": {
-    "decorators": [],
+    "decorators": [
+      {
+        "type": "ratatouille_fried_delights:cola_fruit",
+        "chance": 0.1,
+        "max_per_tree": 3
+      }
+    ],
     "dirt_provider": {
       "type": "minecraft:simple_state_provider",
       "state": {
@@ -10,9 +16,9 @@
     },
     "foliage_placer": {
       "type": "minecraft:blob_foliage_placer",
-      "height": 2,
+      "height": 3,
       "offset": 2,
-      "radius": 3
+      "radius": 2
     },
     "foliage_provider": {
       "type": "minecraft:simple_state_provider",
@@ -26,7 +32,7 @@
       }
     },
     "force_dirt": false,
-    "ignore_vines": false,
+    "ignore_vines": true,
     "minimum_size": {
       "type": "minecraft:two_layers_feature_size",
       "limit": 1,
@@ -35,7 +41,7 @@
     },
     "trunk_placer": {
       "type": "minecraft:forking_trunk_placer",
-      "base_height": 4,
+      "base_height": 2,
       "height_rand_a": 3,
       "height_rand_b": 2
     },

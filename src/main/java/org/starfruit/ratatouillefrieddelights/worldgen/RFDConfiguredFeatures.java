@@ -15,21 +15,28 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.feature.trunkplacers.ForkingTrunkPlacer;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
+import org.starfruit.ratatouillefrieddelights.worldgen.tree.deco.ColaFruitDecorator;
 
 public class RFDConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> COLA_TREE_KEY = registerKey("cola_tree");
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
 
-        register(context, COLA_TREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+        var config = new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(RFDBlocks.COLA_LOG.get()),
-                new ForkingTrunkPlacer(4, 3, 2),
+                new ForkingTrunkPlacer(2, 3, 2),
 
                 BlockStateProvider.simple(RFDBlocks.COLA_LEAVES.get()),
-                new BlobFoliagePlacer(ConstantInt.of(3), ConstantInt.of(2), 2),
+                new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), 3),
 
-                new TwoLayersFeatureSize(1, 0, 2)).build());
+                new TwoLayersFeatureSize(1, 0, 2)
+        )
+                .ignoreVines()
+                // ★ 在这里启用果实装饰器
+                .decorators(java.util.List.of(new ColaFruitDecorator(0.1F, 3)))
+                .build();
 
+        register(context, COLA_TREE_KEY, Feature.TREE, config);
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
