@@ -7,14 +7,20 @@ import com.simibubi.create.foundation.utility.FilesHelper;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
+import org.starfruit.ratatouillefrieddelights.worldgen.*;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
@@ -81,6 +87,20 @@ public class RFDDataGen {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+
+        // === 新增：世界生成（Configured/Placed Feature） ===
+        RegistrySetBuilder worldgenBuilder = new RegistrySetBuilder()
+                .add(Registries.CONFIGURED_FEATURE, RFDConfiguredFeatures::bootstrap)
+                .add(Registries.PLACED_FEATURE,     RFDPlacedFeatures::bootstrap)
+                .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS,     RFDBiomeModifiers::bootstrap);
+
+        generator.addProvider(
+                event.includeServer(),
+                new DatapackBuiltinEntriesProvider(
+                        output, lookupProvider, worldgenBuilder,
+                        Set.of(RatatouilleFriedDelights.MOD_ID)
+                )
+        );
 
 //        generator.addProvider(event.includeServer(), new RatatouilleStandardRecipeGen(output, lookupProvider));
 //        generator.addProvider(event.includeServer(), new RatatouilleSequencedAssemblyRecipeGen(output, lookupProvider));

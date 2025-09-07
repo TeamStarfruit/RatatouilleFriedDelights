@@ -1,8 +1,13 @@
 package org.starfruit.ratatouillefrieddelights.entry;
 
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.material.MapColor;
 import org.forsteri.ratatouille.Ratatouille;
@@ -35,8 +40,12 @@ public class RFDBlocks {
     public static final BlockEntry<RFDFlammableRotatedPillarBlock> COLA_LOG =
             RatatouilleFriedDelights.REGISTRATE
                     .block("cola_log", RFDFlammableRotatedPillarBlock::new)
+                    .tag(BlockTags.LOGS)
+                    .tag(BlockTags.LOGS_THAT_BURN)
+                    .tag(BlockTags.OVERWORLD_NATURAL_LOGS)
                     .initialProperties(() -> Blocks.OAK_LOG) // 拷贝属性
                     .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // 可以额外改
+                    .blockstate((c, p) -> p.axisBlock(c.getEntry())) //原木state注册
                     .transform(axeOnly())
                     .item()
                     .build()
@@ -85,10 +94,20 @@ public class RFDBlocks {
     public static final BlockEntry<LeavesBlock> COLA_LEAVES =
             RatatouilleFriedDelights.REGISTRATE
                     .block("cola_leaves", LeavesBlock::new)
-                    .initialProperties(() -> Blocks.OAK_LEAVES) // 拷贝属性
-                    .properties(p -> p.strength(2.0F).sound(SoundType.CHERRY_LEAVES))
-                    .transform(axeOnly())
+                    .initialProperties(() -> Blocks.OAK_LEAVES)
+                    .properties(p -> p.strength(0.2F).randomTicks().noOcclusion().sound(SoundType.GRASS))
+                    .tag(BlockTags.LEAVES)
+                    .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models()
+                            .cubeAll(ctx.getName(), prov.blockTexture(ctx.getEntry()))))
+                    .loot((lt, block) -> lt.add(RFDBlocks.COLA_LEAVES.get(),
+                            lt.createLeavesDrops(
+                                    RFDBlocks.COLA_LEAVES.get(),   // 树叶
+                                    RFDBlocks.COLA_SAPLING.get(),  // 树苗
+                                    0.05F, 0.0625F, 0.0833F, 0.10F // Fortune 掉率
+                            )
+                    ))
                     .item()
+                    .tag(ItemTags.LEAVES)
                     .build()
                     .register();
 
