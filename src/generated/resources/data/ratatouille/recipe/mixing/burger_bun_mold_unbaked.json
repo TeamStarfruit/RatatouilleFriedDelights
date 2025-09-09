@@ -1,0 +1,27 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "create:wheat_flour"
+    },
+    {
+      "item": "create:wheat_flour"
+    },
+    {
+      "item": "ratatouille_fried_delights:butter"
+    },
+    {
+      "item": "ratatouille_fried_delights:burger_bun_mold"
+    },
+    {
+      "type": "fluid_stack",
+      "amount": 250,
+      "fluid": "ratatouille:egg_yolk"
+    }
+  ],
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:burger_bun_mold_unbaked"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "ratatouille:salt"
+    },
+    {
+      "tag": "c:foods/raw_fish"
+    },
+    {
+      "type": "fluid_stack",
+      "amount": 250,
+      "fluid": "ratatouille:egg_yolk"
+    }
+  ],
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:raw_fish_fillet"
+    }
+  ]
+}
