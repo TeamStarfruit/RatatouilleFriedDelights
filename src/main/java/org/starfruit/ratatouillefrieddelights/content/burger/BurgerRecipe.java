@@ -12,6 +12,7 @@ import org.starfruit.ratatouillefrieddelights.entry.RFDDataComponents;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BurgerRecipe extends DeployerApplicationRecipe {
@@ -28,39 +29,22 @@ public class BurgerRecipe extends DeployerApplicationRecipe {
     @Override
     public ItemStack assemble(RecipeWrapper t, HolderLookup.Provider provider) {
         ItemStack burger = new ItemStack(RFDItems.BURGER.get());
-        burger.set(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(List.of(
-                new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.HAMBURGER_PATTY.get()),
-                new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                new ItemStack(RFDItems.SHREDDED_LETTUCE.get()),
-                new ItemStack(RFDItems.TOMATO_SLICES.get()),
-                new ItemStack(RFDItems.TOP_BURGER_BUN.get())
-        )));
+
+        List<ItemStack> allItems = new ArrayList<>();
+
+        if (t.getItem(0).is(RFDItems.BURGER)) {
+            allItems.addAll(t.getItem(0).getOrDefault(RFDDataComponents.BURGER_CONTENTS, BurgerContents.EMPTY).items);
+        } else {
+            allItems.add(t.getItem(0));
+        }
+
+        if (t.getItem(1).is(RFDItems.BURGER)) {
+            allItems.addAll(t.getItem(1).getOrDefault(RFDDataComponents.BURGER_CONTENTS, BurgerContents.EMPTY).items);
+        } else {
+            allItems.add(t.getItem(1));
+        }
+
+        burger.set(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(allItems));
 
         return burger;
     }
