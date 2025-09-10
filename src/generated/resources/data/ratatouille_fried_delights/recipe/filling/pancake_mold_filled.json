@@ -1,0 +1,18 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:pancake_mold"
+    },
+    {
+      "type": "fluid_stack",
+      "amount": 250,
+      "fluid": "ratatouille_fried_delights:pancake_batter"
+    }
+  ],
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:pancake_mold_filled"
+    }
+  ]
+}

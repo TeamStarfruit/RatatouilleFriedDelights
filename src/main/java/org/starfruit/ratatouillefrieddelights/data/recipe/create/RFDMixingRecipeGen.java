@@ -7,9 +7,10 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
-import org.forsteri.ratatouille.Ratatouille;
 import org.forsteri.ratatouille.entry.CRFluids;
 import org.forsteri.ratatouille.entry.CRItems;
+import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
+import org.starfruit.ratatouillefrieddelights.entry.RFDFluids;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import vectorwing.farmersdelight.common.registry.ModItems;
 
@@ -77,9 +78,47 @@ public class RFDMixingRecipeGen extends MixingRecipeGen {
             .require(Tags.Fluids.MILK, 500)
             .output(RFDItems.BUTTER.get())
             .requiresHeat(HeatCondition.HEATED)
+    ),
+
+    PANCAKE_BATTER = create("pancake_batter", b -> b
+            .require(AllItems.WHEAT_FLOUR.get())
+            .require(Items.SUGAR)
+            .require(Items.EGG)
+            .require(RFDItems.BUTTER)
+            .require(Tags.Fluids.MILK, 250)
+            .output(RFDFluids.PANCAKE_BATTER.get(), 1000)
+    ),
+
+    MAYONNAISE = create("mayonnaise", b -> b
+            .require(RFDFluids.SUNFLOWER_OIL.get(), 500)
+            .require(CRFluids.EGG_YOLK.get(), 500)
+            .output(RFDFluids.MAYONNAISE.get(), 1000)
+    ),
+
+    TARTAR_SAUCE = create("tartar_sauce", b -> b
+            .require(RFDFluids.MAYONNAISE.get(), 1000)
+            .require(Items.SEA_PICKLE)
+            .output(RFDFluids.TARTAR_SAUCE.get(), 1000)
+    ),
+
+    ICE_CREAM_BASE = create("ice_cream_base", b -> b
+            .require(RFDItems.ICE_CUBES.get())
+            .require(RFDItems.ICE_CUBES.get())
+            .require(Items.SUGAR)
+            .require(Tags.Fluids.MILK, 500)
+            .output(RFDFluids.ICE_CREAM_BASE.get(), 1000)
+    ),
+
+    COLA_SYRUP = create("cola_syrup", b -> b
+            .require(RFDItems.COLA_NUTS.get())
+            .require(Items.SUGAR)
+            .require(Items.SUGAR)
+            .require(Tags.Fluids.WATER, 1000)
+            .output(RFDFluids.COLA_SYRUP.get(), 1000)
+            .requiresHeat(HeatCondition.HEATED)
     );
 
     public RFDMixingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, Ratatouille.MOD_ID);
+        super(output, registries, RatatouilleFriedDelights.MOD_ID);
     }
 }

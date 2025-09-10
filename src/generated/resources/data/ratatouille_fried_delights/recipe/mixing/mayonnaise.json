@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "type": "fluid_stack",
+      "amount": 500,
+      "fluid": "ratatouille_fried_delights:sunflower_oil"
+    },
+    {
+      "type": "fluid_stack",
+      "amount": 500,
+      "fluid": "ratatouille:egg_yolk"
+    }
+  ],
+  "results": [
+    {
+      "amount": 1000,
+      "id": "ratatouille_fried_delights:mayonnaise"
+    }
+  ]
+}

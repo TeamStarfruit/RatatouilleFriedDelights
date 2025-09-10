@@ -1,0 +1,14 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:cheese"
+    }
+  ],
+  "results": [
+    {
+      "count": 4,
+      "id": "ratatouille_fried_delights:cheese_slice"
+    }
+  ]
+}

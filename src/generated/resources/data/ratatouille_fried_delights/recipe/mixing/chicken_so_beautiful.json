@@ -1,0 +1,22 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "minecraft:chicken"
+    },
+    {
+      "item": "ratatouille_fried_delights:secret_seasoning_powder"
+    },
+    {
+      "item": "minecraft:egg"
+    }
+  ],
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:raw_original_recipe_chicken_leg"
+    },
+    {
+      "id": "ratatouille_fried_delights:original_recipe_chicken_breast"
+    }
+  ]
+}

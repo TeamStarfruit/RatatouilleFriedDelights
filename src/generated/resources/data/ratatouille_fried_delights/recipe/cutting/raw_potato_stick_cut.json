@@ -1,0 +1,14 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "minecraft:potato"
+    }
+  ],
+  "results": [
+    {
+      "count": 2,
+      "id": "ratatouille_fried_delights:raw_potato_stick"
+    }
+  ]
+}

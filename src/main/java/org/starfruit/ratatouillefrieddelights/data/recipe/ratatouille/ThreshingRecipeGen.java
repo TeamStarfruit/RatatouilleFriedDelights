@@ -5,10 +5,10 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
-import org.forsteri.ratatouille.Ratatouille;
 import org.forsteri.ratatouille.content.thresher.ThreshingRecipe;
 import org.forsteri.ratatouille.entry.CRItems;
 import org.forsteri.ratatouille.entry.CRRecipeTypes;
+import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import vectorwing.farmersdelight.common.registry.ModItems;
 
@@ -25,6 +25,13 @@ public final class ThreshingRecipeGen extends StandardProcessingRecipeGen<Thresh
                     .output(RFDItems.COLA_NUTS.get())
                     .output(RFDItems.COLA_NUTS.get())
                     .output(0.5F, RFDItems.COLA_NUTS.get(),2).duration(200)
+    ),
+            SUNFLOWER_SEEDS = this.create("sunflower_seeds",
+            b -> b
+                    .require(Items.SUNFLOWER)
+                    .output(RFDItems.SUNFLOWER_SEEDS.get(),2)
+                    .output(0.5F, RFDItems.SUNFLOWER_SEEDS.get(),2)
+                    .duration(200)
     );
     /*
         BOIL_STONE = this.create("boil_stone",
@@ -53,7 +60,7 @@ public final class ThreshingRecipeGen extends StandardProcessingRecipeGen<Thresh
         );
     */
     public ThreshingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, Ratatouille.MOD_ID);
+        super(output, registries, RatatouilleFriedDelights.MOD_ID);
     }
 
     @Override

@@ -1,60 +1,53 @@
 package org.starfruit.ratatouillefrieddelights.data.recipe.create;
 
+import com.simibubi.create.AllFluids;
 import com.simibubi.create.api.data.recipe.FillingRecipeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.Items;
 import org.forsteri.ratatouille.Ratatouille;
+import org.forsteri.ratatouille.entry.CRFluids;
+import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
+import org.starfruit.ratatouillefrieddelights.entry.RFDFluids;
+import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 
 import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("unused")
 public class RFDFillingRecipeGen extends FillingRecipeGen {
-/*    GeneratedRecipe
-            CAKE = create("cake", b -> b
-            .require(CRItems.CAKE_BASE.get())
-            .require(Tags.Fluids.MILK, 1000)
-            .output(Items.CAKE)
+    GeneratedRecipe
+
+    PANCAKE_MOLD_FILLED = create("pancake_mold_filled", b -> b
+            .require(RFDItems.PANCAKE_MOLD.get())
+            .require(RFDFluids.PANCAKE_BATTER.get(), 250)
+            .output(RFDItems.PANCAKE_MOLD_FILLED.get())
     ),
 
-    CAKE_MOLD_FILLED = create("cake_mold_filled", b -> b
-            .require(CRItems.CAKE_MOLD.get())
-            .require(CRFluids.CAKE_BATTER.get(), 500)
-            .output(CRItems.CAKE_MOLD_FILLED.get())
+    COLA_FILLED = create("cola_filled", b -> b
+                    .require(Items.GLASS_BOTTLE)
+                    .require(RFDFluids.COLA_SYRUP.get(), 100)
+                    .output(RFDItems.COLA.get())
     ),
 
-    CHOCOLATE_CAKE = create("chocolate_cake", b -> b
-            .require(CRItems.CAKE_BASE.get())
-            .require(com.simibubi.create.AllFluids.CHOCOLATE.get(), 1000)
-            .output(ResourceLocation.parse("neapolitan:chocolate_cake"))
-            .whenModLoaded("neapolitan")
-    ),
-
-    CHOCOLATE_MOLD_FILLED = create("chocolate_mold_filled", b -> b
-            .require(CRItems.CHOCOLATE_MOLD.get())
-            .require(com.simibubi.create.AllFluids.CHOCOLATE.get(), 250)
-            .output(CRItems.CHOCOLATE_MOLD_FILLED.get())
-    ),
-
-    COMPOST_TEA_BOTTLE = create("compost_tea_bottle", b -> b
+    ICE_CREAM_FILLED = create("ice_cream_filled", b -> b
             .require(Items.GLASS_BOTTLE)
-            .require(CRFluids.COMPOST_TEA.get(), 100)
-            .output(CRItems.COMPOST_TEA_BOTTLE.get())
+            .require(RFDFluids.ICE_CREAM_BASE.get(), 100)
+            .output(RFDItems.ICE_CREAM.get())
     ),
 
-    HONEY_CAKE = create("honey_cake", b -> b
-            .require(CRItems.CAKE_BASE.get())
-            .require(Tags.Fluids.HONEY, 500) // forge:honey 流体标签
-            .output(ResourceLocation.parse("createaddition:honey_cake"))
-            .whenModLoaded("createaddition")
+    CHOCOLATE_SUNDAE_FILLED = create("chocolate_sundae_filled", b -> b
+            .require(RFDItems.ICE_CREAM)
+            .require(AllFluids.CHOCOLATE.get(), 100)
+            .output(RFDItems.CHOCOLATE_SUNDAE.get())
     ),
 
-    MELON_POPSICLE_MOLD_FILLED = create("melon_popsicle_mold_filled", b -> b
-            .require(CRFluids.MELON_JUICE_FLUID.get(), 100)
-            .require(CRItems.POPSICLE_MOLD.get())
-            .output(CRItems.MELON_POPSICLE_MOLD_FILLED.get())
+    VANILLA_CONE_FILLED = create("vanilla_cone_filled", b -> b
+            .require(RFDItems.CONE.get())
+            .require(RFDFluids.ICE_CREAM_BASE.get(), 100)
+            .output(RFDItems.VANILLA_CONE.get())
     );
-*/
+
     public RFDFillingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, Ratatouille.MOD_ID);
+        super(output, registries, RatatouilleFriedDelights.MOD_ID);
     }
 }

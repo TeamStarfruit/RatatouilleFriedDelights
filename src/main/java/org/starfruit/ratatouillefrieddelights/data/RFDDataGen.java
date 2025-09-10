@@ -15,6 +15,8 @@ import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import org.forsteri.ratatouille.Ratatouille;
+import org.forsteri.ratatouille.data.recipe.RatatouilleRegistrateTags;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.data.recipe.RFDRecipeProvider;
 import org.starfruit.ratatouillefrieddelights.data.recipe.RFDStandardRecipeGen;
@@ -36,7 +38,7 @@ public class RFDDataGen {
     }
 
     private static void addExtraRegistrateData() {
-//        RatatouilleRegistrateTags.addGenerators();
+        RFDRegistrateTags.addGenerators();
         RatatouilleFriedDelights.REGISTRATE.addDataGenerator(ProviderType.LANG, provider -> {
             BiConsumer<String, String> langConsumer = provider::add;
 

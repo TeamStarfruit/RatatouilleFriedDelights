@@ -1,0 +1,14 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "minecraft:apple"
+    }
+  ],
+  "results": [
+    {
+      "count": 2,
+      "id": "ratatouille_fried_delights:apple_slices"
+    }
+  ]
+}

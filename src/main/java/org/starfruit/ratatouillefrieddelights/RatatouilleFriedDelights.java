@@ -49,6 +49,7 @@ public class RatatouilleFriedDelights {
         NeoForge.EVENT_BUS.register(this);
 
         RFDItems.register();
+        RFDFluids.register();
         RFDDataComponents.register(modEventBus);
         RFDRecipeTypes.register(modEventBus);
         RFDBlocks.register();

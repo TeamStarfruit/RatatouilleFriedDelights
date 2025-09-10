@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ratatouille_fried_delights:item/pan_cake_mold"
+    "layer0": "ratatouille_fried_delights:item/pancake_mold"
   }
 }

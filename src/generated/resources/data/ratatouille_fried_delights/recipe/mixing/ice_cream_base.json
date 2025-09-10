@@ -1,0 +1,25 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:ice_cubes"
+    },
+    {
+      "item": "ratatouille_fried_delights:ice_cubes"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "type": "fluid_tag",
+      "amount": 500,
+      "fluid_tag": "c:milk"
+    }
+  ],
+  "results": [
+    {
+      "amount": 1000,
+      "id": "ratatouille_fried_delights:ice_cream_base"
+    }
+  ]
+}

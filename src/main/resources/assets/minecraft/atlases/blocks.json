@@ -4,6 +4,54 @@
       "type": "directory",
       "source": "fluid",
       "prefix": "fluid/"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/cola_syrup_still"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/cola_syrup_flow"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/sunflower_oil_still"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/sunflower_oil_flow"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/mayonnaise_still"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/mayonnaise_flow"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/tartar_sauce_still"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/tartar_sauce_flow"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/pancake_batter_still"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/pancake_batter_flow"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/ice_cream_base_still"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/ice_cream_base_flow"
     }
   ]
 }
