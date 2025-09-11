@@ -182,7 +182,7 @@ public class RFDBlocks {
                         prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
                             int age = state.getValue(ColaFruitBlock.AGE);
                             return ConfiguredModel.builder()
-                                    .modelFile(prov.models().getExistingFile(prov.modLoc("block/cola_fruit/cola_fruit_block_stage" + age)))
+                                    .modelFile(prov.models().getExistingFile(prov.modLoc("block/cola_fruit_block/cola_fruit_block_stage" + age)))
                                     .build();
                         });
                     })
@@ -214,7 +214,7 @@ public class RFDBlocks {
                     })
 
                     .item()
-                    .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/cola_fruit/item")))
+                    .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/cola_fruit_block/item")))
                     .build()
                     .register();
 

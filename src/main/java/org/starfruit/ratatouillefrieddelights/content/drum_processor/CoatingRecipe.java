@@ -27,7 +27,11 @@ public class CoatingRecipe extends StandardProcessingRecipe<RecipeInput> {
     public boolean matches(RecipeInput inv, Level worldIn) {
         if (inv.isEmpty())
             return false;
-        return ingredients.getFirst()
-                .test(inv.getItem(0));
+        for (int i = 0; i < ingredients.size(); i++) {
+            if (!ingredients.get(i).test(inv.getItem(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 }
