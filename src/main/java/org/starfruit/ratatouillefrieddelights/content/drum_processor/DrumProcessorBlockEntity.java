@@ -1,20 +1,30 @@
 package org.starfruit.ratatouillefrieddelights.content.drum_processor;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
+import com.simibubi.create.content.logistics.funnel.FunnelBlock;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.inventory.InvManipulationBehaviour;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.sound.SoundScapes;
+import net.createmod.catnip.math.VecHelper;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.block.AirBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -77,6 +87,40 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         // 1) 没动力就不跑
         if (getSpeed() == 0.0F)
             return;
+        // copy from ThresherBlockEntity::tick
+        if (canOutput()) {
+            Direction direction = getEjectDirection();
+            for (int slot = 0; slot < this.outputInv.getSlots(); slot++) {
+                ItemStack stack = this.outputInv.getStackInSlot(slot);
+                if (!stack.isEmpty()) {
+                    BlockEntity be = this.level.getBlockEntity(this.worldPosition.below().relative(direction));
+                    InvManipulationBehaviour inserter =
+                            be == null ? null : BlockEntityBehaviour.get(level, be.getBlockPos(), InvManipulationBehaviour.TYPE);
+                    IItemHandler targetInv = be == null ? null
+                            : Optional.ofNullable(level.getCapability(Capabilities.ItemHandler.BLOCK, be.getBlockPos(), direction.getOpposite()))
+                            .orElse(inserter == null ? null : inserter.getInventory());
+                    if (targetInv != null) {
+                        if (ItemHandlerHelper.insertItemStacked(targetInv, stack, true).isEmpty()) {
+                            ItemHandlerHelper.insertItemStacked(targetInv, stack.copy(), false);
+                            this.outputInv.setStackInSlot(slot, ItemStack.EMPTY);
+                            notifyUpdate();
+                        }
+                    }
+                }
+            }
+        } else if (level.getBlockState(getBlockPos().relative(getEjectDirection())).getBlock() instanceof AirBlock) {
+            for (int slot = 0; slot < this.outputInv.getSlots(); slot++) {
+                ItemStack stack = this.outputInv.getStackInSlot(slot);
+                if (!stack.isEmpty()) {
+                    Vec3 neighbour = VecHelper.getCenterOf(getBlockPos().relative(getEjectDirection()));
+                    ItemEntity itementity = new ItemEntity(level, neighbour.x, Mth.floor(neighbour.y) + 1 / 16F, neighbour.z, stack.split(level.random.nextInt(21) + 10));
+                    itementity.setDeltaMovement(Vec3.ZERO);
+                    level.addFreshEntity(itementity);
+                    this.outputInv.setStackInSlot(slot, ItemStack.EMPTY);
+                    notifyUpdate();
+                }
+            }
+        }
 
         // 输出槽满了 → 停机
         ItemStack out = outputInv.getStackInSlot(0);
@@ -186,6 +230,35 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         super.destroy();
         ItemHelper.dropContents(this.level, this.worldPosition, this.inputInv);
         ItemHelper.dropContents(this.level, this.worldPosition, this.outputInv);
+    }
+
+    public Direction getEjectDirection() {
+        return getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING).getCounterClockWise();
+    }
+
+    private boolean canOutput() {
+        if (level == null) return false;
+        Direction direction = getEjectDirection();
+        BlockPos neighbour = getBlockPos().relative(direction);
+        BlockPos output = neighbour.below();
+        BlockState blockState = level.getBlockState(neighbour);
+        if (FunnelBlock.isFunnel(blockState)) {
+            if (FunnelBlock.getFunnelFacing(blockState) == direction) {
+                return false;
+            }
+        } else {
+            if (!blockState.getCollisionShape(level, neighbour).isEmpty()) {
+                return false;
+            }
+
+            BlockEntity blockEntity = level.getBlockEntity(output);
+            if (blockEntity instanceof BeltBlockEntity belt) {
+                return belt.getSpeed() == 0.0F || belt.getMovementFacing() != direction.getOpposite();
+            }
+        }
+
+        DirectBeltInputBehaviour directBeltInputBehaviour = (DirectBeltInputBehaviour) BlockEntityBehaviour.get(level, output, DirectBeltInputBehaviour.TYPE);
+        return directBeltInputBehaviour != null && directBeltInputBehaviour.canInsertFromSide(direction);
     }
 
 //    private boolean canProcess(ItemStack stack) {

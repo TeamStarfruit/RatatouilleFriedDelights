@@ -11,6 +11,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -26,9 +27,19 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 
-
+/// NOTE: output direction is rotating HORIZONTAL_FACING clockwise 90°
 public class DrumProcessorBlock extends HorizontalKineticBlock implements IBE<DrumProcessorBlockEntity> {
     public DrumProcessorBlock(Properties properties) {super(properties);}
+
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Direction preferredFacing = this.getPreferredHorizontalFacing(context);
+        if (preferredFacing == null) {
+            preferredFacing = context.getHorizontalDirection();
+        }
+        preferredFacing = preferredFacing.getClockWise();
+
+        return (BlockState) this.defaultBlockState().setValue(HORIZONTAL_FACING, context.getPlayer() != null && context.getPlayer().isShiftKeyDown() ? preferredFacing : preferredFacing.getOpposite());
+    }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
@@ -98,7 +109,7 @@ public class DrumProcessorBlock extends HorizontalKineticBlock implements IBE<Dr
     }
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
-        return getRotationAxis(state) == face.getAxis();
+        return state.getValue(HORIZONTAL_FACING).getClockWise() == face;
     }
 
     @Override

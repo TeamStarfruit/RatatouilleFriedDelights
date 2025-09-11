@@ -28,6 +28,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -50,8 +51,9 @@ public class ContinuousFryerBlockEntity extends SmartBlockEntity implements IHav
     TransportedItemStack heldItem;
     protected int processingTicks;
     Map<Direction, ContinuousFryerItemHandler> itemHandlers;
+    private FryingRecipe lastRecipe;
 
-        public ContinuousFryerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public ContinuousFryerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
             super(type, pos, state);
             itemHandlers = new IdentityHashMap<>();
             for (Direction d : Iterate.horizontalDirections) {
@@ -146,17 +148,17 @@ public class ContinuousFryerBlockEntity extends SmartBlockEntity implements IHav
         ItemStack in = heldItem.stack;
         if (in.isEmpty()) return;
 
-        Optional<RecipeHolder<FryingRecipe>> match = RFDRecipeTypes.FRYING.find(in, level);
+        Optional<RecipeHolder<FryingRecipe>> match = RFDRecipeTypes.FRYING.find(new SingleRecipeInput(in), level);
 
         if (match.isPresent()) {
             FryingRecipe recipe = match.get().value();
 
             // 检查油量是否足够
-            if (internalTank.getPrimaryHandler().getFluidAmount() >= recipe.getOilCost()) {
+//            if (internalTank.getPrimaryHandler().getFluidAmount() >= recipe.getOilCost()) {
                 lastRecipe = recipe;
                 processingTicks = recipe.getProcessingDuration();
                 sendData();
-            }
+//            }
         }
     }
 
@@ -172,7 +174,7 @@ public class ContinuousFryerBlockEntity extends SmartBlockEntity implements IHav
 
         // 消耗油
         internalTank.allowExtraction();
-        internalTank.getPrimaryHandler().drain(lastRecipe.getOilCost(), FluidAction.EXECUTE);
+//        internalTank.getPrimaryHandler().drain(lastRecipe.getOilCost(), FluidAction.EXECUTE);
         internalTank.forbidExtraction();
 
         // 产物
