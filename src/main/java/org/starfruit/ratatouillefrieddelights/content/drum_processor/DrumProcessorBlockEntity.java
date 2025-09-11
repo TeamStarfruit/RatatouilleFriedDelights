@@ -56,7 +56,7 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
     public ItemStackHandler outputInv;
     public IItemHandler capability;
     public int timer;
-    private DrumProcessingRecipe lastRecipe;
+    public DrumProcessingRecipe lastRecipe;
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
@@ -82,23 +82,29 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
     }
 
     public void spawnParticles() {
-        if (level == null) return;
+        if (level == null || lastRecipe == null) return;
+
+        var axis = getEjectDirection().getAxis();
+
         for (int i = 0; i < inputInv.getSlots(); i++) {
             ItemStack stackInSlot = inputInv.getStackInSlot(i);
-
             if (stackInSlot.isEmpty()) return;
 
             ItemParticleOption data = new ItemParticleOption(ParticleTypes.ITEM, stackInSlot);
+
             float angle = level.random.nextFloat() * 360;
-            Vec3 offset = new Vec3(0, 0, 0.5f);
-            offset = VecHelper.rotate(offset, angle, Direction.Axis.Y);
-            Vec3 target = VecHelper.rotate(offset, getSpeed() > 0 ? 25 : -25, Direction.Axis.Y);
+            Vec3 offset = new Vec3(0, 0.5f, 0);
+            offset = VecHelper.rotate(offset, angle, axis);
+
+            Vec3 target = VecHelper.rotate(offset, getSpeed() > 0 ? 25 : -25, axis);
 
             Vec3 center = offset.add(VecHelper.getCenterOf(worldPosition));
             target = VecHelper.offsetRandomly(target.subtract(offset), level.random, 1 / 128f);
+
             level.addParticle(data, center.x, center.y, center.z, target.x, target.y, target.z);
         }
     }
+
 
     @Override
     public void tick() {
@@ -162,8 +168,10 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         }
 
         // 4) 空输入则不启动
-        if (inputInv.getStackInSlot(0).isEmpty() || inputInv.getStackInSlot(1).isEmpty())
+        if (inputInv.getStackInSlot(0).isEmpty() || inputInv.getStackInSlot(1).isEmpty()) {
+            notifyUpdate();
             return;
+        }
 
         // 5) 查配方（单输入）
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);

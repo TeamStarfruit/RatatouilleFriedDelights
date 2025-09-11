@@ -31,11 +31,15 @@ public abstract class DrumProcessingRecipe extends StandardProcessingRecipe<Reci
     public boolean matches(RecipeInput inv, Level worldIn) {
         if (inv.isEmpty())
             return false;
-        for (int i = 0; i < ingredients.size(); i++) {
-            if (!ingredients.get(i).test(inv.getItem(i))) {
-                return false;
+        int count = 0;
+        for (net.minecraft.world.item.crafting.Ingredient ingredient : ingredients) {
+            for (int j = 0; j < inv.size(); j++) {
+                if (ingredient.test(inv.getItem(j))) {
+                    count += 1;
+                    break;
+                }
             }
         }
-        return true;
+        return count == ingredients.size();
     }
 }
