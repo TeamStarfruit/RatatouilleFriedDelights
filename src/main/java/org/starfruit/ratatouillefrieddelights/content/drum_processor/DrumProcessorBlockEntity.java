@@ -188,14 +188,14 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         ItemHelper.dropContents(this.level, this.worldPosition, this.outputInv);
     }
 
-    private boolean canProcess(ItemStack stack) {
-        if (level == null) return false;
-        SingleRecipeInput inventoryIn = new SingleRecipeInput(stack);
-
-        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level))
-            return true;
-        return RFDRecipeTypes.COATING.find(inventoryIn, level)
-                .isPresent();}
+//    private boolean canProcess(ItemStack stack) {
+//        if (level == null) return false;
+//        SingleRecipeInput inventoryIn = new SingleRecipeInput(stack);
+//
+//        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level))
+//            return true;
+//        return RFDRecipeTypes.COATING.find(inventoryIn, level)
+//                .isPresent();}
 
     @MethodsReturnNonnullByDefault
     @ParametersAreNonnullByDefault
@@ -224,7 +224,7 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         public boolean isItemValid(int slot, ItemStack stack) {
             if (DrumProcessorBlockEntity.this.outputInv == this.getHandlerFromIndex(this.getIndexForSlot(slot)))
                 return false;
-            return DrumProcessorBlockEntity.this.canProcess(stack) && super.isItemValid(slot, stack);
+            return super.isItemValid(slot, stack);
         }
     }
 
