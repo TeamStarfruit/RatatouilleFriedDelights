@@ -13,14 +13,14 @@ import java.util.concurrent.CompletableFuture;
 
 public class CoatingRecipeGen extends StandardProcessingRecipeGen<CoatingRecipe> {
 
-//    GeneratedRecipe
-//            RICE = this.create(
-//            "rice",
- //           b -> b
- //                   .require(ModItems.RICE_PANICLE.get())
- //                   .output(ModItems.RICE.get())
- //                   .output(0.5F, vectorwing.farmersdelight.common.registry.ModItems.RICE.get()).duration(200)
- //   );
+    GeneratedRecipe
+            RICE = this.create(
+            "rice",
+            b -> b
+                    .require(ModItems.RICE_PANICLE.get())
+                    .output(ModItems.RICE.get())
+
+    );
 
     public CoatingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, RatatouilleFriedDelights.MOD_ID);

@@ -5,11 +5,15 @@ import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import net.createmod.catnip.lang.FontHelper;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import org.forsteri.ratatouille.entry.CRPartialModels;
+import org.forsteri.ratatouille.entry.CRPonderPlugin;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -47,6 +51,7 @@ public class RatatouilleFriedDelights {
         modEventBus.addListener(this::commonSetup);
         RFDCreativeModeTabs.register(modEventBus);
         NeoForge.EVENT_BUS.register(this);
+        modEventBus.addListener(RatatouilleFriedDelights::clientInit);
 
         RFDItems.register();
         RFDFluids.register();
@@ -70,6 +75,10 @@ public class RatatouilleFriedDelights {
         LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.getAsInt());
 
         Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
+    }
+
+    public static void clientInit(final FMLClientSetupEvent event) {
+        RFDPartialModels.init();
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

@@ -1,6 +1,18 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "ratatouille_fried_delights:block/drum_processor/block",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "ratatouille_fried_delights:block/drum_processor/block",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "ratatouille_fried_delights:block/drum_processor/block",
+      "y": 270
+    },
+    "facing=west": {
       "model": "ratatouille_fried_delights:block/drum_processor/block"
     }
   }

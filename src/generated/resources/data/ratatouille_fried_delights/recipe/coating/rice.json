@@ -1,0 +1,13 @@
+{
+  "type": "ratatouille_fried_delights:coating",
+  "ingredients": [
+    {
+      "item": "farmersdelight:rice_panicle"
+    }
+  ],
+  "results": [
+    {
+      "id": "farmersdelight:rice"
+    }
+  ]
+}

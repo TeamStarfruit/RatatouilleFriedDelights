@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.vehicle.Minecart;
@@ -55,10 +56,10 @@ public class RFDBlocks {
 
     public static final BlockEntry<DrumProcessorBlock> DRUM_PROCESSOR = RatatouilleFriedDelights.REGISTRATE
             .block("drum_processor", DrumProcessorBlock::new)
-            .initialProperties(SharedProperties::stone)
+            .initialProperties(SharedProperties::copperMetal)
             .properties(p -> p.mapColor(MapColor.METAL).sound(SoundType.METAL))
             .transform(pickaxeOnly())
-            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), AssetLookup.partialBaseModel(ctx, prov)))
+            .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p), 270))
             .item()
             .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/drum_processor/item")))
             .build()
