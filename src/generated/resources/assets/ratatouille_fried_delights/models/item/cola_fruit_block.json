@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "ratatouille_fried_delights:block/cola_fruit/cola_fruit_block"
-  }
+  "parent": "ratatouille_fried_delights:block/cola_fruit/item"
 }

@@ -50,7 +50,7 @@ public class RFDBlocks {
             .transform(pickaxeOnly())
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), AssetLookup.partialBaseModel(ctx, prov)))
             .item()
-            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/continuous_fryer/continuous_fryer_single")))
+            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/continuous_fryer/item")))
             .build()
             .register();
 
@@ -214,8 +214,7 @@ public class RFDBlocks {
                     })
 
                     .item()
-                    .model((c, p) ->
-                                    p.generated(c, p.modLoc("block/cola_fruit/" + p.name(c))))
+                    .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/cola_fruit/item")))
                     .build()
                     .register();
 
