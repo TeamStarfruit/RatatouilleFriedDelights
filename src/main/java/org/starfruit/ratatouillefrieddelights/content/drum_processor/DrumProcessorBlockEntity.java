@@ -54,7 +54,7 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
     public ItemStackHandler outputInv;
     public IItemHandler capability;
     public int timer;
-    private CoatingRecipe lastRecipe;
+    private DrumProcessingRecipe lastRecipe;
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
@@ -149,7 +149,9 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         boolean matched = lastRecipe != null && lastRecipe.matches(inventoryIn, level);
 
         if (!matched) {
-            Optional<RecipeHolder<CoatingRecipe>> recipe = RFDRecipeTypes.COATING.find(inventoryIn, level);
+            Optional<RecipeHolder<DrumProcessingRecipe>> recipe = RFDRecipeTypes.COATING.find(inventoryIn, level);
+            if (recipe.isEmpty())  recipe = RFDRecipeTypes.TUMBLING.find(inventoryIn, level);
+
             if (recipe.isEmpty()) {
                 // 未命中：给一个“空转冷却”（可选），并同步一次
                 timer = 100;
@@ -174,7 +176,9 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
 
         if (lastRecipe == null || !lastRecipe.matches(inventoryIn, this.level)) {
-            Optional<RecipeHolder<CoatingRecipe>> recipe = RFDRecipeTypes.COATING.find(inventoryIn, this.level);
+            Optional<RecipeHolder<DrumProcessingRecipe>> recipe = RFDRecipeTypes.COATING.find(inventoryIn, level);
+            if (recipe.isEmpty())  recipe = RFDRecipeTypes.TUMBLING.find(inventoryIn, level);
+
             if (recipe.isEmpty()) {
                 return;
             }

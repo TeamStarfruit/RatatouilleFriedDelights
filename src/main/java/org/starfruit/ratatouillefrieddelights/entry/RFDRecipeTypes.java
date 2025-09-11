@@ -17,6 +17,7 @@ import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerRecipe;
 import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryingRecipe;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.CoatingRecipe;
+import org.starfruit.ratatouillefrieddelights.content.drum_processor.TumblingRecipe;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -25,6 +26,7 @@ import java.util.function.Supplier;
 public enum RFDRecipeTypes implements IRecipeTypeInfo {
 
     COATING(CoatingRecipe::new),
+    TUMBLING(TumblingRecipe::new),
     FRYING(FryingRecipe::new),
 
 
