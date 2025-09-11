@@ -11,6 +11,7 @@ import org.starfruit.ratatouillefrieddelights.data.recipe.ratatouille.*;
 import org.starfruit.ratatouillefrieddelights.data.recipe.create.*;
 import org.jetbrains.annotations.NotNull;
 import org.starfruit.ratatouillefrieddelights.data.recipe.ratatouille_fry_delights.CoatingRecipeGen;
+import org.starfruit.ratatouillefrieddelights.data.recipe.ratatouille_fry_delights.FryingRecipeGen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public final class RFDRecipeProvider extends RecipeProvider {
         GENERATORS.add(new RFDMixingRecipeGen(output, registries));
 
         GENERATORS.add(new CoatingRecipeGen(output, registries));
+        GENERATORS.add(new FryingRecipeGen(output, registries));
 
         gen.addProvider(true, new DataProvider() {
             @Override

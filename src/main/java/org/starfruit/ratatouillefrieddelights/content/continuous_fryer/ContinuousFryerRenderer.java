@@ -133,7 +133,7 @@ public class ContinuousFryerRenderer extends SmartBlockEntityRenderer<Continuous
 
     /* ----------------------- 油液渲染：槽液面 + 处理中扰动 ----------------------- */
     protected void renderOil(ContinuousFryerBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light) {
-        SmartFluidTankBehaviour tank = be.oilTank;
+        SmartFluidTankBehaviour tank = be.internalTank;
         if (tank == null)
             return;
 

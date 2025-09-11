@@ -1,0 +1,14 @@
+{
+  "type": "ratatouille_fried_delights:frying",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:raw_apple_pie"
+    }
+  ],
+  "processing_time": 200,
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:fried_apple_pie"
+    }
+  ]
+}

@@ -82,10 +82,6 @@ public class ContinuousFryerBlock extends Block implements IWrenchable, IBE<Cont
         });
     }
 
-    /**
-     * 从上方掉下来的物品，若当前位置存在 DirectBeltInputBehaviour，则尝试插入
-     * 与 Drain 的行为一致，便于与传送带/漏斗生态衔接
-     */
     @Override
     public void updateEntityAfterFallOn(BlockGetter world, Entity entity) {
         super.updateEntityAfterFallOn(world, entity);
@@ -115,11 +111,11 @@ public class ContinuousFryerBlock extends Block implements IWrenchable, IBE<Cont
     protected ItemInteractionResult tryFillOil(Level level, Player player, InteractionHand hand,
                                                ItemStack heldItem, ContinuousFryerBlockEntity be) {
         // 允许插入 → 尝试把玩家手上的流体物品“倒入”锅内油槽
-        be.oilTank.allowInsertion();
+        be.internalTank.allowInsertion();
         ItemInteractionResult res = FluidHelper.tryEmptyItemIntoBE(level, player, hand, heldItem, be)
                 ? ItemInteractionResult.SUCCESS
                 : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        be.oilTank.forbidInsertion(); // 还原为默认策略（如你在 BE 里设置了只读/只写，可以按需调整）
+        be.internalTank.forbidInsertion(); // 还原为默认策略（如你在 BE 里设置了只读/只写，可以按需调整）
         return res;
     }
 

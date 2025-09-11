@@ -15,6 +15,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerRecipe;
+import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryingRecipe;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.CoatingRecipe;
 
 import javax.annotation.Nullable;
@@ -24,6 +25,7 @@ import java.util.function.Supplier;
 public enum RFDRecipeTypes implements IRecipeTypeInfo {
 
     COATING(CoatingRecipe::new),
+    FRYING(FryingRecipe::new),
 
 
     BURGER(() -> new ItemApplicationRecipe.Serializer<>(BurgerRecipe::new), AllRecipeTypes.DEPLOYING::getType, false),;
