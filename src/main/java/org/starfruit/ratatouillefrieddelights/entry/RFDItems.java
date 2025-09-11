@@ -92,6 +92,9 @@ public class RFDItems {
     public static final ItemEntry<Item> ICE_CREAM = RatatouilleFriedDelights.REGISTRATE.item("ice_cream", Item::new).register();
     public static final ItemEntry<Item> CHOCOLATE_SUNDAE = RatatouilleFriedDelights.REGISTRATE.item("chocolate_sundae", Item::new).register();
 
+    public static final ItemEntry<Item> TARTAR_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tartar_topping", Item::new).register();
+    public static final ItemEntry<Item> TOMATO_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tomato_topping", Item::new).register();
+
     public static final ItemEntry<BurgerItem> BURGER = RatatouilleFriedDelights.REGISTRATE.item("burger", BurgerItem::new)
             .tag(RFDTags.AllItemTags.BURGER_BASE.tag, RFDTags.AllItemTags.BURGER_TOPPINGS.tag) // Yes, this is how I implemented it, don't question
             .model((ctx, prov) -> prov.getBuilder("item/" + ctx.getName()))
