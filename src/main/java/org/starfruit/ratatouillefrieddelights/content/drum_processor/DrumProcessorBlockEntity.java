@@ -78,6 +78,10 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         if (getSpeed() == 0.0F)
             return;
 
+        // 输出槽满了 → 停机
+        ItemStack out = outputInv.getStackInSlot(0);
+        if (!out.isEmpty() && out.getCount() >= out.getMaxStackSize()) return;
+
         // 3) 正在计时：按处理速度递减；客户端只播粒子，服务端到0就执行 process()
         if (timer > 0) {
             timer -= getProcessingSpeed();
@@ -93,7 +97,7 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         }
 
         // 4) 空输入则不启动
-        if (inputInv.getStackInSlot(0).isEmpty())
+        if (inputInv.getStackInSlot(0).isEmpty() || inputInv.getStackInSlot(1).isEmpty())
             return;
 
         // 5) 查配方（单输入）
@@ -132,9 +136,12 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
             }
         }
 
-        ItemStack stackInSlot = inputInv.getStackInSlot(0);
-        stackInSlot.shrink(1);
-        inputInv.setStackInSlot(0, stackInSlot);
+        ItemStack in0 = inputInv.getStackInSlot(0);
+        ItemStack in1 = inputInv.getStackInSlot(1);
+        in0.shrink(1);
+        in1.shrink(1);
+        inputInv.setStackInSlot(0, in0);
+        inputInv.setStackInSlot(1, in1);
         this.lastRecipe.rollResults().forEach((stack) -> {
             ItemHandlerHelper.insertItemStacked(this.outputInv, stack, false);
         });
