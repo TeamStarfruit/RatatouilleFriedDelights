@@ -4,6 +4,7 @@ import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.item.ItemHelper;
+import com.simibubi.create.foundation.sound.SoundScapes;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -14,6 +15,8 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -21,9 +24,6 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
-import org.forsteri.ratatouille.content.thresher.ThresherBlockEntity;
-import org.forsteri.ratatouille.entry.CRBlockEntityTypes;
-import org.forsteri.ratatouille.entry.CRRecipeTypes;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
@@ -35,8 +35,8 @@ import java.util.Optional;
 public class DrumProcessorBlockEntity extends KineticBlockEntity {
     public DrumProcessorBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
-        this.inputInv = new ItemStackHandler(16);
-        this.outputInv = new ItemStackHandler(16);
+        this.inputInv = new ItemStackHandler(2);
+        this.outputInv = new ItemStackHandler(2);
         this.capability = new DrumProcessorInventoryHandler();
     }
 
@@ -55,45 +55,65 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    @OnlyIn(Dist.CLIENT)
+    public void tickAudio() {
+        super.tickAudio();
 
         if (getSpeed() == 0)
             return;
-        for (int i = 0; i < outputInv.getSlots(); i++)
-            if (outputInv.getStackInSlot(i)
-                    .getCount() == outputInv.getSlotLimit(i))
-                return;
-
-        if (timer > 0) {
-            timer -= getProcessingSpeed();
-
-            if (level.isClientSide) {
-                //spawnParticles();
-                return;
-            }
-            if (timer <= 0)
-                process();
-            return;
-        }
-
         if (inputInv.getStackInSlot(0)
                 .isEmpty())
             return;
 
-        RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
-            Optional<RecipeHolder<CoatingRecipe>> recipe = RFDRecipeTypes.COATING.find(inventoryIn, level);
-            if (!recipe.isPresent()) {
-                timer = 100;
-            } else {
-                lastRecipe = recipe.get().value();
-                timer = lastRecipe.getProcessingDuration();
+        float pitch = Mth.clamp((Math.abs(getSpeed()) / 256f) + .45f, .85f, 1f);
+        SoundScapes.play(SoundScapes.AmbienceGroup.MILLING, worldPosition, pitch);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (level == null) return;
+
+        // 1) 没动力就不跑
+        if (getSpeed() == 0.0F)
+            return;
+
+        // 3) 正在计时：按处理速度递减；客户端只播粒子，服务端到0就执行 process()
+        if (timer > 0) {
+            timer -= getProcessingSpeed();
+
+            if (level.isClientSide) {
+                // spawnParticles();
+                return;
             }
-            notifyUpdate();
+            if (timer <= 0) {
+                process();  // 在 process() 里负责：消耗输入1个 + 把结果塞进 outputInv
+            }
+            return;
         }
 
-        timer = lastRecipe.getProcessingDuration();
+        // 4) 空输入则不启动
+        if (inputInv.getStackInSlot(0).isEmpty())
+            return;
+
+        // 5) 查配方（单输入）
+        RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
+        boolean matched = lastRecipe != null && lastRecipe.matches(inventoryIn, level);
+
+        if (!matched) {
+            Optional<RecipeHolder<CoatingRecipe>> recipe = RFDRecipeTypes.COATING.find(inventoryIn, level);
+            if (recipe.isEmpty()) {
+                // 未命中：给一个“空转冷却”（可选），并同步一次
+                timer = 100;
+                notifyUpdate();
+                return; // 重要：别往下走
+            } else {
+                lastRecipe = recipe.get().value();
+            }
+        }
+
+        // 6) 命中：设定处理时长并同步，然后等待下一tick进入“计时阶段”
+        timer = Math.max(1, lastRecipe.getProcessingDuration());
         sendData();
     }
 
@@ -102,10 +122,11 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
     }
 
     private void process() {
+        if (level == null) return;
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
 
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
-            Optional<RecipeHolder<CoatingRecipe>> recipe = RFDRecipeTypes.COATING.find(inventoryIn, level);
+        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, this.level)) {
+            Optional<RecipeHolder<CoatingRecipe>> recipe = RFDRecipeTypes.COATING.find(inventoryIn, this.level);
             if (recipe.isEmpty()) {
                 return;
             }

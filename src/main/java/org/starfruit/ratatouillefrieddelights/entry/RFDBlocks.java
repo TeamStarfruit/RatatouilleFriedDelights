@@ -56,7 +56,7 @@ public class RFDBlocks {
 
     public static final BlockEntry<DrumProcessorBlock> DRUM_PROCESSOR = RatatouilleFriedDelights.REGISTRATE
             .block("drum_processor", DrumProcessorBlock::new)
-            .initialProperties(SharedProperties::copperMetal)
+            .initialProperties(() -> Blocks.IRON_BLOCK)
             .properties(p -> p.mapColor(MapColor.METAL).sound(SoundType.METAL))
             .transform(pickaxeOnly())
             .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p), 270))

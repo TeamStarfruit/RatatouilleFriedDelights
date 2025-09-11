@@ -3,8 +3,12 @@
   "ingredients": [
     {
       "item": "farmersdelight:rice_panicle"
+    },
+    {
+      "item": "minecraft:sand"
     }
   ],
+  "processing_time": 200,
   "results": [
     {
       "id": "farmersdelight:rice"
