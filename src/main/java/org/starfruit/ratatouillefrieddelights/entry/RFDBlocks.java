@@ -24,10 +24,12 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import org.forsteri.ratatouille.Ratatouille;
+import org.forsteri.ratatouille.entry.CRStress;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.cola_fruit.ColaFruitBlock;
 import org.starfruit.ratatouillefrieddelights.content.cola_tree.RFDFlammableRotatedPillarBlock;
 import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.ContinuousFryerBlock;
+import org.starfruit.ratatouillefrieddelights.content.drum_processor.DrumProcessorBlock;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
 
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -48,6 +50,17 @@ public class RFDBlocks {
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), AssetLookup.partialBaseModel(ctx, prov)))
             .item()
             .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/continuous_fryer/continuous_fryer_single")))
+            .build()
+            .register();
+
+    public static final BlockEntry<DrumProcessorBlock> DRUM_PROCESSOR = RatatouilleFriedDelights.REGISTRATE
+            .block("drum_processor", DrumProcessorBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.mapColor(MapColor.METAL).sound(SoundType.METAL))
+            .transform(pickaxeOnly())
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), AssetLookup.partialBaseModel(ctx, prov)))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/drum_processor/item")))
             .build()
             .register();
 

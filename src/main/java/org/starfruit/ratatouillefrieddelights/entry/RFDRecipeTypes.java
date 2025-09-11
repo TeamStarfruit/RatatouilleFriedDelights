@@ -15,12 +15,17 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerRecipe;
+import org.starfruit.ratatouillefrieddelights.content.drum_processor.CoatingRecipe;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 public enum RFDRecipeTypes implements IRecipeTypeInfo {
+
+    COATING(CoatingRecipe::new),
+
+
     BURGER(() -> new ItemApplicationRecipe.Serializer<>(BurgerRecipe::new), AllRecipeTypes.DEPLOYING::getType, false),;
     private final ResourceLocation id;
     private final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<?>> serializerObject;

@@ -10,6 +10,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import org.starfruit.ratatouillefrieddelights.data.recipe.ratatouille.*;
 import org.starfruit.ratatouillefrieddelights.data.recipe.create.*;
 import org.jetbrains.annotations.NotNull;
+import org.starfruit.ratatouillefrieddelights.data.recipe.ratatouille_fry_delights.CoatingRecipeGen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +31,15 @@ public final class RFDRecipeProvider extends RecipeProvider {
         GENERATORS.add(new DemoldingRecipeGen(output, registries));
         GENERATORS.add(new FreezingRecipeGen(output, registries));
         GENERATORS.add(new BakingRecipeGen(output, registries));
+
         GENERATORS.add(new RFDCompactingRecipeGen(output, registries));
         GENERATORS.add(new RFDCuttingRecipeGen(output, registries));
         GENERATORS.add(new RFDEmptyingRecipeGen(output, registries));
         GENERATORS.add(new RFDFillingRecipeGen(output, registries));
         GENERATORS.add(new RFDMillingRecipeGen(output, registries));
         GENERATORS.add(new RFDMixingRecipeGen(output, registries));
+
+        GENERATORS.add(new CoatingRecipeGen(output, registries));
 
         gen.addProvider(true, new DataProvider() {
             @Override
