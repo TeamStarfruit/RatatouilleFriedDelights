@@ -30,5 +30,7 @@ public class DrumProcessorRenderer extends KineticBlockEntityRenderer<DrumProces
     }
 
     protected void renderItems(DrumProcessorBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+        if (be.getLevel() == null) return;
+
     }
 }

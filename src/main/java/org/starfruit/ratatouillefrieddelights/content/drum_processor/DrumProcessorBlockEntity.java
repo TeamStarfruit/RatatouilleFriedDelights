@@ -13,6 +13,8 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -79,6 +81,25 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         SoundScapes.play(SoundScapes.AmbienceGroup.MILLING, worldPosition, pitch);
     }
 
+    public void spawnParticles() {
+        if (level == null) return;
+        for (int i = 0; i < inputInv.getSlots(); i++) {
+            ItemStack stackInSlot = inputInv.getStackInSlot(i);
+
+            if (stackInSlot.isEmpty()) return;
+
+            ItemParticleOption data = new ItemParticleOption(ParticleTypes.ITEM, stackInSlot);
+            float angle = level.random.nextFloat() * 360;
+            Vec3 offset = new Vec3(0, 0, 0.5f);
+            offset = VecHelper.rotate(offset, angle, Direction.Axis.Y);
+            Vec3 target = VecHelper.rotate(offset, getSpeed() > 0 ? 25 : -25, Direction.Axis.Y);
+
+            Vec3 center = offset.add(VecHelper.getCenterOf(worldPosition));
+            target = VecHelper.offsetRandomly(target.subtract(offset), level.random, 1 / 128f);
+            level.addParticle(data, center.x, center.y, center.z, target.x, target.y, target.z);
+        }
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -131,7 +152,7 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
             timer -= getProcessingSpeed();
 
             if (level.isClientSide) {
-                // spawnParticles();
+                spawnParticles();
                 return;
             }
             if (timer <= 0) {
@@ -153,18 +174,15 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
             if (recipe.isEmpty())  recipe = RFDRecipeTypes.TUMBLING.find(inventoryIn, level);
 
             if (recipe.isEmpty()) {
-                // 未命中：给一个“空转冷却”（可选），并同步一次
                 timer = 100;
-                notifyUpdate();
-                return; // 重要：别往下走
             } else {
                 lastRecipe = recipe.get().value();
+                timer = lastRecipe.getProcessingDuration();
             }
+        } else {
+            timer = lastRecipe.getProcessingDuration();
         }
-
-        // 6) 命中：设定处理时长并同步，然后等待下一tick进入“计时阶段”
-        timer = Math.max(1, lastRecipe.getProcessingDuration());
-        sendData();
+        notifyUpdate();
     }
 
     public int getProcessingSpeed() {
@@ -182,6 +200,8 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
             if (recipe.isEmpty()) {
                 return;
             }
+
+            this.lastRecipe = recipe.get().value();
         }
 
         ItemStack in0 = inputInv.getStackInSlot(0);
