@@ -33,12 +33,20 @@ public class CoatingRecipeGen extends StandardProcessingRecipeGen<CoatingRecipe>
                             .output(RFDItems.RAW_FILLET_O_FISH.get())
                             .duration(200)
             ),
-            BREADED_ORIGINAL_RECIPE_CHICKEN_DRUMSTICK = this.create(
-                    "fillet_fish_coating",
+            BREADED_ORIGINAL_DRUMSTICK = this.create(
+                    "drumstick_coating",
                     b -> b
-                            .require(RFDItems.RAW_FISH_FILLET.get())
+                            .require(RFDItems.BATTERED_ORIGINAL_DRUMSTICK.get())
                             .require(RFDItems.BREADCRUMB)
-                            .output(RFDItems.RAW_FILLET_O_FISH.get())
+                            .output(RFDItems.BREADED_ORIGINAL_DRUMSTICK.get())
+                            .duration(200)
+            ),
+            BREADED_ORIGINAL_KEEL = this.create(
+                    "keel_coating",
+                    b -> b
+                            .require(RFDItems.BATTERED_ORIGINAL_KEEL.get())
+                            .require(RFDItems.BREADCRUMB)
+                            .output(RFDItems.BREADED_ORIGINAL_KEEL.get())
                             .duration(200)
             );
 

@@ -70,8 +70,8 @@ public class RFDMixingRecipeGen extends MixingRecipeGen {
             .require(Items.CHICKEN)
             .require(RFDItems.SECRET_SEASONING_POWDER)
             .require(Items.EGG)
-            .output(RFDItems.RAW_ORIGINAL_RECIPE_CHICKEN_LEG.get())
-            .output(RFDItems.RAW_ORIGINAL_RECIPE_CHICKEN_BREAST.get())
+            .output(RFDItems.BATTERED_ORIGINAL_DRUMSTICK.get())
+            .output(RFDItems.BATTERED_ORIGINAL_KEEL.get())
     ),
 
     BUTTER = create("butter", b -> b

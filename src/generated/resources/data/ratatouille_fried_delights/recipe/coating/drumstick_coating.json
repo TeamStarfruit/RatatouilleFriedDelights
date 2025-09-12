@@ -1,0 +1,17 @@
+{
+  "type": "ratatouille_fried_delights:coating",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:battered_original_drumstick"
+    },
+    {
+      "item": "ratatouille_fried_delights:breadcrumb"
+    }
+  ],
+  "processing_time": 200,
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:breaded_original_drumstick"
+    }
+  ]
+}

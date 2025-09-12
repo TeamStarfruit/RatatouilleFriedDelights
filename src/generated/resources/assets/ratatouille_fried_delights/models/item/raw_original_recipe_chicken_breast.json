@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "ratatouille_fried_delights:item/raw_original_recipe_chicken_breast"
-  }
-}

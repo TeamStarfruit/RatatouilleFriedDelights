@@ -5,6 +5,7 @@ import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import net.createmod.catnip.lang.FontHelper;
+import net.createmod.catnip.lang.LangBuilder;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -87,6 +88,8 @@ public class RatatouilleFriedDelights {
         // Do something when the server starts
 //        LOGGER.info("HELLO from server starting");
     }
+
+    public static LangBuilder lang(){return new LangBuilder(MOD_ID);}
 
     public static ResourceLocation asResource(String path) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
