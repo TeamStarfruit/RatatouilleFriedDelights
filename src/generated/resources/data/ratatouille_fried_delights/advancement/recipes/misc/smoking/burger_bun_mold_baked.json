@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ratatouille_fried_delights:burger_bun"
+            "items": "ratatouille_fried_delights:burger_bun_mold_unbaked"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ratatouille_fried_delights:crafting/top_burger_bun"
+        "recipe": "ratatouille_fried_delights:smoking/burger_bun_mold_baked"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ratatouille_fried_delights:crafting/top_burger_bun"
+      "ratatouille_fried_delights:smoking/burger_bun_mold_baked"
     ]
   }
 }

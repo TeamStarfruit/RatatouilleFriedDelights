@@ -19,7 +19,38 @@ public class FryingRecipeGen extends StandardProcessingRecipeGen<FryingRecipe> {
             b -> b
                     .require(RFDItems.RAW_APPLE_PIE.get())
                     .output(RFDItems.FRIED_APPLE_PIE.get())
-                    .duration(200));
+                    .duration(200)),
+
+    FILLET_O_FISH = this.create("fillet_o_fish",
+                    b -> b
+                .require(RFDItems.RAW_FILLET_O_FISH.get())
+                .output(RFDItems.FILLET_O_FISH.get())
+                .duration(200)),
+
+    FRENCH_FRIES = this.create("french_fries",
+            b -> b
+                    .require(RFDItems.RAW_POTATO_STICK.get())
+                    .output(RFDItems.FRENCH_FRIES.get())
+                    .duration(200)),
+
+    CHICKEN_NUGGETS = this.create("chicken_nuggets",
+            b -> b
+                    .require(RFDItems.RAW_CHICKEN_NUGGETS.get())
+                    .output(RFDItems.CHICKEN_NUGGETS.get())
+                    .duration(200)),
+
+    ORIGINAL_CHICKEN_DRUMSTICK = this.create("original_chicken_drumstick",
+            b -> b
+                    .require(RFDItems.BREADED_ORIGINAL_DRUMSTICK.get())
+                    .output(RFDItems.ORIGINAL_CHICKEN_DRUMSTICK.get())
+                    .duration(200)),
+
+    ORIGINAL_CHICKEN_KEEL = this.create("original_chicken_keel",
+            b -> b
+                    .require(RFDItems.BREADED_ORIGINAL_KEEL.get())
+                    .output(RFDItems.ORIGINAL_CHICKEN_KEEL.get())
+                    .duration(200))
+    ;
 
 
     public FryingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

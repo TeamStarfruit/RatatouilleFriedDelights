@@ -1,0 +1,39 @@
+{
+  "type": "ratatouille_fried_delights:tumbling",
+  "ingredients": [
+    {
+      "item": "create:rose_quartz"
+    },
+    {
+      "item": "create:rose_quartz"
+    },
+    {
+      "item": "create:rose_quartz"
+    },
+    {
+      "item": "create:rose_quartz"
+    },
+    {
+      "item": "create:rose_quartz"
+    },
+    {
+      "item": "create:rose_quartz"
+    },
+    {
+      "item": "create:rose_quartz"
+    },
+    {
+      "item": "create:rose_quartz"
+    },
+    {
+      "item": "minecraft:sand"
+    }
+  ],
+  "processing_time": 200,
+  "results": [
+    {
+      "count": 8,
+      "id": "create:polished_rose_quartz"
+    }
+  ]
+}

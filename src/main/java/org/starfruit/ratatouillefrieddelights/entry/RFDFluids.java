@@ -51,7 +51,7 @@ public class RFDFluids {
     public static final FluidEntry<VirtualFluid> ICE_CREAM_BASE =
             RatatouilleFriedDelights.REGISTRATE
                     .virtualFluid("ice_cream_base")
-                    .lang("Ice Cream BASE")
+                    .lang("Ice Cream Base")
                     .register();
 
     static {

@@ -1,5 +1,6 @@
 package org.starfruit.ratatouillefrieddelights.entry;
 
+import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -76,8 +77,10 @@ public class RFDItems {
     public static final ItemEntry<Item> RAW_APPLE_PIE = RatatouilleFriedDelights.REGISTRATE.item("raw_apple_pie", Item::new).register();
     public static final ItemEntry<Item> PUFF_PASTRY = RatatouilleFriedDelights.REGISTRATE.item("puff_pastry", Item::new).register();
     public static final ItemEntry<Item> APPLE_SLICES = RatatouilleFriedDelights.REGISTRATE.item("apple_slices", Item::new).register();
+    public static final ItemEntry<SequencedAssemblyItem> UNPROCESSED_RAW_APPLE_PIE = RatatouilleFriedDelights.REGISTRATE.item("unprocessed_raw_apple_pie", SequencedAssemblyItem::new).register();
 
     public static final ItemEntry<Item> HOTCAKE_MEAL = RatatouilleFriedDelights.REGISTRATE.item("hotcake_meal", Item::new).register();
+    public static final ItemEntry<SequencedAssemblyItem> UNPROCESSED_HOTCAKE_MEAL = RatatouilleFriedDelights.REGISTRATE.item("unprocessed_hotcake_meal", SequencedAssemblyItem::new).register();
     public static final ItemEntry<Item> PANCAKE = RatatouilleFriedDelights.REGISTRATE.item("pancake", Item::new).register();
     public static final ItemEntry<Item> PANCAKE_MOLD_BAKED = RatatouilleFriedDelights.REGISTRATE.item("pancake_mold_baked", Item::new).register();
     public static final ItemEntry<Item> PANCAKE_MOLD_FILLED = RatatouilleFriedDelights.REGISTRATE.item("pancake_mold_filled", Item::new).register();

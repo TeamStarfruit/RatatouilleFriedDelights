@@ -19,12 +19,12 @@ public class RFDFillingRecipeGen extends FillingRecipeGen {
 
     PANCAKE_MOLD_FILLED = create("pancake_mold_filled", b -> b
             .require(RFDItems.PANCAKE_MOLD.get())
-            .require(RFDFluids.PANCAKE_BATTER.get(), 250)
+            .require(CRFluids.CAKE_BATTER.get(), 250)
             .output(RFDItems.PANCAKE_MOLD_FILLED.get())
     ),
 
     COLA_FILLED = create("cola_filled", b -> b
-                    .require(Items.GLASS_BOTTLE)
+                    .require(RFDItems.TALL_CUP)
                     .require(RFDFluids.COLA_SYRUP.get(), 100)
                     .output(RFDItems.COLA.get())
     ),

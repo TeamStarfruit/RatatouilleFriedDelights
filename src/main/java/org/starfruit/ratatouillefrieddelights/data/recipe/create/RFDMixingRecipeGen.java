@@ -80,14 +80,14 @@ public class RFDMixingRecipeGen extends MixingRecipeGen {
             .requiresHeat(HeatCondition.HEATED)
     ),
 
-    PANCAKE_BATTER = create("pancake_batter", b -> b
-            .require(AllItems.WHEAT_FLOUR.get())
-            .require(Items.SUGAR)
-            .require(Items.EGG)
-            .require(RFDItems.BUTTER)
-            .require(Tags.Fluids.MILK, 250)
-            .output(RFDFluids.PANCAKE_BATTER.get(), 1000)
-    ),
+//    PANCAKE_BATTER = create("pancake_batter", b -> b
+//            .require(AllItems.WHEAT_FLOUR.get())
+//            .require(Items.SUGAR)
+//            .require(Items.EGG)
+//            .require(RFDItems.BUTTER)
+//            .require(Tags.Fluids.MILK, 250)
+//            .output(RFDFluids.PANCAKE_BATTER.get(), 1000)
+//    ),
 
     MAYONNAISE = create("mayonnaise", b -> b
             .require(RFDFluids.SUNFLOWER_OIL.get(), 500)
@@ -111,11 +111,11 @@ public class RFDMixingRecipeGen extends MixingRecipeGen {
 
     COLA_SYRUP = create("cola_syrup", b -> b
             .require(RFDItems.COLA_NUTS.get())
+            .require(RFDItems.COLA_NUTS.get())
             .require(Items.SUGAR)
             .require(Items.SUGAR)
             .require(Tags.Fluids.WATER, 1000)
             .output(RFDFluids.COLA_SYRUP.get(), 1000)
-            .requiresHeat(HeatCondition.HEATED)
     );
 
     public RFDMixingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

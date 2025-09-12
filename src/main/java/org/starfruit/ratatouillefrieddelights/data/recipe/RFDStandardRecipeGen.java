@@ -35,9 +35,14 @@ public final class RFDStandardRecipeGen extends BaseRecipeProvider {
 
     GeneratedRecipe
             TOP_BURGER_BUN = create(RFDItems.TOP_BURGER_BUN)
-            .unlockedBy(Items.WHITE_WOOL::asItem) // mandatory
+            .unlockedBy(RFDItems.BURGER_BUN::asItem) // mandatory
             .viaShapeless(b -> b
                     .requires(RFDItems.BOTTOM_BURGER_BUN.get())
+            ),
+            BOTTOM_BURGER_BUN = create(RFDItems.BOTTOM_BURGER_BUN)
+                    .unlockedBy(RFDItems.BURGER_BUN::asItem) // mandatory
+                    .viaShapeless(b -> b
+                            .requires(RFDItems.TOP_BURGER_BUN.get())
             );
     /*            CHEF_HAT_WITH_GOGGLES = create(CRItems.CHEF_HAT_WITH_GOGGLES)
                         .unlockedBy(CRItems.CHEF_HAT::get)
@@ -152,24 +157,18 @@ public final class RFDStandardRecipeGen extends BaseRecipeProvider {
                                 .define('S', AllItems.ANDESITE_ALLOY)
                                 .define('X', AllBlocks.MECHANICAL_HARVESTER)
                         );
-
+*/
         // smoking
         GeneratedRecipe
-                CAKE_MOLD_BAKED = create(CRItems.CAKE_MOLD_BAKED::get)
-                .viaCooking(CRItems.CAKE_MOLD_FILLED::get)
+            PANCAKE_MOLD_BAKED = create(RFDItems.PANCAKE_MOLD_BAKED::get)
+                .viaCooking(RFDItems.PANCAKE_MOLD_FILLED::get)
                 .forDuration(200)
                 .inSmoker(),
-
-        ROAST_COCO = create(CRItems.DRIED_COCOA_BEANS::get)
-                .viaCooking(() -> Items.COCOA_BEANS)
-                .forDuration(20)
-                .inSmoker(),
-
-        SAUSAGE = create(CRItems.SAUSAGE::get)
-                .viaCooking(CRItems.RAW_SAUSAGE::get)
-                .forDuration(100)
+            BURGER_BUN_MOLD_BAKED = create(RFDItems.BURGER_BUN_MOLD_BAKED::get)
+                .viaCooking(RFDItems.BURGER_BUN_MOLD_UNBAKED::get)
+                .forDuration(200)
                 .inSmoker();
-    */
+
     public RFDStandardRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, RatatouilleFriedDelights.MOD_ID);
     }

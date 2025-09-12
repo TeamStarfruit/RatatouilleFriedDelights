@@ -1,0 +1,59 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "ratatouille_fried_delights:puff_pastry"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:raw_apple_pie"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_raw_apple_pie"
+        }
+      ],
+      "results": [
+        {
+          "id": "ratatouille_fried_delights:unprocessed_raw_apple_pie"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_raw_apple_pie"
+        },
+        {
+          "item": "ratatouille_fried_delights:apple_slices"
+        }
+      ],
+      "results": [
+        {
+          "id": "ratatouille_fried_delights:unprocessed_raw_apple_pie"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_raw_apple_pie"
+        }
+      ],
+      "results": [
+        {
+          "id": "ratatouille_fried_delights:unprocessed_raw_apple_pie"
+        }
+      ]
+    }
+  ],
+  "transitional_item": {
+    "id": "ratatouille_fried_delights:unprocessed_raw_apple_pie"
+  }
+}

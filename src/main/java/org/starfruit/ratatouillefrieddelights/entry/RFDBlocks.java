@@ -45,7 +45,7 @@ public class RFDBlocks {
 
      public static final BlockEntry<ContinuousFryerBlock> CONTINUOUS_FRYER = RatatouilleFriedDelights.REGISTRATE
             .block("continuous_fryer", ContinuousFryerBlock::new)
-            .initialProperties(SharedProperties::stone)
+            .initialProperties(SharedProperties::copperMetal)
             .properties(p -> p.mapColor(MapColor.METAL).sound(SoundType.METAL))
             .transform(pickaxeOnly())
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), AssetLookup.partialBaseModel(ctx, prov)))

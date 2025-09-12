@@ -1,0 +1,14 @@
+{
+  "type": "ratatouille_fried_delights:frying",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:raw_fillet_o_fish"
+    }
+  ],
+  "processing_time": 200,
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:fillet_o_fish"
+    }
+  ]
+}

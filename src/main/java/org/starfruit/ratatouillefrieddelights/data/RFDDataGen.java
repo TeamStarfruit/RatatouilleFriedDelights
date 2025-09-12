@@ -20,6 +20,7 @@ import org.forsteri.ratatouille.data.recipe.RatatouilleRegistrateTags;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.data.recipe.RFDRecipeProvider;
 import org.starfruit.ratatouillefrieddelights.data.recipe.RFDStandardRecipeGen;
+import org.starfruit.ratatouillefrieddelights.data.recipe.create.RFDSequencedAssemblyRecipeGen;
 import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
 import org.starfruit.ratatouillefrieddelights.worldgen.*;
 
@@ -107,7 +108,7 @@ public class RFDDataGen {
         );
 
         generator.addProvider(event.includeServer(), new RFDStandardRecipeGen(output, lookupProvider));
-//        generator.addProvider(event.includeServer(), new RatatouilleSequencedAssemblyRecipeGen(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new RFDSequencedAssemblyRecipeGen(output, lookupProvider));
 
 
         if (event.includeServer()) {

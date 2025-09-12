@@ -81,6 +81,8 @@ public class RFDCreativeModeTabs {
             Set<Item> exclusions = new ReferenceOpenHashSet<>();
 
             exclusions.add(RFDItems.BURGER.get());
+            exclusions.add(RFDItems.UNPROCESSED_HOTCAKE_MEAL.get());
+            exclusions.add(RFDItems.UNPROCESSED_RAW_APPLE_PIE.get());
 
             return exclusions::contains;
         }

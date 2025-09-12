@@ -16,15 +16,6 @@ import java.util.concurrent.CompletableFuture;
 public class CoatingRecipeGen extends StandardProcessingRecipeGen<CoatingRecipe> {
 
     GeneratedRecipe
-            RICE = this.create(
-            "rice",
-            b -> b
-                    .require(ModItems.RICE_PANICLE.get())
-                    .require(Items.SAND)
-                    .output(ModItems.RICE.get())
-                    .duration(200)
-
-            ),
             RAW_FILLET_O_FISH = this.create(
                     "fillet_fish_coating",
                     b -> b

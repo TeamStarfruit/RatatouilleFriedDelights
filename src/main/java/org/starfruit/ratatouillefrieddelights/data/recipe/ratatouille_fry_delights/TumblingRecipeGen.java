@@ -1,5 +1,6 @@
 package org.starfruit.ratatouillefrieddelights.data.recipe.ratatouille_fry_delights;
 
+import com.simibubi.create.AllItems;
 import com.simibubi.create.api.data.recipe.StandardProcessingRecipeGen;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.minecraft.core.HolderLookup;
@@ -15,16 +16,32 @@ import java.util.concurrent.CompletableFuture;
 
 public class TumblingRecipeGen extends StandardProcessingRecipeGen<TumblingRecipe> {
 
-//    GeneratedRecipe
-//            RICE = this.create(
-//            "rice",
-//            b -> b
-//                    .require(ModItems.RICE_PANICLE.get())
-//                    .require(Items.SAND)
-//                    .output(ModItems.RICE.get())
-//                    .duration(200)
-//
-//    );
+    GeneratedRecipe
+            quartz = this.create(
+            "quartz_polishing",
+            b -> b
+                    .require(AllItems.ROSE_QUARTZ.get())
+                    .require(AllItems.ROSE_QUARTZ.get())
+                    .require(AllItems.ROSE_QUARTZ.get())
+                    .require(AllItems.ROSE_QUARTZ.get())
+                    .require(AllItems.ROSE_QUARTZ.get())
+                    .require(AllItems.ROSE_QUARTZ.get())
+                    .require(AllItems.ROSE_QUARTZ.get())
+                    .require(AllItems.ROSE_QUARTZ.get())
+                    .require(Items.SAND)
+                    .output(AllItems.POLISHED_ROSE_QUARTZ.get(),8)
+                    .duration(200)
+
+            ),
+            copper = this.create(
+                    "copper_polishing",
+                    b -> b
+                            .require(Items.EXPOSED_COPPER)
+                            .require(Items.SAND)
+                            .output(Items.COPPER_BLOCK)
+                            .duration(200)
+
+            );
 
     public TumblingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, RatatouilleFriedDelights.MOD_ID);

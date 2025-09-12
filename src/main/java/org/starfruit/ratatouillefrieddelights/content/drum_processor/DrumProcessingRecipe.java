@@ -16,11 +16,11 @@ public abstract class DrumProcessingRecipe extends StandardProcessingRecipe<Reci
     }
 
     protected int getMaxInputCount() {
-        return 2;
+        return 16;
     }
 
     protected int getMaxOutputCount() {
-        return 1;
+        return 16;
     }
 
     protected boolean canSpecifyDuration() {
