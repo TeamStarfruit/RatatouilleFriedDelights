@@ -1,0 +1,27 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout",
+	"texture_size": [64, 64],
+	"textures": {
+		"1": "ratatouille_fried_delights:block/continuous_fryer/ladder_andesite"
+	},
+	"elements": [
+		{
+			"from": [2, 11, 0],
+			"to": [14, 11, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 9, 2]},
+			"faces": {
+				"up": {"uv": [2, 0, 14, 16], "texture": "#1"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "belt",
+			"origin": [3, 27, 1],
+			"color": 0,
+			"children": [0]
+		}
+	]
+}

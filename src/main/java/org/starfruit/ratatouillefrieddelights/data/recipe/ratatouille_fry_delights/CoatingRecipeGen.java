@@ -7,6 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.CoatingRecipe;
+import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
 import vectorwing.farmersdelight.common.registry.ModItems;
 
@@ -23,7 +24,23 @@ public class CoatingRecipeGen extends StandardProcessingRecipeGen<CoatingRecipe>
                     .output(ModItems.RICE.get())
                     .duration(200)
 
-    );
+            ),
+            RAW_FILLET_O_FISH = this.create(
+                    "fillet_fish_coating",
+                    b -> b
+                            .require(RFDItems.RAW_FISH_FILLET.get())
+                            .require(RFDItems.BREADCRUMB)
+                            .output(RFDItems.RAW_FILLET_O_FISH.get())
+                            .duration(200)
+            ),
+            BREADED_ORIGINAL_RECIPE_CHICKEN_DRUMSTICK = this.create(
+                    "fillet_fish_coating",
+                    b -> b
+                            .require(RFDItems.RAW_FISH_FILLET.get())
+                            .require(RFDItems.BREADCRUMB)
+                            .output(RFDItems.RAW_FILLET_O_FISH.get())
+                            .duration(200)
+            );
 
     public CoatingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, RatatouilleFriedDelights.MOD_ID);

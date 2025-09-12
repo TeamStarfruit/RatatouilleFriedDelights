@@ -28,8 +28,10 @@ public class RFDItems {
     public static final ItemEntry<Item> RAW_POTATO_STICK = RatatouilleFriedDelights.REGISTRATE.item("raw_potato_stick", Item::new).register();
 
     public static final ItemEntry<Item> ORIGINAL_RECIPE_CHICKEN_LEG = RatatouilleFriedDelights.REGISTRATE.item("original_recipe_chicken_leg", Item::new).register();
+    public static final ItemEntry<Item> BREADED_ORIGINAL_RECIPE_CHICKEN_DRUMSTICK = RatatouilleFriedDelights.REGISTRATE.item("breaded_original_recipe_chicken_drumstick", Item::new).register();
     public static final ItemEntry<Item> RAW_ORIGINAL_RECIPE_CHICKEN_LEG = RatatouilleFriedDelights.REGISTRATE.item("raw_original_recipe_chicken_leg", Item::new).register();
     public static final ItemEntry<Item> ORIGINAL_RECIPE_CHICKEN_BREAST = RatatouilleFriedDelights.REGISTRATE.item("raw_original_recipe_chicken_breast", Item::new).register();
+    public static final ItemEntry<Item> BREADED_ORIGINAL_RECIPE_CHICKEN_BREAST = RatatouilleFriedDelights.REGISTRATE.item("breaded_original_recipe_chicken_breast", Item::new).register();
     public static final ItemEntry<Item> RAW_ORIGINAL_RECIPE_CHICKEN_BREAST = RatatouilleFriedDelights.REGISTRATE.item("original_recipe_chicken_breast", Item::new).register();
     public static final ItemEntry<Item> SECRET_SEASONING_POWDER = RatatouilleFriedDelights.REGISTRATE.item("secret_seasoning_powder", Item::new).register();
 
