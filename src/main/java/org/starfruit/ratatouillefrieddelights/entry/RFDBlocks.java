@@ -24,7 +24,6 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import org.forsteri.ratatouille.Ratatouille;
 import org.forsteri.ratatouille.entry.CRStress;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.cola_fruit.ColaFruitBlock;
@@ -33,8 +32,6 @@ import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.Continuou
 import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryerGenerator;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.DrumProcessorBlock;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
-
-import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -50,6 +47,7 @@ public class RFDBlocks {
             .properties(p -> p.mapColor(MapColor.METAL).sound(SoundType.METAL))
             .transform(pickaxeOnly())
             .blockstate(new FryerGenerator()::generate)
+            .transform(RFDStress.setImpact(4F))
             .item()
             .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/continuous_fryer/item")))
             .build()
@@ -61,6 +59,7 @@ public class RFDBlocks {
             .properties(p -> p.mapColor(MapColor.METAL).sound(SoundType.METAL))
             .transform(pickaxeOnly())
             .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p), 270))
+            .transform(RFDStress.setImpact(4F))
             .item()
             .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/drum_processor/item")))
             .build()
