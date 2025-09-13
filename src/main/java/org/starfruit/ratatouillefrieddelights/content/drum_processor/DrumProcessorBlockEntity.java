@@ -82,7 +82,7 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
     }
 
     public void spawnParticles() {
-        if (level == null || lastRecipe == null) return;
+        if (level == null) return;
 
         var axis = getEjectDirection().getAxis();
 
