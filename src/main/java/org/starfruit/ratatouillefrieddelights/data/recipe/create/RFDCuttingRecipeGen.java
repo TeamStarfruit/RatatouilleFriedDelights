@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 public class RFDCuttingRecipeGen extends CuttingRecipeGen {
     GeneratedRecipe
             RAW_POTATO_STICK_CUT = create("raw_potato_stick_cut", b -> b
-            .require(Items.POTATO)
+            .require(RFDItems.PEELED_POTATO.get())
             .output(RFDItems.RAW_POTATO_STICK.get(), 2)
     ),
 

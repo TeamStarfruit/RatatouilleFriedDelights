@@ -2,7 +2,7 @@
   "type": "create:cutting",
   "ingredients": [
     {
-      "item": "minecraft:potato"
+      "item": "ratatouille_fried_delights:peeled_potato"
     }
   ],
   "results": [

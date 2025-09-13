@@ -49,6 +49,17 @@ public class RFDSequencedAssemblyRecipeGen extends SequencedAssemblyRecipeGen {
                     .require(RFDItems.APPLE_SLICES.get())
             )
             .addStep(PressingRecipe::new, rb -> rb)
+    ),
+
+    COLA = create("cola", b -> b
+            .require(RFDItems.TALL_CUP.get())
+            .transitionTo(RFDItems.UNPROCESSED_COLA.get())
+            .addOutput(RFDItems.COLA.get(), 1)
+            .loops(1)
+            .addStep(DeployerApplicationRecipe::new, rb -> rb
+                            .require(RFDItems.ICE_CUBES.get()))
+            .addStep(FillingRecipe::new, rb -> rb
+                    .require(RFDFluids.COLA_SYRUP.get(), 100))
     );
 
     public RFDSequencedAssemblyRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

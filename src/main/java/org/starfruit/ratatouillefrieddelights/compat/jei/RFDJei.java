@@ -20,6 +20,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.ItemLike;
+import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryingRecipe;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.TumblingRecipe;
 import org.starfruit.ratatouillefrieddelights.util.Lang;
 import org.jetbrains.annotations.NotNull;
@@ -67,6 +68,13 @@ public class RFDJei implements IModPlugin {
                 .itemIcon(RFDBlocks.DRUM_PROCESSOR.get())
                 .emptyBackground(177, 53)
                 .build("tumbling", TumblingCategory::new);
+
+        final CreateRecipeCategory<?> frying = builder(FryingRecipe.class)
+                .addTypedRecipes(RFDRecipeTypes.FRYING::getType)
+                .catalyst(RFDBlocks.CONTINUOUS_FRYER::get)
+                .itemIcon(RFDBlocks.CONTINUOUS_FRYER.get())
+                .emptyBackground(160, 53)
+                .build("frying", FryingCategory::new);
         allCategories.forEach(registration::addRecipeCategories);
     }
 

@@ -9,6 +9,7 @@ import net.minecraft.world.item.Items;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.CoatingRecipe;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.TumblingRecipe;
+import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
 import vectorwing.farmersdelight.common.registry.ModItems;
 
@@ -30,7 +31,7 @@ public class TumblingRecipeGen extends StandardProcessingRecipeGen<TumblingRecip
                     .require(AllItems.ROSE_QUARTZ.get())
                     .require(Items.SAND)
                     .output(AllItems.POLISHED_ROSE_QUARTZ.get(),8)
-                    .duration(200)
+                    .duration(500)
 
             ),
             copper = this.create(
@@ -40,6 +41,14 @@ public class TumblingRecipeGen extends StandardProcessingRecipeGen<TumblingRecip
                             .require(Items.SAND)
                             .output(Items.COPPER_BLOCK)
                             .duration(200)
+
+            ),
+            PEELED_POTATO = this.create(
+                    "peeled_potato",
+                    b -> b
+                            .require(Items.POTATO)
+                            .output(RFDItems.PEELED_POTATO)
+                            .duration(100)
 
             );
 

@@ -1,0 +1,51 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "ratatouille_fried_delights:tall_cup"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:cola"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_cola"
+        },
+        {
+          "item": "ratatouille_fried_delights:ice_cubes"
+        }
+      ],
+      "results": [
+        {
+          "id": "ratatouille_fried_delights:unprocessed_cola"
+        }
+      ]
+    },
+    {
+      "type": "create:filling",
+      "ingredients": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_cola"
+        },
+        {
+          "type": "fluid_stack",
+          "amount": 100,
+          "fluid": "ratatouille_fried_delights:cola_syrup"
+        }
+      ],
+      "results": [
+        {
+          "id": "ratatouille_fried_delights:unprocessed_cola"
+        }
+      ]
+    }
+  ],
+  "transitional_item": {
+    "id": "ratatouille_fried_delights:unprocessed_cola"
+  }
+}

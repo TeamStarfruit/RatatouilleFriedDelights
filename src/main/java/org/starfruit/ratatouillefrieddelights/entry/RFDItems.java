@@ -27,6 +27,7 @@ public class RFDItems {
 
     public static final ItemEntry<Item> FRENCH_FRIES = RatatouilleFriedDelights.REGISTRATE.item("french_fries", Item::new).register();
     public static final ItemEntry<Item> RAW_POTATO_STICK = RatatouilleFriedDelights.REGISTRATE.item("raw_potato_stick", Item::new).register();
+    public static final ItemEntry<Item> PEELED_POTATO = RatatouilleFriedDelights.REGISTRATE.item("peeled_potato", Item::new).register();
 
     public static final ItemEntry<Item> ORIGINAL_CHICKEN_DRUMSTICK = RatatouilleFriedDelights.REGISTRATE.item("original_chicken_drumstick", Item::new).register();
     public static final ItemEntry<Item> BREADED_ORIGINAL_DRUMSTICK = RatatouilleFriedDelights.REGISTRATE.item("breaded_original_drumstick", Item::new).register();
@@ -91,6 +92,7 @@ public class RFDItems {
     public static final ItemEntry<Item> TALL_CUP = RatatouilleFriedDelights.REGISTRATE.item("tall_cup", Item::new).register();
     public static final ItemEntry<Item> SHORT_CUP = RatatouilleFriedDelights.REGISTRATE.item("short_cup", Item::new).register();
     public static final ItemEntry<Item> COLA = RatatouilleFriedDelights.REGISTRATE.item("cola", Item::new).register();
+    public static final ItemEntry<SequencedAssemblyItem> UNPROCESSED_COLA = RatatouilleFriedDelights.REGISTRATE.item("unprocessed_cola", SequencedAssemblyItem::new).register();
 
     public static final ItemEntry<Item> VANILLA_CONE = RatatouilleFriedDelights.REGISTRATE.item("vanilla_cone", Item::new).register();
     public static final ItemEntry<Item> CONE = RatatouilleFriedDelights.REGISTRATE.item("cone", Item::new).register();

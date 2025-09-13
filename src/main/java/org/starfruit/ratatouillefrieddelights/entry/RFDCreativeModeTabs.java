@@ -83,6 +83,7 @@ public class RFDCreativeModeTabs {
             exclusions.add(RFDItems.BURGER.get());
             exclusions.add(RFDItems.UNPROCESSED_HOTCAKE_MEAL.get());
             exclusions.add(RFDItems.UNPROCESSED_RAW_APPLE_PIE.get());
+            exclusions.add(RFDItems.UNPROCESSED_COLA.get());
 
             return exclusions::contains;
         }
