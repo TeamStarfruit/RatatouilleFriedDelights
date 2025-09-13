@@ -1,7 +1,49 @@
 {
   "variants": {
-    "": {
-      "model": "ratatouille_fried_delights:block/continuous_fryer/block"
+    "facing=east,part=end": {
+      "model": "ratatouille_fried_delights:block/continuous_fryer/end",
+      "y": 270
+    },
+    "facing=east,part=middle": {
+      "model": "ratatouille_fried_delights:block/continuous_fryer/middle",
+      "y": 270
+    },
+    "facing=east,part=single": {
+      "model": "ratatouille_fried_delights:block/continuous_fryer/single",
+      "y": 270
+    },
+    "facing=north,part=end": {
+      "model": "ratatouille_fried_delights:block/continuous_fryer/end",
+      "y": 180
+    },
+    "facing=north,part=middle": {
+      "model": "ratatouille_fried_delights:block/continuous_fryer/middle",
+      "y": 180
+    },
+    "facing=north,part=single": {
+      "model": "ratatouille_fried_delights:block/continuous_fryer/single",
+      "y": 180
+    },
+    "facing=south,part=end": {
+      "model": "ratatouille_fried_delights:block/continuous_fryer/end"
+    },
+    "facing=south,part=middle": {
+      "model": "ratatouille_fried_delights:block/continuous_fryer/middle"
+    },
+    "facing=south,part=single": {
+      "model": "ratatouille_fried_delights:block/continuous_fryer/single"
+    },
+    "facing=west,part=end": {
+      "model": "ratatouille_fried_delights:block/continuous_fryer/end",
+      "y": 90
+    },
+    "facing=west,part=middle": {
+      "model": "ratatouille_fried_delights:block/continuous_fryer/middle",
+      "y": 90
+    },
+    "facing=west,part=single": {
+      "model": "ratatouille_fried_delights:block/continuous_fryer/single",
+      "y": 90
     }
   }
 }

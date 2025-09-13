@@ -30,6 +30,7 @@ import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.cola_fruit.ColaFruitBlock;
 import org.starfruit.ratatouillefrieddelights.content.cola_tree.RFDFlammableRotatedPillarBlock;
 import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.ContinuousFryerBlock;
+import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryerGenerator;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.DrumProcessorBlock;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
 
@@ -48,7 +49,7 @@ public class RFDBlocks {
             .initialProperties(SharedProperties::copperMetal)
             .properties(p -> p.mapColor(MapColor.METAL).sound(SoundType.METAL))
             .transform(pickaxeOnly())
-            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.get(), AssetLookup.partialBaseModel(ctx, prov)))
+            .blockstate(new FryerGenerator()::generate)
             .item()
             .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/continuous_fryer/item")))
             .build()
