@@ -2,7 +2,9 @@ package org.starfruit.ratatouillefrieddelights.entry;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.content.kinetics.belt.BeltModel;
 import com.simibubi.create.foundation.data.AssetLookup;
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -30,6 +32,7 @@ import org.starfruit.ratatouillefrieddelights.content.cola_fruit.ColaFruitBlock;
 import org.starfruit.ratatouillefrieddelights.content.cola_tree.RFDFlammableRotatedPillarBlock;
 import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.ContinuousFryerBlock;
 import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryerGenerator;
+import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryerModel;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.DrumProcessorBlock;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
@@ -48,6 +51,7 @@ public class RFDBlocks {
             .transform(pickaxeOnly())
             .blockstate(new FryerGenerator()::generate)
             .transform(RFDStress.setImpact(4F))
+             .onRegister(CreateRegistrate.blockModel(() -> FryerModel::new))
             .item()
             .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/continuous_fryer/item")))
             .build()

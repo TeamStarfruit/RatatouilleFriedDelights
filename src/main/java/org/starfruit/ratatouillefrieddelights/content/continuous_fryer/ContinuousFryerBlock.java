@@ -26,6 +26,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -52,6 +53,11 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IWre
     public ContinuousFryerBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState().setValue(PART, FryerPart.SINGLE));
+    }
+
+    @Override
+    public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
+        return face.getClockWise().getAxis() != getRotationAxis(state);
     }
 
     @Override
@@ -129,7 +135,6 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IWre
         return res;
     }
 
-    // 形状：沿用 Create 的 13px 壳体
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
         return AllShapes.CASING_13PX.get(Direction.UP);

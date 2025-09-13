@@ -9,6 +9,7 @@ import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.fluids.drain.ItemDrainItemHandler;
 import com.simibubi.create.content.fluids.transfer.GenericItemEmptying;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
@@ -43,7 +44,7 @@ import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
 
-public class ContinuousFryerBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
+public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation {
 
     public static final int FILLING_TIME = 20;
 
