@@ -63,7 +63,7 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
 
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
-        return face.getAxis() == getRotationAxis(state);
+        return state.getValue(PART) == FryerPart.END && face.getAxis() == getRotationAxis(state);
     }
 
     @Override
