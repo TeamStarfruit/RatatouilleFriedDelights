@@ -28,6 +28,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -43,6 +44,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.capabilities.Capabilities;
 
 // TODO: 替换为你自己的 BE 类型注册类
+import org.forsteri.ratatouille.content.oven.OvenBlockEntity;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -57,7 +59,7 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IWre
 
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
-        return face.getClockWise().getAxis() != getRotationAxis(state);
+        return face.getAxis() == getRotationAxis(state);
     }
 
     @Override
@@ -69,6 +71,18 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IWre
     @Override
     public PathType getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, Mob entity) {
         return PathType.RAIL;
+    }
+
+    @Override
+    public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+        super.onPlace(state, worldIn, pos, oldState, isMoving);
+
+        if (oldState.getBlock() == state.getBlock())
+            return;
+        if (isMoving)
+            return;
+
+        withBlockEntityDo(worldIn, pos, ContinuousFryerBlockEntity::updateConnectivity);
     }
 
     @Override
@@ -142,16 +156,37 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IWre
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.hasBlockEntity() || state.getBlock() == newState.getBlock())
+        if (level.isClientSide)
+            return;
+        if (state.getBlock() == newState.getBlock())
+            return;
+        if (isMoving)
+            return;
+        if (!state.hasBlockEntity())
             return;
 
         withBlockEntityDo(level, pos, be -> {
             ItemStack held = be.getHeldItemStack();
             if (!held.isEmpty())
                 Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), held);
+
+            Direction facing = state.getValue(ContinuousFryerBlock.HORIZONTAL_FACING);
+
+            for (Direction dir : new Direction[]{facing, facing.getOpposite()}) {
+                BlockPos neighbourPos = pos.relative(dir);
+                BlockState neighbourState = level.getBlockState(neighbourPos);
+
+                if (neighbourState.getBlock() instanceof ContinuousFryerBlock) {
+                    BlockEntity fryerBe = level.getBlockEntity(neighbourPos);
+                    if (fryerBe instanceof ContinuousFryerBlockEntity fryer && !fryer.isRemoved()) {
+                        fryer.setController(fryer.getBlockPos());
+                        fryer.updateConnectivity();
+                    }
+                }
+            }
         });
 
-        level.removeBlockEntity(pos);
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Override

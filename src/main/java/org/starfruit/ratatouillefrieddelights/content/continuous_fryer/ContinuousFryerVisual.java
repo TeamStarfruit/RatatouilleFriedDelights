@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 
 public class ContinuousFryerVisual extends KineticBlockEntityVisual<ContinuousFryerBlockEntity> {
 
-    protected final RotatingInstance axis;
+    protected final @Nullable RotatingInstance axis;
     final Direction direction;
 
     public ContinuousFryerVisual(VisualizationContext context, ContinuousFryerBlockEntity blockEntity, float partialTick) {
@@ -31,33 +31,36 @@ public class ContinuousFryerVisual extends KineticBlockEntityVisual<ContinuousFr
         Direction facing = referenceState.getValue(BlockStateProperties.HORIZONTAL_FACING).getClockWise();
         this.direction = (Direction)this.blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
 
-        this.axis  = (RotatingInstance)instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(RFDPartialModels.FRYER_AXIS))
-                .createInstance();
-
-        this.axis.setup(blockEntity,facing.getAxis(), this.blockEntity.getSpeed())
-                .setPosition(getVisualPosition())
-                .rotateToFace(Direction.SOUTH, this.direction)
-                .setChanged();
+        if (blockEntity.shouldRenderAxis()) {
+            this.axis  = (RotatingInstance)instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(RFDPartialModels.FRYER_AXIS))
+                    .createInstance();
+            this.axis.setup(blockEntity,facing.getAxis(), this.blockEntity.getSpeed())
+                    .setPosition(getVisualPosition())
+                    .rotateToFace(Direction.SOUTH, this.direction)
+                    .setChanged();
+        } else {
+            axis = null;
+        }
     }
 
     @Override
     public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
-        consumer.accept(axis);
+        if (axis != null) consumer.accept(axis);
     }
 
     @Override
     public void update(float partialTick) {
-        this.axis.setup(this.blockEntity, this.blockEntity.getSpeed()).setChanged();
+        if (axis != null) this.axis.setup(this.blockEntity, this.blockEntity.getSpeed()).setChanged();
     }
 
     @Override
     public void updateLight(float partialTick) {
         BlockPos inFront = pos.relative(direction);
-        relight(inFront, axis);
+        if (axis != null) relight(inFront, axis);
     }
 
     @Override
     protected void _delete() {
-        axis.delete();
+        if (axis != null) axis.delete();
     }
 }
