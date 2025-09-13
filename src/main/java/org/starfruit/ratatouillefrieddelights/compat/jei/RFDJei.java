@@ -9,6 +9,7 @@ import com.simibubi.create.infrastructure.config.AllConfigs;
 import com.simibubi.create.infrastructure.config.CRecipes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
@@ -22,6 +23,7 @@ import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.ItemLike;
 import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryingRecipe;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.TumblingRecipe;
+import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.util.Lang;
 import org.jetbrains.annotations.NotNull;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
@@ -80,6 +82,8 @@ public class RFDJei implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        registration.addIngredientInfo(new ItemStack(RFDItems.COLA_FRUITS.get()), VanillaTypes.ITEM_STACK, Lang.translateDirect("jei.info.cola_fruits"));
+
         ingredientManager = registration.getIngredientManager();
         allCategories.forEach(c -> c.registerRecipes(registration));
     }
