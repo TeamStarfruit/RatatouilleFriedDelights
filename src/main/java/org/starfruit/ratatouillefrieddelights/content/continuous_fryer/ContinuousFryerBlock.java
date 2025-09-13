@@ -2,6 +2,9 @@ package org.starfruit.ratatouillefrieddelights.content.continuous_fryer;
 
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
+import com.simibubi.create.content.kinetics.belt.BeltPart;
+import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.advancement.AdvancementBehaviour;
 import com.simibubi.create.foundation.block.IBE;
@@ -16,6 +19,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -25,7 +29,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -36,25 +44,27 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 // TODO: 替换为你自己的 BE 类型注册类
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 
-/**
- * 连续油炸器 Block（雏形）
- * - 支持向内部油槽灌油（FluidHelper.tryEmptyItemIntoBE）
- * - 不支持 GenericItemEmptying（炸锅不“倒液体”）
- * - 空手右键可取回当前 held 物品
- * - 比较器输出 = 内部油槽液位
- */
-public class ContinuousFryerBlock extends Block implements IWrenchable, IBE<ContinuousFryerBlockEntity> {
+import javax.annotation.ParametersAreNonnullByDefault;
+
+public class ContinuousFryerBlock extends HorizontalKineticBlock implements IWrenchable, IBE<ContinuousFryerBlockEntity> {
+    public static final Property<FryerPart> PART = EnumProperty.create("part", FryerPart.class);
 
     public ContinuousFryerBlock(Properties properties) {
         super(properties);
+        registerDefaultState(defaultBlockState().setValue(PART, FryerPart.SINGLE));
     }
 
-    /**
-     * 右键交互（参照 ItemDrainBlock 的 useItemOn 写法）
-     * - 若手持是纯方块物品且本身不带流体能力，交给默认交互
-     * - 尝试把手上容器内的油灌入 BE（成功则消耗动作）
-     * - 否则，若锅里正“卡着”一个物品，空手右键可把它退回背包
-     */
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(PART);
+        super.createBlockStateDefinition(builder);
+    }
+
+    @Override
+    public PathType getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, Mob entity) {
+        return PathType.RAIL;
+    }
+
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                               Player player, InteractionHand hand, BlockHitResult hitResult) {
@@ -125,9 +135,6 @@ public class ContinuousFryerBlock extends Block implements IWrenchable, IBE<Cont
         return AllShapes.CASING_13PX.get(Direction.UP);
     }
 
-    /**
-     * 方块被移除时，掉落锅内正在处理/等待的物品
-     */
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.hasBlockEntity() || state.getBlock() == newState.getBlock())
@@ -141,8 +148,6 @@ public class ContinuousFryerBlock extends Block implements IWrenchable, IBE<Cont
 
         level.removeBlockEntity(pos);
     }
-
-    // ---- IBE 接口实现 ----
 
     @Override
     public Class<ContinuousFryerBlockEntity> getBlockEntityClass() {
@@ -161,20 +166,15 @@ public class ContinuousFryerBlock extends Block implements IWrenchable, IBE<Cont
         AdvancementBehaviour.setPlacedBy(level, pos, placer);
     }
 
-    // ---- 比较器输出：油槽液位 ----
-
-    @Override
-    public boolean hasAnalogOutputSignal(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
-        return ComparatorUtil.levelOfSmartFluidTank(level, pos);
-    }
-
     @Override
     protected boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
+    }
+
+    @Override
+    public Direction.Axis getRotationAxis(BlockState state) {
+        return state.getValue(HORIZONTAL_FACING)
+                .getClockWise()
+                .getAxis();
     }
 }
