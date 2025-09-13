@@ -250,13 +250,40 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     }
 
     public ItemStack getHeldItemStack() {
-            return heldItem == null ? ItemStack.EMPTY : heldItem.stack;
+        return heldItem == null ? ItemStack.EMPTY : heldItem.stack;
+    }
+
+    public Direction getFacingDirection() {
+        return getBlockState()
+                .getValue(ContinuousFryerBlock.HORIZONTAL_FACING);
+    }
+
+    public void updateNeighbours() {
+        if (level == null) return;
+
+        for (Direction dir : new Direction[]{Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST}) {
+            BlockPos neighbourPos = worldPosition.relative(dir);
+            BlockState neighbourState = level.getBlockState(neighbourPos);
+
+            if (neighbourState.getBlock() instanceof ContinuousFryerBlock) {
+                BlockEntity fryerBe = level.getBlockEntity(neighbourPos);
+                if (fryerBe instanceof ContinuousFryerBlockEntity fryer && !fryer.isRemoved()) {
+                    fryer.setController(fryer.getBlockPos());
+                    fryer.updateConnectivity();
+                }
+            }
         }
+    }
 
     @Override
     public void tick() {
         super.tick();
         if (level == null || level.isClientSide) return;
+        if (getControllerBE() == null || getFacingDirection().getAxis() != getControllerBE().getFacingDirection().getAxis()) {
+            setController(worldPosition);
+            updateConnectivity();
+            updateNeighbours();
+        }
 
         if (heldItem == null) {
             processingTicks = 0;

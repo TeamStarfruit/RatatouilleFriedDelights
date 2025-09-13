@@ -16,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,10 +25,13 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -49,7 +53,7 @@ import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class ContinuousFryerBlock extends HorizontalKineticBlock implements IWrenchable, IBE<ContinuousFryerBlockEntity> {
+public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<ContinuousFryerBlockEntity> {
     public static final Property<FryerPart> PART = EnumProperty.create("part", FryerPart.class);
 
     public ContinuousFryerBlock(Properties properties) {
@@ -86,30 +90,11 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IWre
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-                                              Player player, InteractionHand hand, BlockHitResult hitResult) {
-
-        // 与 Drain 一致：方块物品（且该物品没有流体能力）交给默认交互
-        if (stack.getItem() instanceof BlockItem && stack.getCapability(Capabilities.FluidHandler.ITEM) == null)
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-
-        return onBlockEntityUseItemOn(level, pos, be -> {
-            // 1) 玩家手持容器尝试往油槽灌油
-            if (!stack.isEmpty()) {
-                ItemInteractionResult tryFill = tryFillOil(level, player, hand, stack, be);
-                if (tryFill.consumesAction())
-                    return tryFill;
-            }
-
-            // 2) 空手右键：把 held 物品退回玩家背包（仅服务端）
-            ItemStack heldItemStack = be.getHeldItemStack();
-            if (!level.isClientSide && !heldItemStack.isEmpty()) {
-                player.getInventory().placeItemBackInInventory(heldItemStack);
-                be.heldItem = null;
-                be.notifyUpdate();
-            }
-            return ItemInteractionResult.SUCCESS;
-        });
+    public InteractionResult onWrenched(BlockState state, UseOnContext context) {
+        InteractionResult result = super.onWrenched(state, context);
+        withBlockEntityDo(context.getLevel(), context.getClickedPos(),
+                be -> {be.updateConnectivity();be.updateNeighbours();});
+        return result;
     }
 
     @Override
@@ -170,20 +155,7 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IWre
             if (!held.isEmpty())
                 Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), held);
 
-            Direction facing = state.getValue(ContinuousFryerBlock.HORIZONTAL_FACING);
-
-            for (Direction dir : new Direction[]{facing, facing.getOpposite()}) {
-                BlockPos neighbourPos = pos.relative(dir);
-                BlockState neighbourState = level.getBlockState(neighbourPos);
-
-                if (neighbourState.getBlock() instanceof ContinuousFryerBlock) {
-                    BlockEntity fryerBe = level.getBlockEntity(neighbourPos);
-                    if (fryerBe instanceof ContinuousFryerBlockEntity fryer && !fryer.isRemoved()) {
-                        fryer.setController(fryer.getBlockPos());
-                        fryer.updateConnectivity();
-                    }
-                }
-            }
+            be.updateNeighbours();
         });
 
         super.onRemove(state, level, pos, newState, isMoving);
