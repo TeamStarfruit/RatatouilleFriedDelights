@@ -33,6 +33,7 @@ public class RFDMixingRecipeGen extends MixingRecipeGen {
             .require(Tags.Fluids.MILK, 1000)
             .require(CRItems.SALT)
             .output(RFDItems.RAW_CHEESE.get())
+            .requiresHeat(HeatCondition.HEATED)
     ),
 
     RAW_FISH_FILLET = create("raw_fish_fillet", b -> b

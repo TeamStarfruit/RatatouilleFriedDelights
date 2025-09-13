@@ -2,7 +2,7 @@
   "type": "ratatouille_fried_delights:frying",
   "ingredients": [
     {
-      "item": "ratatouille_fried_delights:raw_fillet_o_fish"
+      "item": "ratatouille_fried_delights:breaded_fish_fillet"
     }
   ],
   "processing_time": 200,

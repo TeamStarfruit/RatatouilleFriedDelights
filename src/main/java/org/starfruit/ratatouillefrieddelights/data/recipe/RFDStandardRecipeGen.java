@@ -164,6 +164,10 @@ public final class RFDStandardRecipeGen extends BaseRecipeProvider {
                 .viaCooking(RFDItems.PANCAKE_MOLD_FILLED::get)
                 .forDuration(200)
                 .inSmoker(),
+            CHEESE_BAKED = create(RFDItems.CHEESE::get)
+                    .viaCooking(RFDItems.RAW_CHEESE::get)
+                    .forDuration(200)
+                    .inSmoker(),
             BURGER_BUN_MOLD_BAKED = create(RFDItems.BURGER_BUN_MOLD_BAKED::get)
                 .viaCooking(RFDItems.BURGER_BUN_MOLD_UNBAKED::get)
                 .forDuration(200)

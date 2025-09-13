@@ -2,7 +2,7 @@
   "type": "create:filling",
   "ingredients": [
     {
-      "item": "minecraft:glass_bottle"
+      "item": "ratatouille_fried_delights:short_cup"
     },
     {
       "type": "fluid_stack",

@@ -24,7 +24,7 @@ public class RFDFillingRecipeGen extends FillingRecipeGen {
     ),
 
     ICE_CREAM_FILLED = create("ice_cream_filled", b -> b
-            .require(Items.GLASS_BOTTLE)
+            .require(RFDItems.SHORT_CUP)
             .require(RFDFluids.ICE_CREAM_BASE.get(), 100)
             .output(RFDItems.ICE_CREAM.get())
     ),
@@ -39,6 +39,12 @@ public class RFDFillingRecipeGen extends FillingRecipeGen {
             .require(RFDItems.CONE.get())
             .require(RFDFluids.ICE_CREAM_BASE.get(), 100)
             .output(RFDItems.VANILLA_CONE.get())
+    ),
+
+    SUNFLOWER_SEED_OIL_BOTTLE = create("sunflower_seed_oil_bottle", b -> b
+            .require(Items.GLASS_BOTTLE)
+            .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
+            .output(RFDItems.SUNFLOWER_SEED_OIL_BOTTLE.get())
     );
 
     public RFDFillingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

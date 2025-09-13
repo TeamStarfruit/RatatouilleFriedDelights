@@ -4,12 +4,10 @@ import com.simibubi.create.api.data.recipe.StandardProcessingRecipeGen;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.Items;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.CoatingRecipe;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
-import vectorwing.farmersdelight.common.registry.ModItems;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -21,7 +19,7 @@ public class CoatingRecipeGen extends StandardProcessingRecipeGen<CoatingRecipe>
                     b -> b
                             .require(RFDItems.RAW_FISH_FILLET.get())
                             .require(RFDItems.BREADCRUMB)
-                            .output(RFDItems.RAW_FILLET_O_FISH.get())
+                            .output(RFDItems.BREADED_FISH_FILLET.get())
                             .duration(200)
             ),
             BREADED_ORIGINAL_DRUMSTICK = this.create(

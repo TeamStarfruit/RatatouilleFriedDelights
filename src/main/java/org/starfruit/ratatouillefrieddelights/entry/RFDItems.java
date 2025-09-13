@@ -25,6 +25,7 @@ public class RFDItems {
             .saturationModifier(1F)
             .build())).register();
 
+    public static final ItemEntry<Item> BOXED_FRIES = RatatouilleFriedDelights.REGISTRATE.item("boxed_fries", Item::new).register();
     public static final ItemEntry<Item> FRENCH_FRIES = RatatouilleFriedDelights.REGISTRATE.item("french_fries", Item::new).register();
     public static final ItemEntry<Item> RAW_POTATO_STICK = RatatouilleFriedDelights.REGISTRATE.item("raw_potato_stick", Item::new).register();
     public static final ItemEntry<Item> PEELED_POTATO = RatatouilleFriedDelights.REGISTRATE.item("peeled_potato", Item::new).register();
@@ -40,7 +41,7 @@ public class RFDItems {
     public static final ItemEntry<Item> BUTTER = RatatouilleFriedDelights.REGISTRATE.item("butter", Item::new).register();
     public static final ItemEntry<Item> BREADCRUMB = RatatouilleFriedDelights.REGISTRATE.item("breadcrumb", Item::new).register();
 
-    public static final ItemEntry<Item> BOX_OF_CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE.item("box_of_chicken_nuggets", Item::new).register();
+    public static final ItemEntry<Item> BOXED_CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE.item("boxed_chicken_nuggets", Item::new).register();
     public static final ItemEntry<Item> CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE.item("chicken_nuggets", Item::new).register();
     public static final ItemEntry<Item> RAW_CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE.item("raw_chicken_nuggets", Item::new).register();
 
@@ -51,7 +52,7 @@ public class RFDItems {
 
     public static final ItemEntry<Item> FILLET_O_FISH = RatatouilleFriedDelights.REGISTRATE.item("fillet_o_fish", Item::new)
             .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag).register();
-    public static final ItemEntry<Item> RAW_FILLET_O_FISH = RatatouilleFriedDelights.REGISTRATE.item("raw_fillet_o_fish", Item::new).register();
+    public static final ItemEntry<Item> BREADED_FISH_FILLET = RatatouilleFriedDelights.REGISTRATE.item("breaded_fish_fillet", Item::new).register();
     public static final ItemEntry<Item> RAW_FISH_FILLET = RatatouilleFriedDelights.REGISTRATE.item("raw_fish_fillet", Item::new).register();
 
     public static final ItemEntry<Item> SUNFLOWER_SEED_OIL_BOTTLE = RatatouilleFriedDelights.REGISTRATE.item("sunflower_seed_oil_bottle", Item::new).register();
