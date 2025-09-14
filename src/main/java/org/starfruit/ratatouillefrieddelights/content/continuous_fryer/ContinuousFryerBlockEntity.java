@@ -248,6 +248,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
             level.setBlock(pos, newState, 6);
             fryer.attachKinetics();
+            fryer.refreshCapability();
             fryer.requestModelDataUpdate();
             fryer.notifyUpdate();
         }
@@ -317,10 +318,5 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         fryerLength = compound.getInt("Length");
 
         super.read(compound, registries, clientPacket);
-    }
-
-    @Override
-    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        return containedFluidTooltip(tooltip, isPlayerSneaking, level.getCapability(Capabilities.FluidHandler.BLOCK, worldPosition, null));
     }
 }
