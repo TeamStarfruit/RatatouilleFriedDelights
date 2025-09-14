@@ -99,6 +99,23 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         return controller == null ? worldPosition : controller;
     }
 
+    @Override
+    public float propagateRotationTo(KineticBlockEntity target, BlockState stateFrom, BlockState stateTo,
+                                     BlockPos diff, boolean connectedViaAxes, boolean connectedViaCogs) {
+        if (target instanceof ContinuousFryerBlockEntity fryer && !connectedViaAxes) {
+            if (!getController().equals(fryer.getController()))
+                return 0;
+
+            Direction.Axis axis1 = stateFrom.getValue(ContinuousFryerBlock.HORIZONTAL_FACING).getAxis();
+            Direction.Axis axis2 = stateTo.getValue(ContinuousFryerBlock.HORIZONTAL_FACING).getAxis();
+            if (axis1 != axis2)
+                return 0;
+
+            return 1;
+        }
+        return 0;
+    }
+
     public boolean isController() {
         return controller != null && worldPosition.getX() == controller.getX()
                 && worldPosition.getY() == controller.getY() && worldPosition.getZ() == controller.getZ();
@@ -145,7 +162,6 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         }
 
         int length = chain.size();
-        this.fryerLength = length;
         for (int i = 0; i < length; i++) {
             BlockPos pos = chain.get(i);
             BlockEntity be = level.getBlockEntity(pos);
@@ -180,11 +196,10 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
                 }
             }
 
-            if (newState != old) {
-                level.setBlock(pos, newState, 6);
-                fryer.requestModelDataUpdate();
-                fryer.notifyUpdate();
-            }
+            level.setBlock(pos, newState, 6);
+            fryer.attachKinetics();
+            fryer.requestModelDataUpdate();
+            fryer.notifyUpdate();
         }
     }
 
