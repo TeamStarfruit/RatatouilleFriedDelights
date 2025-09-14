@@ -80,12 +80,11 @@ public class RFDCreativeModeTabs {
         private static Predicate<Item> makeExclusionPredicate() {
             Set<Item> exclusions = new ReferenceOpenHashSet<>();
 
-            exclusions.add(RFDItems.BURGER.get());
             exclusions.add(RFDItems.UNPROCESSED_HOTCAKE_MEAL.get());
             exclusions.add(RFDItems.UNPROCESSED_RAW_APPLE_PIE.get());
             exclusions.add(RFDItems.UNPROCESSED_COLA.get());
 
-            return exclusions::contains;
+            return ((Predicate<Item>) exclusions::contains).or(RFDTags.AllItemTags.RATATOUILLE_TAB_INVISIBLE::matches);
         }
 
         private static List<ItemOrdering> makeOrderings() {

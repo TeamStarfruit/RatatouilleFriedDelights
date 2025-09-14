@@ -1,43 +1,19 @@
 package org.starfruit.ratatouillefrieddelights.content.burger;
 
-import net.createmod.catnip.data.Couple;
 import net.minecraft.world.item.Item;
-import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
+import java.util.function.Supplier;
 
-public class BurgerRenderingProperties {
-    public static final HashMap<Item, Couple<Integer>> BURGER_RENDERING_PROPERTIES = new HashMap<>(); // Pixels, rendering starting from, height
+public interface BurgerRenderingProperties {
+    int renderingPivot();
+    int renderingHeight();
+    Supplier<ItemStack> renderingItem();
 
-    static {
-        BURGER_RENDERING_PROPERTIES.put(
-                RFDItems.BOTTOM_BURGER_BUN.get(),
-                Couple.create(2, 3)
-        );
-
-        BURGER_RENDERING_PROPERTIES.put(
-                RFDItems.HAMBURGER_PATTY.get(),
-                Couple.create(2, 2)
-        );
-
-        BURGER_RENDERING_PROPERTIES.put(
-                RFDItems.CHEESE_SLICE.get(),
-                Couple.create(5, 0)
-        );
-
-        BURGER_RENDERING_PROPERTIES.put(
-                RFDItems.SHREDDED_LETTUCE.get(),
-                Couple.create(1, 2)
-        );
-
-        BURGER_RENDERING_PROPERTIES.put(
-                RFDItems.TOMATO_SLICES.get(),
-                Couple.create(3, 1)
-        );
-
-        BURGER_RENDERING_PROPERTIES.put(
-                RFDItems.TOP_BURGER_BUN.get(),
-                Couple.create(3, 2)
-        );
+    static BurgerRenderingProperties getBurgerRenderingProperties(ItemStack renderingItem) {
+        return BURGER_RENDERING_PROPERTIES_MAP.get(renderingItem.getItem());
     }
+
+    HashMap<Item, BurgerRenderingProperties> BURGER_RENDERING_PROPERTIES_MAP = new HashMap<>(); // Pixels, rendering starting from, height
 }
