@@ -2,24 +2,15 @@ package org.starfruit.ratatouillefrieddelights.content.continuous_fryer;
 
 import java.util.*;
 
-import com.simibubi.create.AllBlockEntityTypes;
-import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
-import com.simibubi.create.content.fluids.drain.ItemDrainItemHandler;
-import com.simibubi.create.content.fluids.transfer.GenericItemEmptying;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
-import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
-import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
-import com.simibubi.create.foundation.advancement.AllAdvancements;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.content.kinetics.belt.transport.BeltInventory;
+import com.simibubi.create.content.kinetics.belt.transport.ItemHandlerBeltSegment;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
-import com.simibubi.create.foundation.utility.BlockHelper;
+import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
+import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
-import net.createmod.catnip.data.Iterate;
-import net.createmod.catnip.data.Pair;
-import net.createmod.catnip.math.VecHelper;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,25 +18,18 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
-import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
-import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
-import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
+
+import static com.simibubi.create.content.fluids.tank.FluidTankBlockEntity.getCapacityMultiplier;
 
 public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation {
 
@@ -54,11 +38,81 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     private FryingRecipe lastRecipe;
 
     public int fryerLength;
+    public int index;
     protected BlockPos controller;
+
+    protected IFluidHandler fluidHandler;
+    protected FluidTank tankInventory;
+
+    protected BeltInventory inventory;
+    protected IItemHandler itemHandler;
 
     public ContinuousFryerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         controller = pos;
+        tankInventory = createTankInventory();
+    }
+
+    protected SmartFluidTank createTankInventory() {
+        return new SmartFluidTank(getCapacityMultiplier(), $->{});
+    }
+
+
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                RFDBlockEntityTypes.CONTINUOUS_FRYER.get(),
+                (be, context) -> {
+                    be.initCapability();
+                    return be.fluidHandler;
+                }
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                RFDBlockEntityTypes.CONTINUOUS_FRYER.get(),
+                (be, context) -> {
+                    be.initCapability();
+                    return be.itemHandler;
+                }
+        );
+    }
+
+    void refreshCapability() {
+        fluidHandler = null;
+        itemHandler = null;
+        invalidateCapabilities();
+    }
+
+    void initCapability() {
+        if (itemHandler != null && fluidHandler != null || level == null) return;
+
+        if (!isController()) {
+            ContinuousFryerBlockEntity controllerBE = getControllerBE();
+            if (controllerBE == null) return;
+
+            controllerBE.initCapability();
+            this.itemHandler = controllerBE.itemHandler;
+            this.fluidHandler = controllerBE.fluidHandler;
+            return;
+        }
+
+        Direction.Axis axis = getFacingDirection().getAxis();
+        BlockPos cursor = getBlockPos();
+        List<FluidTank> chain = new ArrayList<>();
+
+        for (int i = 0; i < fryerLength; i++) {
+            BlockEntity be = level.getBlockEntity(cursor);
+            if (be instanceof ContinuousFryerBlockEntity fryer) {
+                if (fryer.tankInventory == null) {
+                    fryer.tankInventory = createTankInventory();
+                }
+                chain.add(fryer.tankInventory);
+            }
+            cursor = axis == Direction.Axis.X ? cursor.east() : cursor.south();
+        }
+
+        fluidHandler = new CombinedTankWrapper(chain.toArray(new FluidTank[0]));
+        itemHandler = new ItemHandlerBeltSegment(inventory, index);
     }
 
     public boolean shouldRenderAxis() {
@@ -72,18 +126,23 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     }
 
     public ContinuousFryerBlockEntity getControllerBE() {
-        if (controller == null)
+        if (controller == null || level == null)
             return null;
         if (!level.isLoaded(controller))
             return null;
         BlockEntity be = level.getBlockEntity(controller);
-        if (be == null || !(be instanceof ContinuousFryerBlockEntity))
+        if (!(be instanceof ContinuousFryerBlockEntity))
             return null;
         return (ContinuousFryerBlockEntity) be;
     }
 
     public void setController(BlockPos controller) {
+        if (level == null || level.isClientSide && !isVirtual())
+            return;
+        if (controller.equals(this.controller))
+            return;
         this.controller = controller;
+        refreshCapability();
     }
 
     public BlockPos getController() {
@@ -192,11 +251,6 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             fryer.requestModelDataUpdate();
             fryer.notifyUpdate();
         }
-    }
-
-
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-
     }
 
     @Override
