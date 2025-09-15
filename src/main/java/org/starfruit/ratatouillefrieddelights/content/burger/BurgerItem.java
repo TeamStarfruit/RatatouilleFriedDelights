@@ -13,6 +13,7 @@ public class BurgerItem extends Item {
         super(properties);
     }
 
+    @SuppressWarnings("removal")
     @Override
     @OnlyIn(Dist.CLIENT)
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {

@@ -30,6 +30,8 @@ public class RFDItems {
             .saturationModifier(1F)
             .build())).register();
 
+    public static final ItemEntry<Item> SUNFLOWER_SEEDS = RatatouilleFriedDelights.REGISTRATE.item("sunflower_seeds", Item::new).register();
+
     public static final ItemEntry<Item> BOXED_FRIES = RatatouilleFriedDelights.REGISTRATE.item("boxed_fries", Item::new).register();
     public static final ItemEntry<Item> FRENCH_FRIES = RatatouilleFriedDelights.REGISTRATE.item("french_fries", Item::new).register();
     public static final ItemEntry<Item> RAW_POTATO_STICK = RatatouilleFriedDelights.REGISTRATE.item("raw_potato_stick", Item::new).register();
@@ -60,9 +62,6 @@ public class RFDItems {
     public static final ItemEntry<Item> BREADED_FISH_FILLET = RatatouilleFriedDelights.REGISTRATE.item("breaded_fish_fillet", Item::new).register();
     public static final ItemEntry<Item> RAW_FISH_FILLET = RatatouilleFriedDelights.REGISTRATE.item("raw_fish_fillet", Item::new).register();
 
-    public static final ItemEntry<Item> SUNFLOWER_SEED_OIL_BOTTLE = RatatouilleFriedDelights.REGISTRATE.item("sunflower_seed_oil_bottle", Item::new).register();
-    public static final ItemEntry<Item> SUNFLOWER_SEEDS = RatatouilleFriedDelights.REGISTRATE.item("sunflower_seeds", Item::new).register();
-
     public static final ItemEntry<Item> TOP_BURGER_BUN = RatatouilleFriedDelights.REGISTRATE.item("top_burger_bun", Item::new)
             .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag).register();
     public static final ItemEntry<Item> BOTTOM_BURGER_BUN = RatatouilleFriedDelights.REGISTRATE.item("bottom_burger_bun", Item::new)
@@ -73,12 +72,16 @@ public class RFDItems {
     public static final ItemEntry<Item> BURGER_BUN_MOLD = RatatouilleFriedDelights.REGISTRATE.item("burger_bun_mold", Item::new).register();
 
     public static final ItemEntry<Item> HAMBURGER_PATTY = RatatouilleFriedDelights.REGISTRATE.item("hamburger_patty", Item::new)
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag)
+            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag) //隐藏物品tag
             .register();
     public static final ItemEntry<Item> SHREDDED_LETTUCE = RatatouilleFriedDelights.REGISTRATE.item("shredded_lettuce", Item::new)
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag).register();
+            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag)
+            .register();
     public static final ItemEntry<Item> TOMATO_SLICES = RatatouilleFriedDelights.REGISTRATE.item("tomato_slices", Item::new)
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag).register();
+            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag)
+            .register();
+    public static final ItemEntry<Item> TOMATO_INGREDIENT = RatatouilleFriedDelights.REGISTRATE.item("tomato_ingredient", Item::new)
+            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag).register();
 
 
     public static final ItemEntry<Item> FRIED_APPLE_PIE = RatatouilleFriedDelights.REGISTRATE.item("fried_apple_pie", Item::new).register();
@@ -87,6 +90,10 @@ public class RFDItems {
     public static final ItemEntry<Item> APPLE_SLICES = RatatouilleFriedDelights.REGISTRATE.item("apple_slices", Item::new).register();
     public static final ItemEntry<SequencedAssemblyItem> UNPROCESSED_RAW_APPLE_PIE = RatatouilleFriedDelights.REGISTRATE.item("unprocessed_raw_apple_pie", SequencedAssemblyItem::new).register();
 
+    public static final ItemEntry<Item> FRIED_DONUT = RatatouilleFriedDelights.REGISTRATE.item("fried_donut", Item::new).register();
+    public static final ItemEntry<Item> DOUGH_RING = RatatouilleFriedDelights.REGISTRATE.item("dough_ring", Item::new).register();
+
+
     public static final ItemEntry<Item> HOTCAKE_MEAL = RatatouilleFriedDelights.REGISTRATE.item("hotcake_meal", Item::new).register();
     public static final ItemEntry<SequencedAssemblyItem> UNPROCESSED_HOTCAKE_MEAL = RatatouilleFriedDelights.REGISTRATE.item("unprocessed_hotcake_meal", SequencedAssemblyItem::new).register();
     public static final ItemEntry<Item> PANCAKE = RatatouilleFriedDelights.REGISTRATE.item("pancake", Item::new).register();
@@ -94,9 +101,11 @@ public class RFDItems {
     public static final ItemEntry<Item> PANCAKE_MOLD_FILLED = RatatouilleFriedDelights.REGISTRATE.item("pancake_mold_filled", Item::new).register();
     public static final ItemEntry<Item> PANCAKE_MOLD = RatatouilleFriedDelights.REGISTRATE.item("pancake_mold", Item::new).register();
 
-    public static final ItemEntry<Item> FRIED_DONUT = RatatouilleFriedDelights.REGISTRATE.item("fried_donut", Item::new).register();
-    public static final ItemEntry<Item> DOUGH_RING = RatatouilleFriedDelights.REGISTRATE.item("dough_ring", Item::new).register();
-
+    public static final ItemEntry<Item> VANILLA_CONE = RatatouilleFriedDelights.REGISTRATE.item("vanilla_cone", Item::new).register();
+    public static final ItemEntry<Item> CONE = RatatouilleFriedDelights.REGISTRATE.item("cone", Item::new).register();
+    public static final ItemEntry<Item> CONE_MOLD_BAKED = RatatouilleFriedDelights.REGISTRATE.item("cone_mold_baked", Item::new).register();
+    public static final ItemEntry<Item> CONE_MOLD_FILLED = RatatouilleFriedDelights.REGISTRATE.item("cone_mold_filled", Item::new).register();
+    public static final ItemEntry<Item> CONE_MOLD = RatatouilleFriedDelights.REGISTRATE.item("cone_mold", Item::new).register();
 
     public static final ItemEntry<Item> ICE_CUBES = RatatouilleFriedDelights.REGISTRATE.item("ice_cubes", Item::new).register();
     public static final ItemEntry<Item> BOBA_CUP = RatatouilleFriedDelights.REGISTRATE.item("boba_cup", Item::new).register();
@@ -105,14 +114,10 @@ public class RFDItems {
     public static final ItemEntry<Item> COLA = RatatouilleFriedDelights.REGISTRATE.item("cola", Item::new).register();
     public static final ItemEntry<SequencedAssemblyItem> UNPROCESSED_COLA = RatatouilleFriedDelights.REGISTRATE.item("unprocessed_cola", SequencedAssemblyItem::new).register();
 
-    public static final ItemEntry<Item> VANILLA_CONE = RatatouilleFriedDelights.REGISTRATE.item("vanilla_cone", Item::new).register();
-    public static final ItemEntry<Item> CONE = RatatouilleFriedDelights.REGISTRATE.item("cone", Item::new).register();
-    public static final ItemEntry<Item> CONE_MOLD_BAKED = RatatouilleFriedDelights.REGISTRATE.item("cone_mold_baked", Item::new).register();
-    public static final ItemEntry<Item> CONE_MOLD_FILLED = RatatouilleFriedDelights.REGISTRATE.item("cone_mold_filled", Item::new).register();
-    public static final ItemEntry<Item> CONE_MOLD = RatatouilleFriedDelights.REGISTRATE.item("cone_mold", Item::new).register();
-
     public static final ItemEntry<Item> ICE_CREAM = RatatouilleFriedDelights.REGISTRATE.item("ice_cream", Item::new).register();
     public static final ItemEntry<Item> CHOCOLATE_SUNDAE = RatatouilleFriedDelights.REGISTRATE.item("chocolate_sundae", Item::new).register();
+
+    public static final ItemEntry<Item> SUNFLOWER_SEED_OIL_BOTTLE = RatatouilleFriedDelights.REGISTRATE.item("sunflower_seed_oil_bottle", Item::new).register();
 
     public static final ItemEntry<Item> TARTAR_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tartar_topping", Item::new).register();
     public static final ItemEntry<Item> TOMATO_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tomato_topping", Item::new).register();
@@ -122,9 +127,8 @@ public class RFDItems {
                     properties -> properties.component(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(List.of(
                             new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
                             new ItemStack(ModItems.BEEF_PATTY.get()),
-                            new ItemStack(ModItems.BEEF_PATTY.get()),
                             new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                            new ItemStack(RFDItems.SHREDDED_LETTUCE.get()),
+                            new ItemStack(ModItems.CABBAGE_LEAF.get()),
                             new ItemStack(RFDItems.TOMATO_SLICES.get()),
                             new ItemStack(RFDItems.TOP_BURGER_BUN.get())
                     )))

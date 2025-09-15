@@ -55,8 +55,9 @@ public class RFDDataGen {
         prov.tag(RFDTags.AllItemTags.BURGER_BASE.tag)
                 .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag);
 
-        prov.tag(RFDTags.AllItemTags.BURGER_TOPPINGS.tag)
+        prov.tag(RFDTags.AllItemTags.BURGER_TOPPINGS.tag) //TODO
                 .add(ModItems.BEEF_PATTY.get())
+                .add(ModItems.CABBAGE_LEAF.get())
                 .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag);
 
         prov.tag(RFDTags.AllItemTags.RATATOUILLE_TAB_INVISIBLE.tag)

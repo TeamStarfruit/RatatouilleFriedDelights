@@ -28,13 +28,13 @@ public record SimpleBurgerRenderingProperties(int renderingPivot, int renderingH
         );
 
         BURGER_RENDERING_PROPERTIES_MAP.put(
-                RFDItems.SHREDDED_LETTUCE.get(),
+                ModItems.CABBAGE_LEAF.get(),
                 of(1, 2, RFDItems.SHREDDED_LETTUCE::asStack)
         );
 
         BURGER_RENDERING_PROPERTIES_MAP.put(
                 RFDItems.TOMATO_SLICES.get(),
-                of(3, 1, RFDItems.TOMATO_SLICES::asStack)
+                of(3, 1, RFDItems.TOMATO_INGREDIENT::asStack)
         );
 
         BURGER_RENDERING_PROPERTIES_MAP.put(

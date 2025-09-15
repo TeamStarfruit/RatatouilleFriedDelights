@@ -40,7 +40,7 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
                 new ItemStack(ModItems.BEEF_PATTY.get()),
                 new ItemStack(RFDItems.CHEESE_SLICE.get()),
                 new ItemStack(RFDItems.SHREDDED_LETTUCE.get()),
-                new ItemStack(RFDItems.TOMATO_SLICES.get()),
+                new ItemStack(RFDItems.TOMATO_INGREDIENT.get()),
                 new ItemStack(RFDItems.TOP_BURGER_BUN.get())
         )));
 
@@ -92,7 +92,7 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
                 new ItemStack(ModItems.BEEF_PATTY.get()),
                 new ItemStack(RFDItems.CHEESE_SLICE.get()),
                 new ItemStack(RFDItems.SHREDDED_LETTUCE.get()),
-                new ItemStack(RFDItems.TOMATO_SLICES.get()),
+                new ItemStack(RFDItems.TOMATO_INGREDIENT.get()),
                 new ItemStack(RFDItems.TOP_BURGER_BUN.get())
         )));
 
