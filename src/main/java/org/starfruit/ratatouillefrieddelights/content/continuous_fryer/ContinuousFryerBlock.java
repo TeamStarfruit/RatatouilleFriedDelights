@@ -119,21 +119,6 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
             itemEntity.discard();
     }
 
-    /**
-     * 只处理“向 BE 内灌油”的交互。
-     * 不做 GenericItemEmptying（炸锅不从物品里倒液体）。
-     */
-    protected ItemInteractionResult tryFillOil(Level level, Player player, InteractionHand hand,
-                                               ItemStack heldItem, ContinuousFryerBlockEntity be) {
-        // 允许插入 → 尝试把玩家手上的流体物品“倒入”锅内油槽
-        be.internalTank.allowInsertion();
-        ItemInteractionResult res = FluidHelper.tryEmptyItemIntoBE(level, player, hand, heldItem, be)
-                ? ItemInteractionResult.SUCCESS
-                : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        be.internalTank.forbidInsertion(); // 还原为默认策略（如你在 BE 里设置了只读/只写，可以按需调整）
-        return res;
-    }
-
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
         return AllShapes.CASING_13PX.get(Direction.UP);
@@ -151,10 +136,6 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
             return;
 
         withBlockEntityDo(level, pos, be -> {
-            ItemStack held = be.getHeldItemStack();
-            if (!held.isEmpty())
-                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), held);
-
             be.updateNeighbours();
         });
 

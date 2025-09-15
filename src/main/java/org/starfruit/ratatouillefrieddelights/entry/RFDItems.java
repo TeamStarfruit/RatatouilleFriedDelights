@@ -5,11 +5,16 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ItemStack;
 import org.forsteri.ratatouille.Ratatouille;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import net.minecraft.world.item.Item;
+import org.starfruit.ratatouillefrieddelights.content.burger.BurgerContents;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerItem;
 import org.starfruit.ratatouillefrieddelights.content.cola_fruit.ColaFruitItem;
+import vectorwing.farmersdelight.common.registry.ModItems;
+
+import java.util.List;
 
 public class RFDItems {
     static {
@@ -68,7 +73,8 @@ public class RFDItems {
     public static final ItemEntry<Item> BURGER_BUN_MOLD = RatatouilleFriedDelights.REGISTRATE.item("burger_bun_mold", Item::new).register();
 
     public static final ItemEntry<Item> HAMBURGER_PATTY = RatatouilleFriedDelights.REGISTRATE.item("hamburger_patty", Item::new)
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag).register();
+            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag)
+            .register();
     public static final ItemEntry<Item> SHREDDED_LETTUCE = RatatouilleFriedDelights.REGISTRATE.item("shredded_lettuce", Item::new)
             .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag).register();
     public static final ItemEntry<Item> TOMATO_SLICES = RatatouilleFriedDelights.REGISTRATE.item("tomato_slices", Item::new)
@@ -112,6 +118,17 @@ public class RFDItems {
     public static final ItemEntry<Item> TOMATO_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tomato_topping", Item::new).register();
 
     public static final ItemEntry<BurgerItem> BURGER = RatatouilleFriedDelights.REGISTRATE.item("burger", BurgerItem::new)
+            .properties(
+                    properties -> properties.component(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(List.of(
+                            new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
+                            new ItemStack(ModItems.BEEF_PATTY.get()),
+                            new ItemStack(ModItems.BEEF_PATTY.get()),
+                            new ItemStack(RFDItems.CHEESE_SLICE.get()),
+                            new ItemStack(RFDItems.SHREDDED_LETTUCE.get()),
+                            new ItemStack(RFDItems.TOMATO_SLICES.get()),
+                            new ItemStack(RFDItems.TOP_BURGER_BUN.get())
+                    )))
+            )
             .tag(RFDTags.AllItemTags.BURGER_BASE.tag, RFDTags.AllItemTags.BURGER_TOPPINGS.tag) // Yes, this is how I implemented it, don't question
             .model((ctx, prov) -> prov.getBuilder("item/" + ctx.getName()))
             .register();

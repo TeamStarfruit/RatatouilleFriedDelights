@@ -15,14 +15,13 @@ import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import org.forsteri.ratatouille.Ratatouille;
-import org.forsteri.ratatouille.data.recipe.RatatouilleRegistrateTags;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.data.recipe.RFDRecipeProvider;
 import org.starfruit.ratatouillefrieddelights.data.recipe.RFDStandardRecipeGen;
 import org.starfruit.ratatouillefrieddelights.data.recipe.create.RFDSequencedAssemblyRecipeGen;
 import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
 import org.starfruit.ratatouillefrieddelights.worldgen.*;
+import vectorwing.farmersdelight.common.registry.ModItems;
 
 import java.util.Map;
 import java.util.Set;
@@ -57,7 +56,11 @@ public class RFDDataGen {
                 .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag);
 
         prov.tag(RFDTags.AllItemTags.BURGER_TOPPINGS.tag)
+                .add(ModItems.BEEF_PATTY.get())
                 .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag);
+
+        prov.tag(RFDTags.AllItemTags.RATATOUILLE_TAB_INVISIBLE.tag)
+                .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag);
 
         for (RFDTags.AllItemTags tag : RFDTags.AllItemTags.values()) {
             if (tag.alwaysDatagen) {

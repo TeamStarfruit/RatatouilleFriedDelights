@@ -46,7 +46,9 @@ public class RFDTags {
     public enum AllItemTags {
         BURGER_BASE,
         BURGER_TOPPINGS,
-        RATATOUILLE_BURGER_INGREDIENTS;
+        RATATOUILLE_BURGER_INGREDIENTS,
+        RATATOUILLE_TAB_INVISIBLE,
+        RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER;
 
         public final TagKey<Item> tag;
         public final boolean alwaysDatagen;

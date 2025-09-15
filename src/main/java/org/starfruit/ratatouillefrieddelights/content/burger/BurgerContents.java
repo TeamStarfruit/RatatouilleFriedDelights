@@ -27,7 +27,7 @@ public final class BurgerContents implements TooltipComponent
     private static final int NO_STACK_INDEX = -1;
     final List<ItemStack> items;
 
-    BurgerContents(List<ItemStack> items) {
+    public BurgerContents(List<ItemStack> items) {
         this.items = items;
     }
     

@@ -14,6 +14,7 @@ import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BurgerRecipe extends DeployerApplicationRecipe {
     public BurgerRecipe(ItemApplicationRecipeParams params) {
@@ -43,6 +44,10 @@ public class BurgerRecipe extends DeployerApplicationRecipe {
         } else {
             allItems.add(t.getItem(1));
         }
+
+        allItems = allItems.stream().map(ItemStack::copy).collect(Collectors.toList());
+        allItems.forEach(allItem -> allItem.setCount(1));
+        allItems.removeIf(ItemStack::isEmpty);
 
         burger.set(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(allItems));
 

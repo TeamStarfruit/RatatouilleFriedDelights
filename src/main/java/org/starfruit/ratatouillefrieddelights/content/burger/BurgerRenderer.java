@@ -6,7 +6,6 @@ import com.simibubi.create.foundation.item.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModelRenderer;
 import com.simibubi.create.foundation.item.render.PartialItemModelRenderer;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.createmod.catnip.data.Couple;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,6 +14,10 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.IItemDecorator;
 import org.starfruit.ratatouillefrieddelights.entry.RFDDataComponents;
+import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
+import vectorwing.farmersdelight.common.registry.ModItems;
+
+import java.util.List;
 
 public class BurgerRenderer extends CustomRenderedItemModelRenderer {
     public static final IItemDecorator DECORATOR = (guiGraphics, font, stack, xOffset, yOffset) -> {
@@ -31,12 +34,20 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
         if (!stack.has(RFDDataComponents.BURGER_CONTENTS))
             return false;
 
-        BurgerContents burgerContents = stack.get(RFDDataComponents.BURGER_CONTENTS);
+        BurgerContents burgerContents = stack.getOrDefault(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(List.of(
+                new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
+                new ItemStack(ModItems.BEEF_PATTY.get()),
+                new ItemStack(ModItems.BEEF_PATTY.get()),
+                new ItemStack(RFDItems.CHEESE_SLICE.get()),
+                new ItemStack(RFDItems.SHREDDED_LETTUCE.get()),
+                new ItemStack(RFDItems.TOMATO_SLICES.get()),
+                new ItemStack(RFDItems.TOP_BURGER_BUN.get())
+        )));
 
         int totalHeight = burgerContents.items
                 .stream()
-                .map(ingredient -> BurgerRenderingProperties.BURGER_RENDERING_PROPERTIES
-                        .getOrDefault(ingredient.getItem(), Couple.create(4, 3)).getSecond())
+                .map(ingredient -> BurgerRenderingProperties.BURGER_RENDERING_PROPERTIES_MAP
+                        .getOrDefault(ingredient.getItem(), SimpleBurgerRenderingProperties.of(4, 3, () -> ingredient)).renderingHeight())
                 .mapToInt(Integer::intValue).sum();
         totalHeight += 5;
         totalHeight = Math.max(totalHeight, 18);
@@ -48,15 +59,15 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
 
         poseStack.pushPose();
         for (ItemStack burgerContent : burgerContents.items()) {
-            Couple<Integer> renderingProperties = BurgerRenderingProperties.BURGER_RENDERING_PROPERTIES
-                    .getOrDefault(burgerContent.getItem(), Couple.create(4, 3)); // Height of 3 to provide maximum error
+            BurgerRenderingProperties renderingProperties = BurgerRenderingProperties.BURGER_RENDERING_PROPERTIES_MAP
+                    .getOrDefault(burgerContent.getItem(), SimpleBurgerRenderingProperties.of(4, 3, () -> burgerContent)); // Height of 3 to provide maximum error
 
             poseStack.pushPose();
-            poseStack.translate(0, (double)1 * renderingProperties.getFirst(), 0);
-            guiGraphics.renderItem(burgerContent, 0, 0);
+            poseStack.translate(0, (double)1 * renderingProperties.renderingPivot(), 0);
+            guiGraphics.renderItem(renderingProperties.renderingItem().get(), 0, 0);
             poseStack.popPose();
-            poseStack.translate(0, (double)-1 * renderingProperties.getSecond(), 0);
-            poseStack.scale(1.005F, 1F, 1.005F);
+            poseStack.translate(0, (double)-1 * renderingProperties.renderingHeight(), 0);
+            poseStack.scale(1F + 1/512F, 1F, 1F + 1/512F);
         }
         poseStack.popPose();
         poseStack.popPose();
@@ -75,7 +86,15 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
         if (!stack.has(RFDDataComponents.BURGER_CONTENTS))
             return;
 
-        BurgerContents burgerContents = stack.get(RFDDataComponents.BURGER_CONTENTS);
+        BurgerContents burgerContents = stack.getOrDefault(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(List.of(
+                new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
+                new ItemStack(ModItems.BEEF_PATTY.get()),
+                new ItemStack(ModItems.BEEF_PATTY.get()),
+                new ItemStack(RFDItems.CHEESE_SLICE.get()),
+                new ItemStack(RFDItems.SHREDDED_LETTUCE.get()),
+                new ItemStack(RFDItems.TOMATO_SLICES.get()),
+                new ItemStack(RFDItems.TOP_BURGER_BUN.get())
+        )));
 
         ms.pushPose();
         ms.translate(0, 1/16f, 0);
@@ -84,16 +103,16 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
         if (transformType != ItemDisplayContext.FIXED)
             ms.scale(0.5F, 0.5F, 0.5F);
         for (ItemStack burgerContent : burgerContents.items()) {
-            Couple<Integer> renderingProperties = BurgerRenderingProperties.BURGER_RENDERING_PROPERTIES
-                    .getOrDefault(burgerContent.getItem(), Couple.create(4, 3)); // Height of 3 to provide maximum error
+            BurgerRenderingProperties renderingProperties = BurgerRenderingProperties.BURGER_RENDERING_PROPERTIES_MAP
+                    .getOrDefault(burgerContent.getItem(), SimpleBurgerRenderingProperties.of(4, 3, () -> burgerContent)); // Height of 3 to provide maximum error
 
             ms.pushPose();
-            ms.translate(0, (double)-1/16 * renderingProperties.getFirst(), 0);
+            ms.translate(0, (double)-1/16 * renderingProperties.renderingPivot(), 0);
             ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-            itemRenderer.renderStatic(burgerContent, ItemDisplayContext.FIXED, light, overlay, ms, buffer, null, 0);
+            itemRenderer.renderStatic(renderingProperties.renderingItem().get(), ItemDisplayContext.FIXED, light, overlay, ms, buffer, null, 0);
             ms.popPose();
-            ms.translate(0, (double)1/16 * renderingProperties.getSecond(), 0);
-            ms.scale(1.005F, 1F, 1.005F);
+            ms.translate(0, (double)1/16 * renderingProperties.renderingHeight(), 0);
+            ms.scale(1 + 1/512F, 1F, 1 + 1/512F);
         }
         ms.popPose();
     }
