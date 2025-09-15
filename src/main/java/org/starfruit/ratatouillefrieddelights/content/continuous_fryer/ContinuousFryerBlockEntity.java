@@ -4,7 +4,6 @@ import java.util.*;
 
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
 import com.simibubi.create.content.kinetics.belt.transport.BeltInventory;
 import com.simibubi.create.content.kinetics.belt.transport.ItemHandlerBeltSegment;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -15,13 +14,14 @@ import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -30,6 +30,8 @@ import net.neoforged.neoforge.items.IItemHandler;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 
 import static com.simibubi.create.content.fluids.tank.FluidTankBlockEntity.getCapacityMultiplier;
+import static net.minecraft.core.Direction.AxisDirection.NEGATIVE;
+import static net.minecraft.core.Direction.AxisDirection.POSITIVE;
 
 public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation {
 
@@ -44,7 +46,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     protected IFluidHandler fluidHandler;
     protected FluidTank tankInventory;
 
-    protected BeltInventory inventory;
+    protected FryerInventory inventory;
     protected IItemHandler itemHandler;
 
     public ContinuousFryerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -96,7 +98,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             return;
         }
 
-        Direction.Axis axis = getFacingDirection().getAxis();
+        Direction.Axis axis = getFryerFacing().getAxis();
         BlockPos cursor = getBlockPos();
         List<FluidTank> chain = new ArrayList<>();
 
@@ -112,7 +114,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         }
 
         fluidHandler = new CombinedTankWrapper(chain.toArray(new FluidTank[0]));
-        itemHandler = new ItemHandlerBeltSegment(inventory, index);
+        itemHandler = new ItemHandlerFryerSegment(inventory, index);
     }
 
     public boolean shouldRenderAxis() {
@@ -259,7 +261,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
     }
 
-    public Direction getFacingDirection() {
+    public Direction getFryerFacing() {
         return getBlockState()
                 .getValue(ContinuousFryerBlock.HORIZONTAL_FACING);
     }
@@ -285,7 +287,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     public void tick() {
         super.tick();
         if (level == null || level.isClientSide) return;
-        if (getControllerBE() == null || getFacingDirection().getAxis() != getControllerBE().getFacingDirection().getAxis()) {
+        if (getControllerBE() == null || getFryerFacing().getAxis() != getControllerBE().getFryerFacing().getAxis()) {
             setController(worldPosition);
             updateConnectivity();
             updateNeighbours();
@@ -319,4 +321,46 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
         super.read(compound, registries, clientPacket);
     }
+
+    public Direction getMovementFacing() {
+        Direction.Axis axis = getFryerFacing().getAxis();
+        return Direction.fromAxisAndDirection(axis, getFryerMovementSpeed() < 0 ^ axis == Direction.Axis.X ? NEGATIVE : POSITIVE);
+    }
+
+    protected Vec3i getMovementDirection(boolean firstHalf, boolean ignoreHalves) {
+        if (getSpeed() == 0)
+            return BlockPos.ZERO;
+
+        final BlockState blockState = getBlockState();
+        final Direction beltFacing = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        final Direction.Axis axis = beltFacing.getAxis();
+
+        Direction movementFacing = Direction.get(axis == Direction.Axis.X ? NEGATIVE : POSITIVE, axis);
+        if (getSpeed() < 0)
+            movementFacing = movementFacing.getOpposite();
+
+        return movementFacing.getNormal();
+    }
+
+
+    public Vec3i getMovementDirection(boolean firstHalf) {
+        return this.getMovementDirection(firstHalf, false);
+    }
+
+    public Vec3i getFryerChainDirection() {
+        return this.getMovementDirection(true, true);
+    }
+
+    public float getFryerMovementSpeed() {
+        return getSpeed() / 480f;
+    }
+
+    public float getDirectionAwareBeltMovementSpeed() {
+        int offset = getFryerFacing().getAxisDirection()
+                .getStep();
+        if (getFryerFacing().getAxis() == Direction.Axis.X)
+            offset *= -1;
+        return getFryerMovementSpeed() * offset;
+    }
+
 }
