@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "Y": {
+      "item": "minecraft:glass"
+    }
+  },
+  "pattern": [
+    "Y Y",
+    "Y Y",
+    " Y "
+  ],
+  "result": {
+    "count": 3,
+    "id": "ratatouille_fried_delights:tall_cup"
+  }
+}

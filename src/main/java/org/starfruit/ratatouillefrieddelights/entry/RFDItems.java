@@ -108,6 +108,7 @@ public class RFDItems {
     public static final ItemEntry<Item> CONE_MOLD = RatatouilleFriedDelights.REGISTRATE.item("cone_mold", Item::new).register();
 
     public static final ItemEntry<Item> ICE_CUBES = RatatouilleFriedDelights.REGISTRATE.item("ice_cubes", Item::new).register();
+    public static final ItemEntry<Item> CARDBOARD_STRAW = RatatouilleFriedDelights.REGISTRATE.item("cardboard_straw", Item::new).register();
     public static final ItemEntry<Item> BOBA_CUP = RatatouilleFriedDelights.REGISTRATE.item("boba_cup", Item::new).register();
     public static final ItemEntry<Item> TALL_CUP = RatatouilleFriedDelights.REGISTRATE.item("tall_cup", Item::new).register();
     public static final ItemEntry<Item> SHORT_CUP = RatatouilleFriedDelights.REGISTRATE.item("short_cup", Item::new).register();

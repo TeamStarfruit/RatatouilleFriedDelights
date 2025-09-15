@@ -1,5 +1,6 @@
 package org.starfruit.ratatouillefrieddelights.data.recipe.create;
 
+import com.simibubi.create.AllItems;
 import com.simibubi.create.api.data.recipe.CuttingRecipeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -47,6 +48,16 @@ public class RFDCuttingRecipeGen extends CuttingRecipeGen {
     PAN_CAKE_MOLD_CUT = create("pancake_mold_cut", b -> b
             .require(RFDItems.BURGER_BUN_MOLD.get())
             .output(RFDItems.PANCAKE_MOLD.get(), 1)
+    ),
+
+    SHORT_CUP_CUT = create("short_cup", b -> b
+            .require(RFDItems.TALL_CUP.get())
+            .output(RFDItems.SHORT_CUP.get(), 1)
+    ),
+
+    CARDBOARD_STRAW_CUT = create("cardboard_straw", b -> b
+            .require(AllItems.CARDBOARD.get())
+            .output(RFDItems.CARDBOARD_STRAW.get(), 1)
     );
 
     public RFDCuttingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

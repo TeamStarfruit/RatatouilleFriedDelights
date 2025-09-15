@@ -1,0 +1,14 @@
+{
+  "type": "ratatouille_fried_delights:frying",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:dough_ring"
+    }
+  ],
+  "processing_time": 200,
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:fried_donut"
+    }
+  ]
+}

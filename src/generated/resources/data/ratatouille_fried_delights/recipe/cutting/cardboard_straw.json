@@ -1,0 +1,13 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "create:cardboard"
+    }
+  ],
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:cardboard_straw"
+    }
+  ]
+}

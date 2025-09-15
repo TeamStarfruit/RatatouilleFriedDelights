@@ -10,6 +10,8 @@ import net.minecraft.world.level.material.Fluid;
 import org.forsteri.ratatouille.entry.CRTags;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
+import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
+import vectorwing.farmersdelight.common.registry.ModItems;
 
 public class RFDRegistrateTags {
     public static void addGenerators() {
@@ -30,8 +32,26 @@ public class RFDRegistrateTags {
                 .add(
                         RFDItems.PANCAKE_MOLD.get(),
                         RFDItems.BURGER_BUN_MOLD.get(),
-                        RFDItems.TOP_BURGER_BUN.get()
+                        RFDItems.TOP_BURGER_BUN.get(),
+                        RFDItems.CONE_MOLD.get()
                 );
+
+        prov.tag(RFDTags.AllItemTags.BURGER_BASE.tag)
+                .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag);
+
+        prov.tag(RFDTags.AllItemTags.BURGER_TOPPINGS.tag) //TODO
+                .add(ModItems.BEEF_PATTY.get())
+                .add(ModItems.CABBAGE_LEAF.get())
+                .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag);
+
+        prov.tag(RFDTags.AllItemTags.RATATOUILLE_TAB_INVISIBLE.tag)
+                .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag);
+
+        for (RFDTags.AllItemTags tag : RFDTags.AllItemTags.values()) {
+            if (tag.alwaysDatagen) {
+                prov.getOrCreateRawBuilder(tag.tag);
+            }
+        }
     }
 
     private static void genFluidTags(RegistrateTagsProvider<Fluid> provIn) {}

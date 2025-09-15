@@ -46,10 +46,10 @@ public class RFDDataGen {
             providePonderLang(langConsumer);
         });
 
-        RatatouilleFriedDelights.REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, RFDDataGen::genItemTags);
+//        RatatouilleFriedDelights.REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, RFDDataGen::genItemTags);
     }
 
-    private static void genItemTags(RegistrateTagsProvider<Item> provIn) {
+/*    private static void genItemTags(RegistrateTagsProvider<Item> provIn) {
         TagGen.CreateTagsProvider<Item> prov = new TagGen.CreateTagsProvider<>(provIn, Item::builtInRegistryHolder);
 
         prov.tag(RFDTags.AllItemTags.BURGER_BASE.tag)
@@ -69,7 +69,7 @@ public class RFDDataGen {
             }
         }
     }
-
+*/
     private static void provideDefaultLang(String fileName, BiConsumer<String, String> consumer) {
         String path = "assets/" + RatatouilleFriedDelights.MOD_ID + "/lang/default/" + fileName + ".json";
         JsonElement jsonElement = FilesHelper.loadJsonResource(path);

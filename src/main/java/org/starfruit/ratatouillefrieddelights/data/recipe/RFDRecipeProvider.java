@@ -40,6 +40,7 @@ public final class RFDRecipeProvider extends RecipeProvider {
         GENERATORS.add(new RFDFillingRecipeGen(output, registries));
         GENERATORS.add(new RFDMillingRecipeGen(output, registries));
         GENERATORS.add(new RFDMixingRecipeGen(output, registries));
+        GENERATORS.add(new RFDDeployingRecipeGen(output, registries));
 
         GENERATORS.add(new CoatingRecipeGen(output, registries));
         GENERATORS.add(new TumblingRecipeGen(output, registries));

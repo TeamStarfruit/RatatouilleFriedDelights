@@ -21,6 +21,10 @@ public class DemoldingRecipeGen extends StandardProcessingRecipeGen<DemoldingRec
                     .output(RFDItems.PANCAKE.get())
                     .output(RFDItems.PANCAKE_MOLD.get())
     ),
+            CONE = this.create(RFDItems.CONE_MOLD_BAKED::get, b -> b
+                    .output(RFDItems.CONE.get())
+                    .output(RFDItems.CONE_MOLD.get())
+    ),
             BURGER_BUN_SEPARATION = this.create(RFDItems.BURGER_BUN::get, b -> b
                     .output(RFDItems.BOTTOM_BURGER_BUN.get())
                     .output(RFDItems.TOP_BURGER_BUN.get())

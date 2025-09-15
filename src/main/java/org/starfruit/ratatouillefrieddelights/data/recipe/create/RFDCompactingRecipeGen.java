@@ -3,6 +3,7 @@ package org.starfruit.ratatouillefrieddelights.data.recipe.create;
 import com.simibubi.create.api.data.recipe.CompactingRecipeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import org.forsteri.ratatouille.entry.CRItems;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.entry.RFDFluids;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
@@ -15,6 +16,11 @@ public class RFDCompactingRecipeGen extends CompactingRecipeGen {
             SUNFLOWER_OIL = create("sunflower_oil", b -> b
             .require(RFDItems.SUNFLOWER_SEEDS.get())
             .output(RFDFluids.SUNFLOWER_OIL.get(), 100)
+    ),
+            DOUGH_RING = create("dough_ring", b -> b
+                    .require(CRItems.SALTY_DOUGH.get())
+                    .require(RFDItems.BUTTER.get())
+                    .output(RFDItems.DOUGH_RING.get())
     );
 
     public RFDCompactingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

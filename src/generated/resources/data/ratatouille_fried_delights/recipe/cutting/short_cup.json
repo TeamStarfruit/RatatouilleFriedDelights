@@ -1,0 +1,13 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:tall_cup"
+    }
+  ],
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:short_cup"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 package org.starfruit.ratatouillefrieddelights.data.recipe;
 
 import com.google.common.base.Supplier;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.api.data.recipe.BaseRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import net.createmod.catnip.registry.RegisteredObjectsHelper;
@@ -43,7 +44,23 @@ public final class RFDStandardRecipeGen extends BaseRecipeProvider {
                     .unlockedBy(RFDItems.BURGER_BUN::asItem) // mandatory
                     .viaShapeless(b -> b
                             .requires(RFDItems.TOP_BURGER_BUN.get())
-            );
+            ),
+            TALL_CUP = create(RFDItems.TALL_CUP).returns(3)
+            .unlockedBy(Items.GLASS::asItem) // mandatory
+            .viaShaped(b -> b
+                    .pattern("Y Y")
+                    .pattern("Y Y")
+                    .pattern(" Y ")
+                    .define('Y', Items.GLASS)
+            ),
+            CARDBOARD_STRAW = create(RFDItems.CARDBOARD_STRAW).returns(4)
+                    .unlockedBy(Items.GLASS::asItem) // mandatory
+                    .viaShaped(b -> b
+                            .pattern(" Y ")
+                            .pattern("Y Y")
+                            .pattern(" Y ")
+                            .define('Y', AllItems.CARDBOARD)
+                    );
     /*            CHEF_HAT_WITH_GOGGLES = create(CRItems.CHEF_HAT_WITH_GOGGLES)
                         .unlockedBy(CRItems.CHEF_HAT::get)
                         .viaShapeless(b -> b
@@ -164,6 +181,10 @@ public final class RFDStandardRecipeGen extends BaseRecipeProvider {
                 .viaCooking(RFDItems.PANCAKE_MOLD_FILLED::get)
                 .forDuration(200)
                 .inSmoker(),
+            CONE_MOLD_BAKED = create(RFDItems.CONE_MOLD_BAKED::get)
+                    .viaCooking(RFDItems.CONE_MOLD_FILLED::get)
+                    .forDuration(200)
+                    .inSmoker(),
             CHEESE_BAKED = create(RFDItems.CHEESE::get)
                     .viaCooking(RFDItems.RAW_CHEESE::get)
                     .forDuration(200)

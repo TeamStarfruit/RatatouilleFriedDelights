@@ -47,6 +47,12 @@ public class FryingRecipeGen extends StandardProcessingRecipeGen<FryingRecipe> {
             b -> b
                     .require(RFDItems.BREADED_ORIGINAL_KEEL.get())
                     .output(RFDItems.ORIGINAL_CHICKEN_KEEL.get())
+                    .duration(200)),
+
+    FRIED_DONUT = this.create("fried_donut",
+                                                             b -> b
+                    .require(RFDItems.DOUGH_RING.get())
+                    .output(RFDItems.FRIED_DONUT.get())
                     .duration(200))
     ;
 
