@@ -88,6 +88,10 @@ public class RFDItems {
     public static final ItemEntry<Item> PANCAKE_MOLD_FILLED = RatatouilleFriedDelights.REGISTRATE.item("pancake_mold_filled", Item::new).register();
     public static final ItemEntry<Item> PANCAKE_MOLD = RatatouilleFriedDelights.REGISTRATE.item("pancake_mold", Item::new).register();
 
+    public static final ItemEntry<Item> FRIED_DONUT = RatatouilleFriedDelights.REGISTRATE.item("fried_donut", Item::new).register();
+    public static final ItemEntry<Item> DOUGH_RING = RatatouilleFriedDelights.REGISTRATE.item("dough_ring", Item::new).register();
+
+
     public static final ItemEntry<Item> ICE_CUBES = RatatouilleFriedDelights.REGISTRATE.item("ice_cubes", Item::new).register();
     public static final ItemEntry<Item> BOBA_CUP = RatatouilleFriedDelights.REGISTRATE.item("boba_cup", Item::new).register();
     public static final ItemEntry<Item> TALL_CUP = RatatouilleFriedDelights.REGISTRATE.item("tall_cup", Item::new).register();
@@ -97,6 +101,10 @@ public class RFDItems {
 
     public static final ItemEntry<Item> VANILLA_CONE = RatatouilleFriedDelights.REGISTRATE.item("vanilla_cone", Item::new).register();
     public static final ItemEntry<Item> CONE = RatatouilleFriedDelights.REGISTRATE.item("cone", Item::new).register();
+    public static final ItemEntry<Item> CONE_MOLD_BAKED = RatatouilleFriedDelights.REGISTRATE.item("cone_mold_baked", Item::new).register();
+    public static final ItemEntry<Item> CONE_MOLD_FILLED = RatatouilleFriedDelights.REGISTRATE.item("cone_mold_filled", Item::new).register();
+    public static final ItemEntry<Item> CONE_MOLD = RatatouilleFriedDelights.REGISTRATE.item("cone_mold", Item::new).register();
+
     public static final ItemEntry<Item> ICE_CREAM = RatatouilleFriedDelights.REGISTRATE.item("ice_cream", Item::new).register();
     public static final ItemEntry<Item> CHOCOLATE_SUNDAE = RatatouilleFriedDelights.REGISTRATE.item("chocolate_sundae", Item::new).register();
 
