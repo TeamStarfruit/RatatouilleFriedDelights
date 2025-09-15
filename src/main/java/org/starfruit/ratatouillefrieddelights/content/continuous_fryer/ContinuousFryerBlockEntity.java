@@ -4,8 +4,8 @@ import java.util.*;
 
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
 import com.simibubi.create.content.kinetics.belt.transport.BeltInventory;
-import com.simibubi.create.content.kinetics.belt.transport.ItemHandlerBeltSegment;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
@@ -46,7 +46,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     protected IFluidHandler fluidHandler;
     protected FluidTank tankInventory;
 
-    protected FryerInventory inventory;
+    protected FryerInventory itemInventory;
     protected IItemHandler itemHandler;
 
     public ContinuousFryerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -93,7 +93,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             if (controllerBE == null) return;
 
             controllerBE.initCapability();
-            this.itemHandler = controllerBE.itemHandler;
+            this.itemHandler = new ItemHandlerFryerSegment(controllerBE.getItemInventory(), index);
             this.fluidHandler = controllerBE.fluidHandler;
             return;
         }
@@ -114,8 +114,22 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         }
 
         fluidHandler = new CombinedTankWrapper(chain.toArray(new FluidTank[0]));
-        itemHandler = new ItemHandlerFryerSegment(inventory, index);
+        itemHandler = new ItemHandlerFryerSegment(getItemInventory(), index);
     }
+
+    public FryerInventory getItemInventory() {
+        if (!isController()) {
+            ContinuousFryerBlockEntity controllerBE = getControllerBE();
+            if (controllerBE != null)
+                return controllerBE.getItemInventory();
+            return null;
+        }
+        if (itemInventory == null) {
+            itemInventory = new FryerInventory(this);
+        }
+        return itemInventory;
+    }
+
 
     public boolean shouldRenderAxis() {
         BlockState state = getBlockState();
