@@ -39,7 +39,9 @@ public class RFDRegistrateTags {
         prov.tag(RFDTags.AllItemTags.RATATOUILLE_ICE_CREAM.tag)
                 .add(
                         RFDItems.ICE_CREAM.get(),
-                        RFDItems.VANILLA_CONE.get()
+                        RFDItems.VANILLA_CONE.get(),
+                        RFDItems.ICE_CUBES.get(),
+                        RFDItems.CHOCOLATE_SUNDAE.get()
                 );
 
         prov.tag(RFDTags.AllItemTags.BURGER_BASE.tag)
