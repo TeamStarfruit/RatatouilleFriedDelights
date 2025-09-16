@@ -36,6 +36,12 @@ public class RFDRegistrateTags {
                         RFDItems.CONE_MOLD.get()
                 );
 
+        prov.tag(RFDTags.AllItemTags.RATATOUILLE_ICE_CREAM.tag)
+                .add(
+                        RFDItems.ICE_CREAM.get(),
+                        RFDItems.VANILLA_CONE.get()
+                );
+
         prov.tag(RFDTags.AllItemTags.BURGER_BASE.tag)
                 .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag);
 

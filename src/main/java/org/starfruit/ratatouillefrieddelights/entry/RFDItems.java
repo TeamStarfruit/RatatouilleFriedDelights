@@ -101,7 +101,11 @@ public class RFDItems {
     public static final ItemEntry<Item> PANCAKE_MOLD_FILLED = RatatouilleFriedDelights.REGISTRATE.item("pancake_mold_filled", Item::new).register();
     public static final ItemEntry<Item> PANCAKE_MOLD = RatatouilleFriedDelights.REGISTRATE.item("pancake_mold", Item::new).register();
 
-    public static final ItemEntry<Item> VANILLA_CONE = RatatouilleFriedDelights.REGISTRATE.item("vanilla_cone", Item::new).register();
+    public static final ItemEntry<Item> VANILLA_CONE = RatatouilleFriedDelights.REGISTRATE.item("vanilla_cone", Item::new)
+            .properties(p -> p.food(new FoodProperties.Builder().nutrition(2)
+            .alwaysEdible()                 // “快速吃掉”
+            .saturationModifier(1F)
+            .build())).register();
     public static final ItemEntry<Item> CONE = RatatouilleFriedDelights.REGISTRATE.item("cone", Item::new).register();
     public static final ItemEntry<Item> CONE_MOLD_BAKED = RatatouilleFriedDelights.REGISTRATE.item("cone_mold_baked", Item::new).register();
     public static final ItemEntry<Item> CONE_MOLD_FILLED = RatatouilleFriedDelights.REGISTRATE.item("cone_mold_filled", Item::new).register();

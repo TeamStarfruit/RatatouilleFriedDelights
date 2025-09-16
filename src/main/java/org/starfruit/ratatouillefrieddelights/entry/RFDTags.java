@@ -48,7 +48,8 @@ public class RFDTags {
         BURGER_TOPPINGS,
         RATATOUILLE_BURGER_INGREDIENTS,
         RATATOUILLE_TAB_INVISIBLE,
-        RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER;
+        RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER,
+        RATATOUILLE_ICE_CREAM;
 
         public final TagKey<Item> tag;
         public final boolean alwaysDatagen;
