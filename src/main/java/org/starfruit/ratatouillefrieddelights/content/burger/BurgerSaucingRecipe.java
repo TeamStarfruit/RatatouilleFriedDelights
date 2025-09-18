@@ -1,34 +1,26 @@
 package org.starfruit.ratatouillefrieddelights.content.burger;
 
-import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
-import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipeParams;
+import com.simibubi.create.content.fluids.transfer.FillingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeParams;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import org.starfruit.ratatouillefrieddelights.entry.RFDDataComponents;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
-import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BurgerRecipe extends DeployerApplicationRecipe {
-    public BurgerRecipe(ItemApplicationRecipeParams params) {
+public class BurgerSaucingRecipe extends FillingRecipe {
+    public BurgerSaucingRecipe(ProcessingRecipeParams params) {
         super(params);
     }
 
     @Override
-    public boolean matches(RecipeWrapper craftingInput, Level level) {
-        return RFDTags.AllItemTags.BURGER_BASE.matches(craftingInput.getItem(0))
-                && RFDTags.AllItemTags.BURGER_TOPPINGS.matches(craftingInput.getItem(1));
-    }
-
-    @Override
-    public ItemStack assemble(RecipeWrapper t, HolderLookup.Provider provider) {
+    public ItemStack assemble(SingleRecipeInput t, HolderLookup.Provider provider) {
         ItemStack burger = new ItemStack(RFDItems.BURGER.get());
 
         List<ItemStack> allItems = new ArrayList<>();
@@ -57,5 +49,5 @@ public class BurgerRecipe extends DeployerApplicationRecipe {
     @Override
     public List<ProcessingOutput> getRollableResults() {
         return List.of(new ProcessingOutput(new ItemStack(Items.APPLE), 1));
-    } // TODO: For debug, please mixin into BeltDeployerCallbacks#activate to really apply
+    } // TODO: For debug, please mixin into FillingBySpout#fillItem to really apply
 }

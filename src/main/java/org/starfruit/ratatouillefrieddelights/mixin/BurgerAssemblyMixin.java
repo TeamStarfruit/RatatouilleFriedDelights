@@ -24,14 +24,14 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.starfruit.ratatouillefrieddelights.content.burger.BurgerRecipe;
+import org.starfruit.ratatouillefrieddelights.content.burger.BurgerAssemblyRecipe;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Mixin(BeltDeployerCallbacks.class)
-public class BurgerRecipeMixin {
+public class BurgerAssemblyMixin {
     @Shadow
     private static void awardAdvancements(DeployerBlockEntity blockEntity, ItemStack created) {}
 
@@ -39,7 +39,7 @@ public class BurgerRecipeMixin {
     private static void activate(TransportedItemStack transported, TransportedItemStackHandlerBehaviour handler, DeployerBlockEntity blockEntity, Recipe<?> recipe, CallbackInfo ci) {
         if (blockEntity.getLevel() == null) return;
 
-        if (!(recipe instanceof BurgerRecipe pr)) return;
+        if (!(recipe instanceof BurgerAssemblyRecipe pr)) return;
 
         List<ItemStack> stacks;
 
@@ -128,7 +128,6 @@ public class BurgerRecipeMixin {
         world.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, .25f, .75f);
 
         blockEntity.notifyUpdate();
-        System.out.println("Burger recipe activated");
         ci.cancel();
     }
 }
