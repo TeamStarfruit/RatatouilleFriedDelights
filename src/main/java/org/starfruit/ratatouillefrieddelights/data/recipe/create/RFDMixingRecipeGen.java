@@ -102,6 +102,13 @@ public class RFDMixingRecipeGen extends MixingRecipeGen {
             .output(RFDFluids.TARTAR_SAUCE.get(), 1000)
     ),
 
+    KETCHUP = create("ketchup", b -> b
+            .require(ModItems.TOMATO.get())
+            .require(ModItems.TOMATO.get())
+            .require(Items.SUGAR)
+            .output(RFDFluids.KETCHUP.get(), 1000)
+    ),
+
     ICE_CREAM_BASE = create("ice_cream_base", b -> b
             .require(RFDItems.ICE_CUBES.get())
             .require(RFDItems.ICE_CUBES.get())

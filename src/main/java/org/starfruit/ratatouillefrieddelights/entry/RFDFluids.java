@@ -36,11 +36,23 @@ public class RFDFluids {
                     .lang("Mayonnaise")
                     .register();
 
-    public static final FluidEntry<VirtualFluid> TARTAR_SAUCE =
+    public static final FluidEntry<BaseFlowingFluid.Flowing> TARTAR_SAUCE =
             RatatouilleFriedDelights.REGISTRATE
-                    .virtualFluid("tartar_sauce")
+                    .standardFluid("tartar_sauce")
+                    .properties(p -> p
+                            .density(1050))
                     .lang("Tartar Sauce")
-                    .register();
+                    .source(BaseFlowingFluid.Source::new).block().build()
+                    .bucket().build().register();
+
+    public static final FluidEntry<BaseFlowingFluid.Flowing> KETCHUP =
+            RatatouilleFriedDelights.REGISTRATE
+                    .standardFluid("ketchup")
+                    .properties(p -> p
+                            .density(1050))
+                    .lang("ketchup")
+                    .source(BaseFlowingFluid.Source::new).block().build()
+                    .bucket().build().register();
 
     public static final FluidEntry<VirtualFluid> PANCAKE_BATTER =
             RatatouilleFriedDelights.REGISTRATE

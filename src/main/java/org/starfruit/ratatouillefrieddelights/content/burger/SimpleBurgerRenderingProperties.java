@@ -23,6 +23,11 @@ public record SimpleBurgerRenderingProperties(int renderingPivot, int renderingH
         );
 
         BURGER_RENDERING_PROPERTIES_MAP.put(
+                RFDItems.FILLET_O_FISH.get(),
+                of(3, 4, RFDItems.FILLET_O_FISH::asStack)
+        );
+
+        BURGER_RENDERING_PROPERTIES_MAP.put(
                 RFDItems.CHEESE_SLICE.get(),
                 of(5, 0, RFDItems.CHEESE_SLICE::asStack)
         );
@@ -44,7 +49,12 @@ public record SimpleBurgerRenderingProperties(int renderingPivot, int renderingH
 
         BURGER_RENDERING_PROPERTIES_MAP.put(
                 RFDItems.TARTAR_TOPPING.get(),
-                of(5, 1, RFDItems.TARTAR_TOPPING::asStack)
+                of(6, 1, RFDItems.TARTAR_TOPPING::asStack)
+        );
+
+        BURGER_RENDERING_PROPERTIES_MAP.put(
+                RFDItems.KETCHUP_TOPPING.get(),
+                of(6, 1, RFDItems.KETCHUP_TOPPING::asStack)
         );
     }
 }

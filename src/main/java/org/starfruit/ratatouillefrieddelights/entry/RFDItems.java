@@ -239,7 +239,7 @@ public class RFDItems {
     public static final ItemEntry<Item> SUNFLOWER_SEED_OIL_BOTTLE = RatatouilleFriedDelights.REGISTRATE.item("sunflower_seed_oil_bottle", Item::new).register();
 
     public static final ItemEntry<Item> TARTAR_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tartar_topping", Item::new).register();
-    public static final ItemEntry<Item> TOMATO_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tomato_topping", Item::new).register();
+    public static final ItemEntry<Item> KETCHUP_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("ketchup_topping", Item::new).register();
 
     public static final ItemEntry<BurgerItem> BURGER = RatatouilleFriedDelights.REGISTRATE.item("burger", BurgerItem::new)
             .properties(

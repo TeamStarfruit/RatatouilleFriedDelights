@@ -39,6 +39,14 @@
     },
     {
       "type": "single",
+      "resource": "ratatouille:fluid/ketchup_still"
+    },
+    {
+      "type": "single",
+      "resource": "ratatouille:fluid/ketchup_flow"
+    },
+    {
+      "type": "single",
       "resource": "ratatouille:fluid/pancake_batter_still"
     },
     {

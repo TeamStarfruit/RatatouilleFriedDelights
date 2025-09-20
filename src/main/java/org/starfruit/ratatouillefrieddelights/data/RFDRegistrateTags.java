@@ -52,6 +52,10 @@ public class RFDRegistrateTags {
                 .add(ModItems.CABBAGE_LEAF.get())
                 .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag);
 
+        prov.tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag)
+                .add(ModItems.BEEF_PATTY.get())
+                .add(ModItems.CABBAGE_LEAF.get());
+
         prov.tag(RFDTags.AllItemTags.RATATOUILLE_TAB_INVISIBLE.tag)
                 .addTag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag);
 
