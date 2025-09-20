@@ -2,15 +2,11 @@ package org.starfruit.ratatouillefrieddelights.content.burger;
 
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipeParams;
-import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import org.starfruit.ratatouillefrieddelights.entry.RFDDataComponents;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
-import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +15,6 @@ import java.util.stream.Collectors;
 public class BurgerAssemblyRecipe extends DeployerApplicationRecipe {
     public BurgerAssemblyRecipe(ItemApplicationRecipeParams params) {
         super(params);
-    }
-
-    @Override
-    public boolean matches(RecipeWrapper craftingInput, Level level) {
-        return RFDTags.AllItemTags.BURGER_BASE.matches(craftingInput.getItem(0))
-                && RFDTags.AllItemTags.BURGER_TOPPINGS.matches(craftingInput.getItem(1));
     }
 
     @Override
@@ -53,9 +43,4 @@ public class BurgerAssemblyRecipe extends DeployerApplicationRecipe {
 
         return burger;
     }
-
-    @Override
-    public List<ProcessingOutput> getRollableResults() {
-        return List.of(new ProcessingOutput(new ItemStack(Items.APPLE), 1));
-    } // TODO: For debug, please mixin into BeltDeployerCallbacks#activate to really apply
 }

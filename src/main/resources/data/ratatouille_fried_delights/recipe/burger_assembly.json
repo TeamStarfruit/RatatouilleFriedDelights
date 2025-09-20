@@ -2,15 +2,15 @@
   "type": "ratatouille_fried_delights:burger_assembly",
   "ingredients": [
     {
-      "item": "minecraft:apple"
+      "tag": "ratatouille_fried_delights:burger_toppings"
     },
     {
-      "item": "minecraft:apple"
+      "tag": "ratatouille_fried_delights:burger_base"
     }
   ],
   "results": [
     {
-      "id": "minecraft:apple"
+      "id": "ratatouille_fried_delights:burger"
     }
   ]
 }
