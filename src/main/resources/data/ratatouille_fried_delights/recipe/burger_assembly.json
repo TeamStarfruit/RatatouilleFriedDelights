@@ -1,0 +1,16 @@
+{
+  "type": "ratatouille_fried_delights:burger_assembly",
+  "ingredients": [
+    {
+      "item": "minecraft:apple"
+    },
+    {
+      "item": "minecraft:apple"
+    }
+  ],
+  "results": [
+    {
+      "id": "minecraft:apple"
+    }
+  ]
+}

@@ -5,7 +5,6 @@ import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeParams;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import org.starfruit.ratatouillefrieddelights.entry.RFDDataComponents;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
@@ -31,11 +30,7 @@ public class BurgerSaucingRecipe extends FillingRecipe {
             allItems.add(t.getItem(0));
         }
 
-        if (t.getItem(1).is(RFDItems.BURGER)) {
-            allItems.addAll(t.getItem(1).getOrDefault(RFDDataComponents.BURGER_CONTENTS, BurgerContents.EMPTY).items);
-        } else {
-            allItems.add(t.getItem(1));
-        }
+        allItems.addAll(this.getRollableResults().stream().map(ProcessingOutput::rollOutput).toList());
 
         allItems = allItems.stream().map(ItemStack::copy).collect(Collectors.toList());
         allItems.forEach(allItem -> allItem.setCount(1));
@@ -45,9 +40,4 @@ public class BurgerSaucingRecipe extends FillingRecipe {
 
         return burger;
     }
-
-    @Override
-    public List<ProcessingOutput> getRollableResults() {
-        return List.of(new ProcessingOutput(new ItemStack(Items.APPLE), 1));
-    } // TODO: For debug, please mixin into FillingBySpout#fillItem to really apply
 }

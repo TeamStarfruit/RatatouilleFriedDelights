@@ -67,7 +67,7 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
             guiGraphics.renderItem(renderingProperties.renderingItem().get(), 0, 0);
             poseStack.popPose();
             poseStack.translate(0, (double)-1 * renderingProperties.renderingHeight(), 0);
-            poseStack.scale(1F + 1/512F, 1F, 1F + 1/512F);
+            poseStack.scale(1F + 1/256F, 1F, 1F + 1/356F);
         }
         poseStack.popPose();
         poseStack.popPose();
@@ -112,7 +112,7 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
             itemRenderer.renderStatic(renderingProperties.renderingItem().get(), ItemDisplayContext.FIXED, light, overlay, ms, buffer, null, 0);
             ms.popPose();
             ms.translate(0, (double)1/16 * renderingProperties.renderingHeight(), 0);
-            ms.scale(1 + 1/512F, 1F, 1 + 1/512F);
+            ms.scale(1 + 1/256F, 1F, 1 + 1/256F);
         }
         ms.popPose();
     }

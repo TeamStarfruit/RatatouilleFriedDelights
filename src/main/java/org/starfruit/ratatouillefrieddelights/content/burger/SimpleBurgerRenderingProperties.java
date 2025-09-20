@@ -41,5 +41,10 @@ public record SimpleBurgerRenderingProperties(int renderingPivot, int renderingH
                 RFDItems.TOP_BURGER_BUN.get(),
                 of(3, 2, RFDItems.TOP_BURGER_BUN::asStack)
         );
+
+        BURGER_RENDERING_PROPERTIES_MAP.put(
+                RFDItems.TARTAR_TOPPING.get(),
+                of(5, 1, RFDItems.TARTAR_TOPPING::asStack)
+        );
     }
 }

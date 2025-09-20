@@ -15,6 +15,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerAssemblyRecipe;
+import org.starfruit.ratatouillefrieddelights.content.burger.BurgerSaucingRecipe;
 import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryingRecipe;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.CoatingRecipe;
 import org.starfruit.ratatouillefrieddelights.content.drum_processor.TumblingRecipe;
@@ -30,7 +31,9 @@ public enum RFDRecipeTypes implements IRecipeTypeInfo {
     FRYING(FryingRecipe::new),
 
 
-    BURGER(() -> new ItemApplicationRecipe.Serializer<>(BurgerAssemblyRecipe::new), AllRecipeTypes.DEPLOYING::getType, false),;
+    BURGER_ASSEMBLY(() -> new ItemApplicationRecipe.Serializer<>(BurgerAssemblyRecipe::new), AllRecipeTypes.DEPLOYING::getType, false),
+    BURGER_SAUCING(() -> new StandardProcessingRecipe.Serializer<>(BurgerSaucingRecipe::new), AllRecipeTypes.FILLING::getType, false),
+    ;
     private final ResourceLocation id;
     private final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<?>> serializerObject;
     private final @Nullable DeferredHolder<RecipeType<?>, RecipeType<?>> typeObject;
