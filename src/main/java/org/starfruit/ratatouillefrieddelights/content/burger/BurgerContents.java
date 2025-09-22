@@ -2,6 +2,7 @@ package org.starfruit.ratatouillefrieddelights.content.burger;
 
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -10,6 +11,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.math.Fraction;
+import org.starfruit.ratatouillefrieddelights.entry.RFDDataComponents;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -146,5 +148,10 @@ public final class BurgerContents implements TooltipComponent
         public BurgerContents toImmutable() {
             return new BurgerContents(List.copyOf(this.items));
         }
+    }
+
+    public static void setBurger(ItemStack stack, List<ItemStack> contents) {
+        stack.set(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(contents));
+        stack.set(DataComponents.FOOD, BurgerItem.foodProperties(stack, null));
     }
 }

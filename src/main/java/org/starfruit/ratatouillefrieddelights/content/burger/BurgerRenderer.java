@@ -1,6 +1,7 @@
 package org.starfruit.ratatouillefrieddelights.content.burger;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModelRenderer;
@@ -86,6 +87,9 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
         if (!stack.has(RFDDataComponents.BURGER_CONTENTS))
             return;
 
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer player = mc.player;
+
         BurgerContents burgerContents = stack.getOrDefault(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(List.of(
                 new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
                 new ItemStack(ModItems.BEEF_PATTY.get()),
@@ -102,6 +106,11 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
         ms.translate(0, 3/16f, 0);
         if (transformType != ItemDisplayContext.FIXED)
             ms.scale(0.5F, 0.5F, 0.5F);
+
+        if (player != null && player.getUseItemRemainingTicks() > 0) {
+            ms.mulPose(Axis.YP.rotationDegrees(90.0F));
+        }
+
         for (ItemStack burgerContent : burgerContents.items()) {
             BurgerRenderingProperties renderingProperties = BurgerRenderingProperties.BURGER_RENDERING_PROPERTIES_MAP
                     .getOrDefault(burgerContent.getItem(), SimpleBurgerRenderingProperties.of(4, 3, () -> burgerContent)); // Height of 3 to provide maximum error

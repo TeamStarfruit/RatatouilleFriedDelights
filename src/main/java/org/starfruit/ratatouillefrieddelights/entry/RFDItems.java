@@ -2,6 +2,7 @@ package org.starfruit.ratatouillefrieddelights.entry;
 
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -17,6 +18,7 @@ import vectorwing.farmersdelight.common.registry.ModEffects;
 import vectorwing.farmersdelight.common.registry.ModItems;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class RFDItems {
     static {
@@ -241,16 +243,20 @@ public class RFDItems {
     public static final ItemEntry<Item> TARTAR_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tartar_topping", Item::new).register();
     public static final ItemEntry<Item> KETCHUP_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("ketchup_topping", Item::new).register();
 
+    private static final Supplier<List<ItemStack>> defaultBurger = () -> List.of(
+            new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
+            new ItemStack(ModItems.BEEF_PATTY.get()),
+            new ItemStack(RFDItems.CHEESE_SLICE.get()),
+            new ItemStack(ModItems.CABBAGE_LEAF.get()),
+            new ItemStack(RFDItems.TOMATO_SLICES.get()),
+            new ItemStack(RFDItems.TOP_BURGER_BUN.get())
+    );
+
     public static final ItemEntry<BurgerItem> BURGER = RatatouilleFriedDelights.REGISTRATE.item("burger", BurgerItem::new)
             .properties(
-                    properties -> properties.component(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(List.of(
-                            new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
-                            new ItemStack(ModItems.BEEF_PATTY.get()),
-                            new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                            new ItemStack(ModItems.CABBAGE_LEAF.get()),
-                            new ItemStack(RFDItems.TOMATO_SLICES.get()),
-                            new ItemStack(RFDItems.TOP_BURGER_BUN.get())
-                    )))
+                    properties -> properties
+                            .component(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(defaultBurger.get()))
+                            .component(DataComponents.FOOD, BurgerItem.foodPropertiesFromComponents(defaultBurger.get(), null))
             )
             .tag(RFDTags.AllItemTags.BURGER_BASE.tag, RFDTags.AllItemTags.BURGER_TOPPINGS.tag) // Yes, this is how I implemented it, don't question
             .model((ctx, prov) -> prov.getBuilder("item/" + ctx.getName()))

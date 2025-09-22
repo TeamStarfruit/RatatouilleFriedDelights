@@ -39,7 +39,7 @@ public class BurgerAssemblyRecipe extends DeployerApplicationRecipe {
         allItems.forEach(allItem -> allItem.setCount(1));
         allItems.removeIf(ItemStack::isEmpty);
 
-        burger.set(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(allItems));
+        BurgerContents.setBurger(burger, allItems);
 
         return burger;
     }
