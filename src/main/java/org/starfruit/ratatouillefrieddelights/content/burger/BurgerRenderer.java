@@ -98,8 +98,8 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
 
         ms.pushPose();
         ms.translate(0, 1/16f, 0);
-        if (transformType != ItemDisplayContext.FIXED)
-            ms.translate(0, 3/16f, 0);
+
+        ms.translate(0, 3/16f, 0);
         if (transformType != ItemDisplayContext.FIXED)
             ms.scale(0.5F, 0.5F, 0.5F);
         for (ItemStack burgerContent : burgerContents.items()) {
