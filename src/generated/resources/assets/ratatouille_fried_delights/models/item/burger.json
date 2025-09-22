@@ -1,1 +1,5 @@
-{}
+{
+  "textures": {
+    "particle": "ratatouille_fried_delights:item/empty"
+  }
+}

@@ -259,7 +259,7 @@ public class RFDItems {
                             .component(DataComponents.FOOD, BurgerItem.foodPropertiesFromComponents(defaultBurger.get(), null))
             )
             .tag(RFDTags.AllItemTags.BURGER_BASE.tag, RFDTags.AllItemTags.BURGER_TOPPINGS.tag) // Yes, this is how I implemented it, don't question
-            .model((ctx, prov) -> prov.getBuilder("item/" + ctx.getName()))
+            .model((ctx, prov) -> prov.getBuilder("item/" + ctx.getName()).texture("particle", RatatouilleFriedDelights.asResource("item/empty")))
             .register();
 
 
