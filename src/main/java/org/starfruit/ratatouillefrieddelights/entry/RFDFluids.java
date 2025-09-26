@@ -54,12 +54,6 @@ public class RFDFluids {
                     .source(BaseFlowingFluid.Source::new).block().build()
                     .bucket().build().register();
 
-    public static final FluidEntry<VirtualFluid> PANCAKE_BATTER =
-            RatatouilleFriedDelights.REGISTRATE
-                    .virtualFluid("pancake_batter")
-                    .lang("Pancake Batter")
-                    .register();
-
     public static final FluidEntry<VirtualFluid> ICE_CREAM_BASE =
             RatatouilleFriedDelights.REGISTRATE
                     .virtualFluid("ice_cream_base")

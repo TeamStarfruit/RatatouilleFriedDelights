@@ -1,6 +1,7 @@
 package org.starfruit.ratatouillefrieddelights.data.recipe;
 
 import com.google.common.base.Supplier;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.api.data.recipe.BaseRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
@@ -18,10 +19,12 @@ import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
+import org.forsteri.ratatouille.entry.CRItems;
 import org.jetbrains.annotations.NotNull;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.data.recipe.RFDRecipeProvider;
 import org.starfruit.ratatouillefrieddelights.entry.*;
+import vectorwing.farmersdelight.common.registry.ModItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,30 @@ public final class RFDStandardRecipeGen extends BaseRecipeProvider {
                     .viaShapeless(b -> b
                             .requires(RFDItems.TOP_BURGER_BUN.get())
             ),
+            SUNFLOWER_SEEDS = create(RFDItems.SUNFLOWER_SEEDS)
+                    .unlockedBy(Items.SUNFLOWER::asItem) // mandatory
+                    .viaShapeless(b -> b
+                            .requires(Items.SUNFLOWER)
+            ),
+            COLA_NUTS = create(RFDItems.COLA_NUTS)
+                    .unlockedBy(RFDItems.COLA_FRUITS::asItem) // mandatory
+                    .viaShapeless(b -> b
+                            .requires(RFDItems.COLA_FRUITS)
+            ),
+            COLA_PLANKS = create(RFDBlocks.COLA_PLANKS).returns(4)
+                    .unlockedBy(RFDBlocks.COLA_LOG::asItem) // mandatory
+                    .viaShapeless(b -> b
+                            .requires(RFDBlocks.COLA_LOG)
+                    ),
+            SECRET_SEASONING_POWDER = create(RFDItems.SECRET_SEASONING_POWDER).returns(3)
+                    .unlockedBy(Items.DRIED_KELP::asItem) // mandatory
+                    .viaShapeless(b -> b
+                            .requires(AllItems.WHEAT_FLOUR.get())
+                            .requires(Items.BEETROOT)
+                            .requires(Items.DRIED_KELP)
+                            .requires(CRItems.SALT)
+                            .requires(ModItems.ONION.get())
+            ),
             TALL_CUP = create(RFDItems.TALL_CUP).returns(3)
             .unlockedBy(Items.GLASS::asItem) // mandatory
             .viaShaped(b -> b
@@ -53,13 +80,33 @@ public final class RFDStandardRecipeGen extends BaseRecipeProvider {
                     .pattern(" Y ")
                     .define('Y', Items.GLASS)
             ),
-            CARDBOARD_STRAW = create(RFDItems.CARDBOARD_STRAW).returns(4)
+            CARDBOARD_STRAW = create(RFDItems.CARDBOARD_STRAW).returns(12)
                     .unlockedBy(Items.GLASS::asItem) // mandatory
                     .viaShaped(b -> b
-                            .pattern(" Y ")
                             .pattern("Y Y")
-                            .pattern(" Y ")
+                            .pattern("Y Y")
+                            .pattern("Y Y")
                             .define('Y', AllItems.CARDBOARD)
+                    ),
+            DRUM_PROCESSOR = create(RFDBlocks.DRUM_PROCESSOR)
+                    .unlockedBy(Items.IRON_INGOT::asItem) // mandatory
+                    .viaShaped(b -> b
+                            .pattern(" X ")
+                            .pattern(" Y ")
+                            .pattern(" Z ")
+                            .define('X', AllBlocks.INDUSTRIAL_IRON_BLOCK)
+                            .define('Y', AllBlocks.ANDESITE_CASING)
+                            .define('Z', AllBlocks.SHAFT)
+                    ),
+            CONTINUOUS_FRYER = create(RFDBlocks.CONTINUOUS_FRYER)
+                    .unlockedBy(Items.COPPER_INGOT::asItem) // mandatory
+                    .viaShaped(b -> b
+                            .pattern(" X ")
+                            .pattern(" Y ")
+                            .pattern(" Z ")
+                            .define('X', AllBlocks.ANDESITE_LADDER)
+                            .define('Y', AllBlocks.SHAFT)
+                            .define('Z', AllBlocks.COPPER_CASING)
                     );
     /*            CHEF_HAT_WITH_GOGGLES = create(CRItems.CHEF_HAT_WITH_GOGGLES)
                         .unlockedBy(CRItems.CHEF_HAT::get)

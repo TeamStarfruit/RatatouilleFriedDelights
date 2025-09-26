@@ -1,5 +1,6 @@
 package org.starfruit.ratatouillefrieddelights.data;
 
+import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
@@ -42,6 +43,14 @@ public class RFDRegistrateTags {
                         RFDItems.VANILLA_CONE.get(),
                         RFDItems.ICE_CUBES.get(),
                         RFDItems.CHOCOLATE_SUNDAE.get()
+                );
+
+        prov.tag(AllTags.AllItemTags.UPRIGHT_ON_BELT.tag)
+                .add(
+                        RFDItems.ICE_CREAM.get(),
+                        RFDItems.VANILLA_CONE.get(),
+                        RFDItems.CHOCOLATE_SUNDAE.get(),
+                        RFDItems.COLA.get()
                 );
 
         prov.tag(RFDTags.AllItemTags.BURGER_BASE.tag)

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "create:industrial_iron_block"
+    },
+    "Y": {
+      "item": "create:andesite_casing"
+    },
+    "Z": {
+      "item": "create:shaft"
+    }
+  },
+  "pattern": [
+    " X ",
+    " Y ",
+    " Z "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ratatouille_fried_delights:drum_processor"
+  }
+}

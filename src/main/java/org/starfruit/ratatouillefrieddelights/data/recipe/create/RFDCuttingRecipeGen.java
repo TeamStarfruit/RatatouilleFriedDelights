@@ -7,6 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import org.forsteri.ratatouille.entry.CRItems;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
+import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import vectorwing.farmersdelight.common.registry.ModItems;
 
@@ -57,7 +58,12 @@ public class RFDCuttingRecipeGen extends CuttingRecipeGen {
 
     CARDBOARD_STRAW_CUT = create("cardboard_straw", b -> b
             .require(AllItems.CARDBOARD.get())
-            .output(RFDItems.CARDBOARD_STRAW.get(), 1)
+            .output(RFDItems.CARDBOARD_STRAW.get(), 2)
+    ),
+
+    COLA_FRUITS_CUT = create("cola_fruits", b -> b
+            .require(RFDBlocks.COLA_FRUIT_BLOCK.get())
+            .output(RFDItems.COLA_FRUITS.get(), 2)
     );
 
     public RFDCuttingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

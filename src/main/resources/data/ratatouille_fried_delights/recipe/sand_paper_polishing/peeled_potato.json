@@ -1,0 +1,16 @@
+{
+  "type": "create:sandpaper_polishing",
+  "ingredients": [
+    {
+      "item": "minecraft:potato"
+    }
+  ],
+  "results": [
+    {
+      "item": {
+        "count": 1,
+        "id": "ratatouille_fried_delights:peeled_potato"
+      }
+    }
+  ]
+}

@@ -2,10 +2,10 @@
   "type": "create:deploying",
   "ingredients": [
     {
-      "item": "create:cardboard"
+      "item": "ratatouille_fried_delights:french_fries"
     },
     {
-      "item": "ratatouille_fried_delights:french_fries"
+      "item": "create:cardboard"
     }
   ],
   "results": [

@@ -1,0 +1,25 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "minecraft:apple"
+    }
+  ],
+  "result": [
+    {
+      "item": {
+        "count": 1,
+        "id": "ratatouille_fried_delights:apple_slices"
+      }
+    },
+    {
+      "item": {
+        "count": 1,
+        "id": "ratatouille_fried_delights:apple_slices"
+      }
+    }
+  ],
+  "tool": {
+    "tag": "c:tools/knife"
+  }
+}

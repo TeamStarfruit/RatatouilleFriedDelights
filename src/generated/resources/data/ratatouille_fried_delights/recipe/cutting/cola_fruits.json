@@ -2,13 +2,13 @@
   "type": "create:cutting",
   "ingredients": [
     {
-      "item": "create:cardboard"
+      "item": "ratatouille_fried_delights:cola_fruit_block"
     }
   ],
   "results": [
     {
       "count": 2,
-      "id": "ratatouille_fried_delights:cardboard_straw"
+      "id": "ratatouille_fried_delights:cola_fruits"
     }
   ]
 }

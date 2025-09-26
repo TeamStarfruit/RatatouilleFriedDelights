@@ -47,14 +47,6 @@
     },
     {
       "type": "single",
-      "resource": "ratatouille:fluid/pancake_batter_still"
-    },
-    {
-      "type": "single",
-      "resource": "ratatouille:fluid/pancake_batter_flow"
-    },
-    {
-      "type": "single",
       "resource": "ratatouille:fluid/ice_cream_base_still"
     },
     {

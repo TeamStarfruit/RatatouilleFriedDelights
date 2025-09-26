@@ -7,12 +7,12 @@
     }
   },
   "pattern": [
-    " Y ",
     "Y Y",
-    " Y "
+    "Y Y",
+    "Y Y"
   ],
   "result": {
-    "count": 4,
+    "count": 12,
     "id": "ratatouille_fried_delights:cardboard_straw"
   }
 }

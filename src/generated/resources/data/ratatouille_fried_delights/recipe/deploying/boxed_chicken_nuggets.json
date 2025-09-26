@@ -2,10 +2,10 @@
   "type": "create:deploying",
   "ingredients": [
     {
-      "item": "create:cardboard"
+      "item": "ratatouille_fried_delights:chicken_nuggets"
     },
     {
-      "item": "ratatouille_fried_delights:chicken_nuggets"
+      "item": "create:cardboard"
     }
   ],
   "results": [

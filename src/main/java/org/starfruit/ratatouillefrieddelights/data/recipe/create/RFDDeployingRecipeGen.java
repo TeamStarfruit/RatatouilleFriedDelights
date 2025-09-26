@@ -17,13 +17,13 @@ public class RFDDeployingRecipeGen extends DeployingRecipeGen {
             .output(RFDItems.BOBA_CUP.get(), 1)
     ),
             BOXED_FRIES = create("boxed_fries", b -> b
-                    .require(AllItems.CARDBOARD.get())
                     .require(RFDItems.FRENCH_FRIES.get())
+                    .require(AllItems.CARDBOARD.get())
                     .output(RFDItems.BOXED_FRIES.get(), 1)
     ),
             BOXED_CHICKEN_NUGGETS = create("boxed_chicken_nuggets", b -> b
-                    .require(AllItems.CARDBOARD.get())
                     .require(RFDItems.CHICKEN_NUGGETS.get())
+                    .require(AllItems.CARDBOARD.get())
                     .output(RFDItems.BOXED_CHICKEN_NUGGETS.get(), 1)
     );
 

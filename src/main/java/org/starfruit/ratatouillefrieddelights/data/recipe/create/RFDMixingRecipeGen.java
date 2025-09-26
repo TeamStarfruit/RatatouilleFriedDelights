@@ -57,7 +57,7 @@ public class RFDMixingRecipeGen extends MixingRecipeGen {
             .require(Items.DRIED_KELP)
             .require(CRItems.SALT)
             .require(ModItems.ONION.get())
-            .output(RFDItems.SECRET_SEASONING_POWDER.get())
+            .output(RFDItems.SECRET_SEASONING_POWDER.get(), 5)
     ),
 
     PUFF_PASTRY = create("puff_pastry", b -> b
@@ -124,6 +124,11 @@ public class RFDMixingRecipeGen extends MixingRecipeGen {
             .require(Items.SUGAR)
             .require(Tags.Fluids.WATER, 1000)
             .output(RFDFluids.COLA_SYRUP.get(), 1000)
+    ),
+
+    CONE_MOLD = create("cone_mold", b -> b
+            .require(AllItems.IRON_SHEET.get())
+            .output(RFDItems.CONE_MOLD.get())
     );
 
     public RFDMixingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

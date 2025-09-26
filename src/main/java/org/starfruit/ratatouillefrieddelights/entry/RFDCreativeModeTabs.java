@@ -83,6 +83,8 @@ public class RFDCreativeModeTabs {
             exclusions.add(RFDItems.UNPROCESSED_HOTCAKE_MEAL.get());
             exclusions.add(RFDItems.UNPROCESSED_RAW_APPLE_PIE.get());
             exclusions.add(RFDItems.UNPROCESSED_COLA.get());
+            exclusions.add(RFDItems.TARTAR_TOPPING.get());
+            exclusions.add(RFDItems.KETCHUP_TOPPING.get());
 
             return ((Predicate<Item>) exclusions::contains).or(RFDTags.AllItemTags.RATATOUILLE_TAB_INVISIBLE::matches);
         }
