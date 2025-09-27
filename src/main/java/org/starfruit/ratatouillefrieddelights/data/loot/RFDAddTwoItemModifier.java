@@ -11,18 +11,16 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 
-public class RFDAddItemModifier extends LootModifier {
-    public static final MapCodec<RFDAddItemModifier> CODEC = RecordCodecBuilder.mapCodec(inst ->
+public class RFDAddTwoItemModifier extends LootModifier {
+    public static final MapCodec<RFDAddTwoItemModifier> CODEC = RecordCodecBuilder.mapCodec(inst ->
             LootModifier.codecStart(inst).and(
                     BuiltInRegistries.ITEM.byNameCodec().fieldOf("item").forGetter(e -> e.item))
-                    .apply(inst, RFDAddItemModifier::new));
+                    .apply(inst, RFDAddTwoItemModifier::new));
     private final Item item;
-    private int count;
     //https://docs.neoforged.net/docs/resources/server/loottables/glm
-    public RFDAddItemModifier(LootItemCondition[] conditionsIn, Item item) {
+    public RFDAddTwoItemModifier(LootItemCondition[] conditionsIn, Item item) {
         super(conditionsIn);
         this.item = item;
-        this.count = count;
     }
 
     @Override
@@ -32,7 +30,9 @@ public class RFDAddItemModifier extends LootModifier {
                 return generatedLoot;
             }
         }
-        generatedLoot.add(new ItemStack(this.item));
+        ItemStack stack = new ItemStack(this.item);
+        stack.setCount(2);
+        generatedLoot.add(stack);
         return generatedLoot;
     }
 

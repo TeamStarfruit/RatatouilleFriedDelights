@@ -1,5 +1,5 @@
 {
-  "type": "ratatouille_fried_delights:add_item",
+  "type": "ratatouille_fried_delights:add_two_item",
   "conditions": [
     {
       "block": "minecraft:ice",
