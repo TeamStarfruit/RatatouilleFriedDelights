@@ -7,7 +7,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
-import org.starfruit.ratatouillefrieddelights.content.cola_fruit.ColaFruitBlock;
+import org.starfruit.ratatouillefrieddelights.content.colafruit.ColaFruitBlock;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
 
 public class ColaFruitDecorator extends TreeDecorator {

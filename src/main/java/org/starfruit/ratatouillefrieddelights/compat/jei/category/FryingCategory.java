@@ -17,8 +17,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.forsteri.ratatouille.entry.CRBlocks;
-import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryingRecipe;
+import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryingRecipe;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
 
 import java.util.ArrayList;

@@ -16,9 +16,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerAssemblyRecipe;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerSaucingRecipe;
-import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryingRecipe;
-import org.starfruit.ratatouillefrieddelights.content.drum_processor.CoatingRecipe;
-import org.starfruit.ratatouillefrieddelights.content.drum_processor.TumblingRecipe;
+import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryingRecipe;
+import org.starfruit.ratatouillefrieddelights.content.drumprocessor.CoatingRecipe;
+import org.starfruit.ratatouillefrieddelights.content.drumprocessor.TumblingRecipe;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
