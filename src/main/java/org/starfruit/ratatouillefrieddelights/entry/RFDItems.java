@@ -244,6 +244,10 @@ public class RFDItems {
     public static final ItemEntry<Item> KETCHUP_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("ketchup_topping", Item::new).register();
 
     public static final ItemEntry<Item> BOBA_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("boba_topping", Item::new).register();
+    public static final ItemEntry<Item> GLOW_BERRIES_BALL_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("glow_berries_ball_topping", Item::new).register();
+    public static final ItemEntry<Item> CHORUS_BOBA_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("chorus_boba_topping", Item::new).register();
+    public static final ItemEntry<Item> SLIME_JELLY_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("slime_jelly_topping", Item::new).register();
+    public static final ItemEntry<Item> COOKIES_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("cookies_topping", Item::new).register();
     public static final ItemEntry<Item> TEA_BOTTOM_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tea_bottom_topping", Item::new).register();
     public static final ItemEntry<Item> TEA_TOP_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tea_top_topping", Item::new).register();
 
