@@ -31,6 +31,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.starfruit.ratatouillefrieddelights.data.RFDDataGen;
 import net.neoforged.neoforge.registries.RegisterEvent;
+import org.starfruit.ratatouillefrieddelights.data.loot.RFDLootModifiers;
 import org.starfruit.ratatouillefrieddelights.entry.*;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.deco.RFDTreeDecoratorTypes;
 
@@ -60,6 +61,7 @@ public class RatatouilleFriedDelights {
         RFDRecipeTypes.register(modEventBus);
         RFDBlocks.register();
         RFDBlockEntityTypes.register();
+        RFDLootModifiers.register(modEventBus);
 
         RFDConfigs.register(modLoadingContext, modContainer);
 

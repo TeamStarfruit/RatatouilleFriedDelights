@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:cola_fruits"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ratatouille_fried_delights:cola_nuts"
+  }
+}

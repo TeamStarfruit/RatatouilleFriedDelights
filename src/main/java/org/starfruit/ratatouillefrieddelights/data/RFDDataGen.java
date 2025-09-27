@@ -113,6 +113,7 @@ public class RFDDataGen {
 
         generator.addProvider(event.includeServer(), new RFDStandardRecipeGen(output, lookupProvider));
         generator.addProvider(event.includeServer(), new RFDSequencedAssemblyRecipeGen(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new RFDGlobalLootModifierProvider(output, lookupProvider));
 
 
         if (event.includeServer()) {
