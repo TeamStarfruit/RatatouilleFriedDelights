@@ -13,7 +13,7 @@ import net.minecraft.world.item.Item;
 import org.starfruit.ratatouillefrieddelights.content.DrinkableItem;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerContents;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerItem;
-import org.starfruit.ratatouillefrieddelights.content.cola_fruit.ColaFruitItem;
+import org.starfruit.ratatouillefrieddelights.content.colafruit.ColaFruitItem;
 import vectorwing.farmersdelight.common.registry.ModEffects;
 import vectorwing.farmersdelight.common.registry.ModItems;
 

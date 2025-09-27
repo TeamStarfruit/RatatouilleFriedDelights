@@ -21,14 +21,14 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.ItemLike;
-import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryingRecipe;
-import org.starfruit.ratatouillefrieddelights.content.drum_processor.TumblingRecipe;
+import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryingRecipe;
+import org.starfruit.ratatouillefrieddelights.content.drumprocessor.TumblingRecipe;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.util.Lang;
 import org.jetbrains.annotations.NotNull;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.compat.jei.category.*;
-import org.starfruit.ratatouillefrieddelights.content.drum_processor.CoatingRecipe;
+import org.starfruit.ratatouillefrieddelights.content.drumprocessor.CoatingRecipe;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
 

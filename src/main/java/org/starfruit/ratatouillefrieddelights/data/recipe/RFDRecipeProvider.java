@@ -8,13 +8,13 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
-import org.starfruit.ratatouillefrieddelights.data.recipe.farmers_delights.FDCuttingRecipeGen;
+import org.starfruit.ratatouillefrieddelights.data.recipe.farmersdelights.FDCuttingRecipeGen;
 import org.starfruit.ratatouillefrieddelights.data.recipe.ratatouille.*;
 import org.starfruit.ratatouillefrieddelights.data.recipe.create.*;
 import org.jetbrains.annotations.NotNull;
-import org.starfruit.ratatouillefrieddelights.data.recipe.ratatouille_fry_delights.CoatingRecipeGen;
-import org.starfruit.ratatouillefrieddelights.data.recipe.ratatouille_fry_delights.FryingRecipeGen;
-import org.starfruit.ratatouillefrieddelights.data.recipe.ratatouille_fry_delights.TumblingRecipeGen;
+import org.starfruit.ratatouillefrieddelights.data.recipe.ratatouillefrydelights.CoatingRecipeGen;
+import org.starfruit.ratatouillefrieddelights.data.recipe.ratatouillefrydelights.FryingRecipeGen;
+import org.starfruit.ratatouillefrieddelights.data.recipe.ratatouillefrydelights.TumblingRecipeGen;
 
 import java.util.ArrayList;
 import java.util.List;

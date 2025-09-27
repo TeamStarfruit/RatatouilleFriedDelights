@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.starfruit.ratatouillefrieddelights.compat.jei.category.animations.AnimatedDrumProcessor;
-import org.starfruit.ratatouillefrieddelights.content.drum_processor.TumblingRecipe;
+import org.starfruit.ratatouillefrieddelights.content.drumprocessor.TumblingRecipe;
 
 import java.util.ArrayList;
 import java.util.List;

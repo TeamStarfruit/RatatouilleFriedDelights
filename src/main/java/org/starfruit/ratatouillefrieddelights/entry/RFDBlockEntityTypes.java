@@ -1,10 +1,9 @@
 package org.starfruit.ratatouillefrieddelights.entry;
 
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import org.forsteri.ratatouille.content.thresher.ThresherVisual;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
-import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.*;
-import org.starfruit.ratatouillefrieddelights.content.drum_processor.*;
+import org.starfruit.ratatouillefrieddelights.content.continuousfryer.*;
+import org.starfruit.ratatouillefrieddelights.content.drumprocessor.*;
 
 public class RFDBlockEntityTypes {
 

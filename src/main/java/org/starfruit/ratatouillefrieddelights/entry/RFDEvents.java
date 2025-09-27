@@ -1,8 +1,8 @@
 package org.starfruit.ratatouillefrieddelights.entry;
 
 import net.neoforged.fml.common.EventBusSubscriber;
-import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.ContinuousFryerBlockEntity;
-import org.starfruit.ratatouillefrieddelights.content.drum_processor.DrumProcessorBlockEntity;
+import org.starfruit.ratatouillefrieddelights.content.continuousfryer.ContinuousFryerBlockEntity;
+import org.starfruit.ratatouillefrieddelights.content.drumprocessor.DrumProcessorBlockEntity;
 
 @EventBusSubscriber
 public class RFDEvents {
