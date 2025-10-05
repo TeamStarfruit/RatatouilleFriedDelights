@@ -1,4 +1,4 @@
-package org.starfruit.ratatouillefrieddelights.content.continuous_fryer;
+package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllShapes;
@@ -42,6 +42,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 // TODO: 替换为你自己的 BE 类型注册类
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
+import org.starfruit.ratatouillefrieddelights.content.continuousfryer.*;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
 

@@ -1,4 +1,4 @@
-package org.starfruit.ratatouillefrieddelights.content.continuous_fryer;
+package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.equipment.armor.CardboardArmorHandler;

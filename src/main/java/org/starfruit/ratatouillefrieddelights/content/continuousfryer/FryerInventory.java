@@ -2,6 +2,8 @@ package org.starfruit.ratatouillefrieddelights.content.continuous_fryer;
 
 import static com.simibubi.create.content.kinetics.belt.transport.BeltTunnelInteractionHandler.flapTunnel;
 
+import static com.simibubi.create.content.kinetics.belt.transport.BeltTunnelInteractionHandler.flapTunnel;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
