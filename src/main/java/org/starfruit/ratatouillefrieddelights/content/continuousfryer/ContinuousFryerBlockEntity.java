@@ -5,20 +5,14 @@ import java.util.function.Function;
 
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.content.kinetics.belt.BeltBlock;
-import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
-import com.simibubi.create.content.kinetics.belt.BeltHelper;
-import com.simibubi.create.content.kinetics.belt.BeltPart;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
-import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour;
-import com.simibubi.create.content.kinetics.belt.transport.BeltInventory;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
-import com.simibubi.create.content.logistics.tunnel.BrassTunnelBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.inventory.VersionedInventoryTrackerBehaviour;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
+import com.simibubi.create.foundation.item.ItemHelper;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,6 +20,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -47,7 +42,7 @@ import static net.minecraft.core.Direction.AxisDirection.NEGATIVE;
 import static net.minecraft.core.Direction.AxisDirection.POSITIVE;
 
 public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation {
-    public Map<Entity, FryerMovementHandler.FriedEntityInfo> passengers;
+    public Map<Entity, FryerMovementHandler.FringEntityInfo> passengers;
     private FryingRecipe lastRecipe;
 
     public int fryerLength;
@@ -79,6 +74,25 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             return super.createRenderBoundingBox().inflate(fryerLength + 1);
     }
 
+    private List<ContinuousFryerBlockEntity> getConnectedChain() {
+        if (level == null) return List.of(this);
+        ContinuousFryerBlockEntity controller = getControllerBE();
+        if (controller == null) return List.of(this);
+
+        Direction.Axis axis = controller.getFryerFacing().getAxis();
+        List<ContinuousFryerBlockEntity> chain = new ArrayList<>();
+
+        BlockPos cursor = controller.getBlockPos();
+        for (int i = 0; i < controller.fryerLength; i++) {
+            BlockEntity be = level.getBlockEntity(cursor);
+            if (be instanceof ContinuousFryerBlockEntity fryer) {
+                chain.add(fryer);
+            }
+            cursor = axis == Direction.Axis.X ? cursor.east() : cursor.south();
+        }
+        return chain;
+    }
+
     @Override
     public void destroy() {
         super.destroy();
@@ -89,12 +103,43 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         if (controllerBE == null)
             return;
 
-        FryerInventory inv = controllerBE.getItemInventory();
-        if (inv == null)
+        var itemInv = controllerBE.getItemInventory();
+        if (itemInv == null)
             return;
 
-        inv.ejectAll();
-        controllerBE.notifyUpdate();
+        List<FryingItemStack> allItems = itemInv.getTransportedItems();
+        if (allItems == null)
+            return;
+        allItems = new ArrayList<>(allItems);
+
+        ItemHelper.dropContents(level, worldPosition, new ItemHandlerFryerSegment(itemInv, index));
+
+        List<ContinuousFryerBlockEntity> chain = controllerBE.getConnectedChain();
+        for (ContinuousFryerBlockEntity fryer : chain) {
+            fryer.itemInventory = new FryerInventory(fryer);
+        }
+
+        for (FryingItemStack item : allItems) {
+            float globalPos = item.fryerPosition;
+            int segmentIndex = Mth.clamp((int) globalPos, 0, chain.size() - 1);
+            float localPos = globalPos - segmentIndex;
+            ContinuousFryerBlockEntity target = chain.get(segmentIndex);
+
+            target.setController(target.worldPosition);
+
+            item.fryerPosition = localPos;
+            item.prevFryerPosition = localPos;
+            item.insertedAt = 0;
+            item.locked = false;
+            item.lockedExternally = false;
+
+            FryerInventory targetInv = target.getItemInventory();
+            targetInv.getTransportedItems().add(item);
+            targetInv.getTransportedItems()
+                    .sort((a, b) -> Float.compare(b.fryerPosition, a.fryerPosition));
+        }
+
+        updateNeighbours();
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -264,6 +309,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             chain.addFirst(cursor);
         }
 
+        List<FryingItemStack> mergedItems = new ArrayList<>();
         int length = chain.size();
         for (int i = 0; i < length; i++) {
             BlockPos pos = chain.get(i);
@@ -300,6 +346,25 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
                 }
             }
 
+            FryerInventory inv = fryer.itemInventory;
+            if (inv != null) {
+                List<FryingItemStack> stacks = inv.getTransportedItems();
+                if (stacks != null && !stacks.isEmpty()) {
+                    for (FryingItemStack stack : stacks) {
+                        float localPos = stack.fryerPosition;
+                        float globalPos = i + localPos;
+                        stack.fryerPosition = globalPos;
+                        stack.prevFryerPosition = globalPos;
+
+                        stack.locked = false;
+                        stack.lockedExternally = false;
+                        stack.insertedAt = i;
+                        mergedItems.add(stack);
+                    }
+                }
+            }
+            fryer.itemInventory = null;
+
             level.setBlock(pos, newState, 6);
             fryer.detachKinetics();
             fryer.clearKineticInformation();
@@ -307,6 +372,15 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             fryer.refreshCapability();
             fryer.requestModelDataUpdate();
             fryer.notifyUpdate();
+        }
+
+        ContinuousFryerBlockEntity controllerBE =
+                (ContinuousFryerBlockEntity) level.getBlockEntity(chain.getFirst());
+        if (controllerBE != null) {
+            FryerInventory controllerInv = controllerBE.getItemInventory();
+            controllerInv.getTransportedItems().clear();
+            controllerInv.getTransportedItems().addAll(mergedItems);
+            controllerBE.notifyUpdate();
         }
     }
 

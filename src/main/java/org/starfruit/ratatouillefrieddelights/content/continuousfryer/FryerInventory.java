@@ -443,6 +443,13 @@ public class FryerInventory {
         items.clear();
     }
 
+    public void clear() {
+        items.clear();
+        toInsert.clear();
+        toRemove.clear();
+        lazyClientItem = null;
+    }
+
     public void applyToEachWithin(float position, float maxDistanceToPosition,
                                   Function<FryingItemStack, FryingResult> processFunction) {
         boolean dirty = false;

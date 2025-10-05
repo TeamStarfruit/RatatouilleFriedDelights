@@ -6,7 +6,6 @@ import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltPart;
 import com.simibubi.create.content.kinetics.belt.BeltSlope;
-import com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -31,12 +30,12 @@ import static net.minecraft.core.Direction.AxisDirection.POSITIVE;
 import static net.minecraft.world.entity.MoverType.SELF;
 
 public class FryerMovementHandler {
-    public static class FriedEntityInfo {
+    public static class FringEntityInfo {
         int ticksSinceLastCollision;
         BlockPos lastCollidedPos;
         BlockState lastCollidedState;
 
-        public FriedEntityInfo(BlockPos collision, BlockState belt) {
+        public FringEntityInfo(BlockPos collision, BlockState belt) {
             refresh(collision, belt);
         }
 
@@ -46,7 +45,7 @@ public class FryerMovementHandler {
             lastCollidedState = belt;
         }
 
-        public FryerMovementHandler.FriedEntityInfo tick() {
+        public FringEntityInfo tick() {
             ticksSinceLastCollision++;
             return this;
         }
@@ -65,7 +64,7 @@ public class FryerMovementHandler {
         return true;
     }
 
-    public static void transportEntity(ContinuousFryerBlockEntity fryerBE, Entity entityIn, FriedEntityInfo info) {
+    public static void transportEntity(ContinuousFryerBlockEntity fryerBE, Entity entityIn, FringEntityInfo info) {
         BlockPos pos = info.lastCollidedPos;
         Level world = fryerBE.getLevel();
         if (world == null)

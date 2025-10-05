@@ -2,7 +2,6 @@ package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.equipment.armor.BacktankBlock;
 import com.simibubi.create.content.equipment.armor.DivingBootsItem;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.content.kinetics.belt.transport.BeltTunnelInteractionHandler;
@@ -42,10 +41,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.neoforged.neoforge.capabilities.Capabilities;
 
-// TODO: 替换为你自己的 BE 类型注册类
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
-import org.starfruit.ratatouillefrieddelights.content.continuousfryer.*;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
 
@@ -135,22 +132,22 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
         }
         return SINGLE_SHAPE;
     }
-
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (level.isClientSide)
-            return;
-        if (state.getBlock() == newState.getBlock())
-            return;
-        if (isMoving)
-            return;
-        if (!state.hasBlockEntity())
-            return;
-
-        withBlockEntityDo(level, pos, ContinuousFryerBlockEntity::updateNeighbours);
-
-        super.onRemove(state, level, pos, newState, isMoving);
-    }
+//
+//    @Override
+//    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+//        if (level.isClientSide)
+//            return;
+//        if (state.getBlock() == newState.getBlock())
+//            return;
+//        if (isMoving)
+//            return;
+//        if (!state.hasBlockEntity())
+//            return;
+//
+//        withBlockEntityDo(level, pos, ContinuousFryerBlockEntity::updateNeighbours);
+//
+//        super.onRemove(state, level, pos, newState, isMoving);
+//    }
 
     @Override
     public Class<ContinuousFryerBlockEntity> getBlockEntityClass() {
@@ -243,11 +240,11 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
         if (controller == null || controller.passengers == null)
             return;
         if (controller.passengers.containsKey(entityIn)) {
-            FryerMovementHandler.FriedEntityInfo info = controller.passengers.get(entityIn);
+            FryerMovementHandler.FringEntityInfo info = controller.passengers.get(entityIn);
             if (info.getTicksSinceLastCollision() != 0 || pos.equals(entityIn.blockPosition()))
                 info.refresh(pos, state);
         } else {
-            controller.passengers.put(entityIn, new FryerMovementHandler.FriedEntityInfo(pos, state));
+            controller.passengers.put(entityIn, new FryerMovementHandler.FringEntityInfo(pos, state));
             entityIn.setOnGround(true);
         }
     }
