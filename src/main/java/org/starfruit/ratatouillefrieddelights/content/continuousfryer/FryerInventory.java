@@ -1,4 +1,4 @@
-package org.starfruit.ratatouillefrieddelights.content.continuous_fryer;
+package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
 
 import static com.simibubi.create.content.kinetics.belt.transport.BeltTunnelInteractionHandler.flapTunnel;
 
@@ -16,9 +16,9 @@ import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehavi
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
-import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryingItemStackHandlerBehaviour.FryingResult;
+import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryingItemStackHandlerBehaviour.FryingResult;
 
-import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryerProcessingBehaviour.ProcessingResult;
+import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerProcessingBehaviour.ProcessingResult;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

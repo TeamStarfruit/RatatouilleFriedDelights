@@ -1,4 +1,4 @@
-package org.starfruit.ratatouillefrieddelights.content.continuous_fryer;
+package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;

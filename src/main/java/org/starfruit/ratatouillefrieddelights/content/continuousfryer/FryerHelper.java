@@ -1,4 +1,4 @@
-package org.starfruit.ratatouillefrieddelights.content.continuous_fryer;
+package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
 
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
