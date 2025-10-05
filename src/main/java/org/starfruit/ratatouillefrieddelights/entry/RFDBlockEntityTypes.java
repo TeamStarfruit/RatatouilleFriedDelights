@@ -9,7 +9,7 @@ public class RFDBlockEntityTypes {
 
     public static final BlockEntityEntry<ContinuousFryerBlockEntity> CONTINUOUS_FRYER = RatatouilleFriedDelights.REGISTRATE
             .blockEntity("continuous_fryer", ContinuousFryerBlockEntity::new)
-            .visual(() -> ContinuousFryerVisual::new)
+            .visual(() -> ContinuousFryerVisual::new, ContinuousFryerBlockEntity::shouldRenderNormally)
             .validBlocks(RFDBlocks.CONTINUOUS_FRYER)
             .renderer(() -> ContinuousFryerRenderer::new)
             .register();

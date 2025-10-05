@@ -2,6 +2,7 @@ package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllShapes;
+import com.simibubi.create.content.equipment.armor.BacktankBlock;
 import com.simibubi.create.content.equipment.armor.DivingBootsItem;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.content.kinetics.belt.transport.BeltTunnelInteractionHandler;
@@ -34,7 +35,9 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -50,6 +53,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<ContinuousFryerBlockEntity> {
     public static final Property<FryerPart> PART = EnumProperty.create("part", FryerPart.class);
+    public static final VoxelShape SINGLE_SHAPE = Shapes.join(AllShapes.CASING_13PX.get(Direction.UP), Block.box(2, 11, 2, 14, 13, 14), BooleanOp.ONLY_FIRST);
 
     public ContinuousFryerBlock(Properties properties) {
         super(properties);
@@ -95,7 +99,41 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
     @Override
     @ParametersAreNonnullByDefault
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
-        return AllShapes.CASING_13PX.get(Direction.UP);
+        FryerPart part = state.getValue(PART);
+        Direction facing = state.getValue(HORIZONTAL_FACING);
+
+        switch (part) {
+            case SINGLE -> {
+                return SINGLE_SHAPE;
+            }
+            case MIDDLE -> {
+                switch (facing.getAxis()) {
+                    case X -> {
+                        return Shapes.join(SINGLE_SHAPE, Block.box(0, 11, 2, 16, 13, 14), BooleanOp.ONLY_FIRST);
+                    }
+                    case Z -> {
+                        return Shapes.join(SINGLE_SHAPE, Block.box(2, 11, 0, 14, 13, 16), BooleanOp.ONLY_FIRST);
+                    }
+                }
+            }
+            case END -> {
+                switch (facing) {
+                    case NORTH -> {
+                        return Shapes.join(SINGLE_SHAPE, Block.box(2, 11, 0, 14, 13, 14), BooleanOp.ONLY_FIRST);
+                    }
+                    case SOUTH -> {
+                        return Shapes.join(SINGLE_SHAPE, Block.box(2, 11, 2, 14, 13, 16), BooleanOp.ONLY_FIRST);
+                    }
+                    case WEST -> {
+                        return Shapes.join(SINGLE_SHAPE, Block.box(0, 11, 2, 14, 13, 14), BooleanOp.ONLY_FIRST);
+                    }
+                    case EAST -> {
+                        return Shapes.join(SINGLE_SHAPE, Block.box(2, 11, 2, 16, 13, 14), BooleanOp.ONLY_FIRST);
+                    }
+                }
+            }
+        }
+        return SINGLE_SHAPE;
     }
 
     @Override

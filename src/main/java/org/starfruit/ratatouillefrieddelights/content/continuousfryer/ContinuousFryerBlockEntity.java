@@ -5,8 +5,10 @@ import java.util.function.Function;
 
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltHelper;
+import com.simibubi.create.content.kinetics.belt.BeltPart;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.BeltInventory;
@@ -537,4 +539,10 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         return getFryerMovementSpeed() * offset;
     }
 
+    public boolean shouldRenderNormally() {
+        if (level == null)
+            return isController();
+        BlockState state = getBlockState();
+        return state != null && state.hasProperty(ContinuousFryerBlock.PART) && state.getValue(ContinuousFryerBlock.PART) != FryerPart.MIDDLE;
+    }
 }

@@ -63,6 +63,8 @@ public class RatatouilleFriedDelights {
         RFDBlockEntityTypes.register();
         RFDLootModifiers.register(modEventBus);
 
+        RFDSpriteShifts.init();
+
         RFDConfigs.register(modLoadingContext, modContainer);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);

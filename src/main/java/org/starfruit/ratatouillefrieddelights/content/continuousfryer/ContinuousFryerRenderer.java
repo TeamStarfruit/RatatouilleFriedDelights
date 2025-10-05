@@ -3,7 +3,6 @@ package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.logistics.box.PackageItem;
 import com.simibubi.create.foundation.render.ShadowRenderHelper;
@@ -61,10 +60,7 @@ public class ContinuousFryerRenderer extends KineticBlockEntityRenderer<Continuo
         if (!VisualizationManager.supportsVisualization(be.getLevel())) {
 
             BlockState blockState = be.getBlockState();
-            if (!AllBlocks.BELT.has(blockState))
-                return;
 
-            FryerPart part = blockState.getValue(ContinuousFryerBlock.PART);
             Direction facing = blockState.getValue(ContinuousFryerBlock.HORIZONTAL_FACING);
             Direction.AxisDirection axisDirection = facing.getAxisDirection();
 
@@ -89,7 +85,7 @@ public class ContinuousFryerRenderer extends KineticBlockEntityRenderer<Continuo
                 SuperByteBuffer beltBuffer = CachedBuffers.partial(beltPartial, blockState)
                         .light(light);
 
-                SpriteShiftEntry spriteShift = RFDSpriteShifts.FRYER_BEL;
+                SpriteShiftEntry spriteShift = RFDSpriteShifts.FRYER_BELT;
 
                 // UV shift
                 float speed = be.getSpeed();
@@ -136,7 +132,7 @@ public class ContinuousFryerRenderer extends KineticBlockEntityRenderer<Continuo
         Vec3i directionVec = beltFacing.getNormal();
         Vec3 beltStartOffset = Vec3.atLowerCornerOf(directionVec)
                 .scale(-.5)
-                .add(.5, 15 / 16f, .5);
+                .add(.5, 13 / 16f, .5);
         ms.translate(beltStartOffset.x, beltStartOffset.y, beltStartOffset.z);
 
         int verticality = 0;
