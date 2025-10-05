@@ -8,6 +8,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
+import com.simibubi.create.foundation.item.ItemHelper;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,11 +16,13 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -28,13 +31,12 @@ import net.neoforged.neoforge.items.IItemHandler;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 
 import static com.simibubi.create.content.fluids.tank.FluidTankBlockEntity.getCapacityMultiplier;
+import static com.simibubi.create.content.kinetics.belt.BeltSlope.HORIZONTAL;
 import static net.minecraft.core.Direction.AxisDirection.NEGATIVE;
 import static net.minecraft.core.Direction.AxisDirection.POSITIVE;
 
 public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation {
-
-    public static final int FILLING_TIME = 20;
-
+    public Map<Entity, FryerMovementHandler.FriedEntityInfo> passengers;
     private FryingRecipe lastRecipe;
 
     public int fryerLength;
@@ -57,6 +59,31 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         return new SmartFluidTank(getCapacityMultiplier(), $->{});
     }
 
+    @Override
+    public AABB createRenderBoundingBox() {
+        if (!isController())
+            return super.createRenderBoundingBox();
+        else
+            return super.createRenderBoundingBox().inflate(fryerLength + 1);
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        if (level == null || level.isClientSide)
+            return;
+
+        ContinuousFryerBlockEntity controllerBE = getControllerBE();
+        if (controllerBE == null)
+            return;
+
+        FryerInventory inv = controllerBE.getItemInventory();
+        if (inv == null)
+            return;
+
+        inv.ejectAll();
+        controllerBE.notifyUpdate();
+    }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
@@ -234,6 +261,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
             fryer.setController(chain.getFirst());
             fryer.fryerLength = length;
+            fryer.index = i;
 
             FryerPart part;
             if (length == 1) {
@@ -261,6 +289,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             }
 
             level.setBlock(pos, newState, 6);
+            fryer.detachKinetics();
+            fryer.clearKineticInformation();
             fryer.attachKinetics();
             fryer.refreshCapability();
             fryer.requestModelDataUpdate();
@@ -304,6 +334,32 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             updateConnectivity();
             updateNeighbours();
         }
+
+        if (!isController())
+            return;
+
+        invalidateRenderBoundingBox();
+        getItemInventory().tick();
+
+        if (getSpeed() == 0)
+            return;
+
+        if (passengers == null)
+            passengers = new HashMap<>();
+
+        List<Entity> toRemove = new ArrayList<>();
+        passengers.forEach((entity, info) -> {
+            boolean canBeTransported = FryerMovementHandler.canBeTransported(entity);
+            boolean leftTheBelt = info.getTicksSinceLastCollision() > 1;
+            if (!canBeTransported || leftTheBelt) {
+                toRemove.add(entity);
+                return;
+            }
+
+            info.tick();
+            FryerMovementHandler.transportEntity(this, entity, info);
+        });
+        toRemove.forEach(passengers::remove);
     }
 
         @Override

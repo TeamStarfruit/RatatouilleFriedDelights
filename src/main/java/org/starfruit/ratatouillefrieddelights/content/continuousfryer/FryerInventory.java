@@ -1,4 +1,6 @@
-package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
+package org.starfruit.ratatouillefrieddelights.content.continuous_fryer;
+
+import static com.simibubi.create.content.kinetics.belt.transport.BeltTunnelInteractionHandler.flapTunnel;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -8,15 +10,13 @@ import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
-import com.simibubi.create.content.kinetics.belt.BeltBlock;
-import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
-import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryingItemStackHandlerBehaviour.FryingResult;
+import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryingItemStackHandlerBehaviour.FryingResult;
 
-import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerProcessingBehaviour.ProcessingResult;
+import org.starfruit.ratatouillefrieddelights.content.continuous_fryer.FryerProcessingBehaviour.ProcessingResult;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -85,8 +85,6 @@ public class FryerInventory {
         // Useful stuff
         float beltSpeed = fryer.getDirectionAwareBeltMovementSpeed();
         Direction movementFacing = fryer.getMovementFacing();
-        boolean horizontal = fryer.getBlockState()
-                .getValue(BeltBlock.SLOPE) == BeltSlope.HORIZONTAL;
         float spacing = 1;
         Level world = fryer.getLevel();
         boolean onClient = world.isClientSide && !fryer.isVirtual();
@@ -144,7 +142,7 @@ public class FryerInventory {
             float nextOffset = currentItem.fryerPosition + limitedMovement;
 
             // Belt item processing
-            if (!onClient && horizontal) {
+            if (!onClient) {
                 ItemStack item = currentItem.stack;
                 if (handleBeltProcessingAndCheckIfRemoved(currentItem, nextOffset, noMovement)) {
                     iterator.remove();
