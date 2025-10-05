@@ -1,6 +1,7 @@
 package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
 
 import com.simibubi.create.content.kinetics.belt.BeltHelper;
+import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.logistics.box.PackageItem;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -38,6 +39,20 @@ public class FryingItemStack implements Comparable<FryingItemStack>{
             angle = R.nextInt(4) * 90 + R.nextInt(20) - 10;
         sideOffset = prevSideOffset = getTargetSideOffset();
         insertedFrom = Direction.UP;
+    }
+
+    public FryingItemStack(TransportedItemStack t) {
+        this.stack = t  .stack;
+        this.fryerPosition = t.beltPosition;
+        this.prevFryerPosition = t.prevBeltPosition;
+        this.sideOffset = t.sideOffset;
+        this.prevSideOffset = t.prevSideOffset;
+        this.angle = t.angle;
+        this.insertedAt = t.insertedAt;
+        this.insertedFrom = t.insertedFrom;
+        this.locked = t.locked;
+        this.lockedExternally = t.lockedExternally;
+        this.processingTime = t.processingTime;
     }
 
     public float getTargetSideOffset() {

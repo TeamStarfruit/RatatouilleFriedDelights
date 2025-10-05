@@ -6,6 +6,7 @@ import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 public class RFDPartialModels {
     public static final PartialModel DRUM = block("block/drum_processor/partial");
     public static final PartialModel FRYER_AXIS = block("block/continuous_fryer/axis");
+    public static final PartialModel FRYER_BELT = block("block/continuous_fryer/belt");
 
     public RFDPartialModels(){}
 

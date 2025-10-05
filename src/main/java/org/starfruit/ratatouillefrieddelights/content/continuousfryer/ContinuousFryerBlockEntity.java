@@ -1,14 +1,22 @@
 package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
 
 import java.util.*;
+import java.util.function.Function;
 
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
+import com.simibubi.create.content.kinetics.belt.BeltHelper;
+import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
+import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour;
+import com.simibubi.create.content.kinetics.belt.transport.BeltInventory;
+import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
+import com.simibubi.create.content.logistics.tunnel.BrassTunnelBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.inventory.VersionedInventoryTrackerBehaviour;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
-import com.simibubi.create.foundation.item.ItemHelper;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,12 +25,14 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -31,7 +41,6 @@ import net.neoforged.neoforge.items.IItemHandler;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 
 import static com.simibubi.create.content.fluids.tank.FluidTankBlockEntity.getCapacityMultiplier;
-import static com.simibubi.create.content.kinetics.belt.BeltSlope.HORIZONTAL;
 import static net.minecraft.core.Direction.AxisDirection.NEGATIVE;
 import static net.minecraft.core.Direction.AxisDirection.POSITIVE;
 
@@ -49,6 +58,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     protected FryerInventory itemInventory;
     protected IItemHandler itemHandler;
 
+    public VersionedInventoryTrackerBehaviour invVersionTracker;
     public ContinuousFryerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         controller = pos;
@@ -300,7 +310,100 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+        super.addBehaviours(behaviours);
+        behaviours.add(new DirectBeltInputBehaviour(this).onlyInsertWhen(this::canInsertFrom)
+                .setInsertionHandler(this::tryInsertingFromSide).considerOccupiedWhen(this::isOccupied));
+        behaviours.add(new FryingItemStackHandlerBehaviour(this, this::applyToAllItems)
+                .withStackPlacement(this::getWorldPositionOf));
+        behaviours.add(invVersionTracker = new VersionedInventoryTrackerBehaviour(this));
+    }
 
+    private Vec3 getWorldPositionOf(FryingItemStack transported) {
+        ContinuousFryerBlockEntity controllerBE = getControllerBE();
+        if (controllerBE == null)
+            return Vec3.ZERO;
+        return FryerHelper.getVectorForOffset(controllerBE, transported.fryerPosition);
+    }
+
+    private void applyToAllItems(float maxDistanceFromCenter,
+                                 Function<FryingItemStack, FryingItemStackHandlerBehaviour.FryingResult> processFunction) {
+        ContinuousFryerBlockEntity controller = getControllerBE();
+        if (controller == null)
+            return;
+        FryerInventory inventory = controller.getItemInventory();
+        if (inventory != null)
+            inventory.applyToEachWithin(index + .5f, maxDistanceFromCenter, processFunction);
+    }
+
+    private boolean canInsertFrom(Direction side) {
+        if (getSpeed() == 0)
+            return false;
+        return getMovementFacing() != side.getOpposite();
+    }
+
+    private ItemStack tryInsertingFromSide(TransportedItemStack transportedStack, Direction side, boolean simulate) {
+        ContinuousFryerBlockEntity nextBeltController = getControllerBE();
+        ItemStack inserted = transportedStack.stack;
+        ItemStack empty = ItemStack.EMPTY;
+
+        if (nextBeltController == null)
+            return inserted;
+        FryerInventory nextInventory = nextBeltController.getItemInventory();
+        if (nextInventory == null)
+            return inserted;
+
+        if (isOccupied(side))
+            return inserted;
+        if (simulate)
+            return empty;
+
+        transportedStack = transportedStack.copy();
+        transportedStack.beltPosition = index + .5f - Math.signum(getDirectionAwareBeltMovementSpeed()) / 16f;
+
+        Direction movementFacing = getMovementFacing();
+        if (!side.getAxis()
+                .isVertical()) {
+            if (movementFacing != side) {
+                transportedStack.sideOffset = side.getAxisDirection()
+                        .getStep() * .675f;
+                if (side.getAxis() == Direction.Axis.X)
+                    transportedStack.sideOffset *= -1;
+            } else {
+                // This creates a smoother transition from belt to belt
+                float extraOffset = transportedStack.prevBeltPosition != 0
+                        && FryerHelper.getSegmentBE(level, worldPosition.relative(movementFacing.getOpposite())) != null
+                        ? .26f
+                        : 0;
+                transportedStack.beltPosition =
+                        getDirectionAwareBeltMovementSpeed() > 0 ? index - extraOffset : index + 1 + extraOffset;
+            }
+        }
+
+        transportedStack.prevSideOffset = transportedStack.sideOffset;
+        transportedStack.insertedAt = index;
+        transportedStack.insertedFrom = side;
+        transportedStack.prevBeltPosition = transportedStack.beltPosition;
+
+        nextInventory.addItem(new FryingItemStack(transportedStack));
+        nextBeltController.setChanged();
+        nextBeltController.sendData();
+        return empty;
+    }
+
+    private boolean isOccupied(Direction side) {
+        ContinuousFryerBlockEntity nextBeltController = getControllerBE();
+        if (nextBeltController == null)
+            return true;
+        FryerInventory nextInventory = nextBeltController.getItemInventory();
+        if (nextInventory == null)
+            return true;
+        if (getSpeed() == 0)
+            return true;
+        if (getMovementFacing() == side.getOpposite())
+            return true;
+        if (!nextInventory.canInsertAtFromSide(index, side))
+            return true;
+        return false;
     }
 
     public Direction getFryerFacing() {
@@ -327,14 +430,13 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
     @Override
     public void tick() {
-        super.tick();
-        if (level == null || level.isClientSide) return;
-        if (getControllerBE() == null || getFryerFacing().getAxis() != getControllerBE().getFryerFacing().getAxis()) {
+        if ((level != null && !level.isClientSide) && (getControllerBE() == null || getFryerFacing().getAxis() != getControllerBE().getFryerFacing().getAxis())) {
             setController(worldPosition);
             updateConnectivity();
             updateNeighbours();
         }
 
+        super.tick();
         if (!isController())
             return;
 
@@ -375,7 +477,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             compound.put("Controller", NbtUtils.writeBlockPos(controller));
         compound.putBoolean("IsController", isController());
         compound.putInt("Length", fryerLength);
-
+        if (isController())
+            compound.put("ItemInventory", getItemInventory().write(registries));
         super.write(compound, registries, clientPacket);
     }
 
@@ -386,6 +489,9 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         if (!isController())
             controller = NBTHelper.readBlockPos(compound, "Controller");
         fryerLength = compound.getInt("Length");
+
+        if (isController())
+            getItemInventory().read(compound.getCompound("ItemInventory"), registries, level);
 
         super.read(compound, registries, clientPacket);
     }
