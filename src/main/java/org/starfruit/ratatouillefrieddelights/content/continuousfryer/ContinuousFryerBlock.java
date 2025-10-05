@@ -89,7 +89,7 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
         InteractionResult result = super.onWrenched(state, context);
         withBlockEntityDo(context.getLevel(), context.getClickedPos(),
-                be -> {be.updateConnectivity();be.updateNeighbours();});
+                be -> {be.split(false);be.updateConnectivity();});
         return result;
     }
 

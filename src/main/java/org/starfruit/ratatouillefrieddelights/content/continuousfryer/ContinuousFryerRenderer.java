@@ -10,9 +10,11 @@ import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.animation.AnimationTickHolder;
+import net.createmod.catnip.animation.LerpedFloat;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.levelWrappers.WrappedLevel;
 import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.platform.NeoForgeCatnipServices;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SpriteShiftEntry;
 import net.createmod.catnip.render.SuperByteBuffer;
@@ -31,6 +33,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.starfruit.ratatouillefrieddelights.entry.RFDPartialModels;
 import org.starfruit.ratatouillefrieddelights.entry.RFDSpriteShifts;
 
@@ -115,8 +119,62 @@ public class ContinuousFryerRenderer extends KineticBlockEntityRenderer<Continuo
             }
 
         }
-
         renderItems(be, partialTicks, ms, buffer, light, overlay);
+
+
+        // fluid
+        if (!be.isController())
+            return;
+
+        LerpedFloat fluidLevel = be.getFluidLevel();
+        if (fluidLevel == null)
+            return;
+
+        float level = fluidLevel.getValue(partialTicks);
+        if (level <= 0)
+            return;
+
+        FluidTank tank = be.tankInventory;
+        FluidStack fluidStack = tank.getFluid();
+        if (fluidStack.isEmpty())
+            return;
+
+        float tankHullWidth = 2 / 16f;
+        float maxFluidHeight = 8 / 16f;
+        float fluidHeight = maxFluidHeight * Mth.clamp(level, 0, 1);
+
+        Direction facing = be.getFryerFacing();
+        boolean alongX = facing.getAxis() == Direction.Axis.X;
+
+        float length = be.fryerLength;
+        float width = 1.0f;
+
+        float xMin, xMax, zMin, zMax;
+        if (alongX) {
+            xMin = tankHullWidth;
+            xMax = length - tankHullWidth;
+            zMin = tankHullWidth;
+            zMax = width - tankHullWidth;
+        } else {
+            xMin = tankHullWidth;
+            xMax = width - tankHullWidth;
+            zMin = tankHullWidth;
+            zMax = length - tankHullWidth;
+        }
+
+        float yMin = 5 / 16f;
+        float yMax = yMin + fluidHeight;
+
+        ms.pushPose();
+        NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox(
+                fluidStack,
+                xMin, yMin, zMin,
+                xMax, yMax, zMax,
+                buffer, ms, light,
+                false, true
+        );
+        ms.popPose();
+
     }
 
     protected void renderItems(ContinuousFryerBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer,

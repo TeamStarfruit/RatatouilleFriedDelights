@@ -13,6 +13,7 @@ import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
 import com.simibubi.create.foundation.item.ItemHelper;
+import net.createmod.catnip.animation.LerpedFloat;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,6 +33,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -56,14 +58,17 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     protected IItemHandler itemHandler;
 
     public VersionedInventoryTrackerBehaviour invVersionTracker;
+    private LerpedFloat fluidLevel;
+    protected boolean forceFluidLevelUpdate;
     public ContinuousFryerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         controller = pos;
         tankInventory = createTankInventory();
+        forceFluidLevelUpdate = true;
     }
 
     protected SmartFluidTank createTankInventory() {
-        return new SmartFluidTank(getCapacityMultiplier(), $->{});
+        return new SmartFluidTank(getCapacityMultiplier(), this::onFluidStackChanged);
     }
 
     @Override
@@ -72,6 +77,14 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             return super.createRenderBoundingBox();
         else
             return super.createRenderBoundingBox().inflate(fryerLength + 1);
+    }
+
+    public void applyFluidTankSize(int blocks) {
+        tankInventory.setCapacity(blocks * getCapacityMultiplier());
+        int overflow = tankInventory.getFluidAmount() - tankInventory.getCapacity();
+        if (overflow > 0)
+            tankInventory.drain(overflow, IFluidHandler.FluidAction.EXECUTE);
+        forceFluidLevelUpdate = true;
     }
 
     private List<ContinuousFryerBlockEntity> getConnectedChain() {
@@ -98,7 +111,10 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         super.destroy();
         if (level == null || level.isClientSide)
             return;
+        split(true);
+    }
 
+    public void split(boolean dropContents) {
         ContinuousFryerBlockEntity controllerBE = getControllerBE();
         if (controllerBE == null)
             return;
@@ -111,12 +127,20 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         if (allItems == null)
             return;
         allItems = new ArrayList<>(allItems);
+        FluidStack totalFluid = controllerBE.tankInventory.getFluid();
+        int totalAmount = totalFluid.getAmount();
 
-        ItemHelper.dropContents(level, worldPosition, new ItemHandlerFryerSegment(itemInv, index));
+        if (dropContents) ItemHelper.dropContents(level, worldPosition, new ItemHandlerFryerSegment(itemInv, index));
 
         List<ContinuousFryerBlockEntity> chain = controllerBE.getConnectedChain();
         for (ContinuousFryerBlockEntity fryer : chain) {
             fryer.itemInventory = new FryerInventory(fryer);
+            fryer.tankInventory = fryer.createTankInventory();
+            if (totalAmount > 0 && !(dropContents && fryer == this)) {
+                int fillAmount = Math.min(totalAmount, fryer.tankInventory.getCapacity());
+                fryer.tankInventory.setFluid(new FluidStack(totalFluid.getFluid(), fillAmount));
+                totalAmount -= fillAmount;
+            }
         }
 
         for (FryingItemStack item : allItems) {
@@ -180,22 +204,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             return;
         }
 
-        Direction.Axis axis = getFryerFacing().getAxis();
-        BlockPos cursor = getBlockPos();
-        List<FluidTank> chain = new ArrayList<>();
-
-        for (int i = 0; i < fryerLength; i++) {
-            BlockEntity be = level.getBlockEntity(cursor);
-            if (be instanceof ContinuousFryerBlockEntity fryer) {
-                if (fryer.tankInventory == null) {
-                    fryer.tankInventory = createTankInventory();
-                }
-                chain.add(fryer.tankInventory);
-            }
-            cursor = axis == Direction.Axis.X ? cursor.east() : cursor.south();
-        }
-
-        fluidHandler = new CombinedTankWrapper(chain.toArray(new FluidTank[0]));
+        fluidHandler = tankInventory;
         itemHandler = new ItemHandlerFryerSegment(getItemInventory(), index);
     }
 
@@ -240,7 +249,13 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         if (controller.equals(this.controller))
             return;
         this.controller = controller;
+//        applyFluidTankSize(1);
+        onFluidStackChanged(tankInventory.getFluid());
         refreshCapability();
+    }
+
+    public LerpedFloat getFluidLevel() {
+        return fluidLevel;
     }
 
     public BlockPos getController() {
@@ -317,9 +332,9 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             if (!(be instanceof ContinuousFryerBlockEntity fryer))
                 continue;
 
-            fryer.setController(chain.getFirst());
             fryer.fryerLength = length;
             fryer.index = i;
+            fryer.setController(chain.getFirst());
 
             FryerPart part;
             if (length == 1) {
@@ -380,6 +395,32 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             FryerInventory controllerInv = controllerBE.getItemInventory();
             controllerInv.getTransportedItems().clear();
             controllerInv.getTransportedItems().addAll(mergedItems);
+
+            FluidStack mergedFluid = FluidStack.EMPTY;
+            for (var fryerPos : chain) {
+                BlockEntity be = level.getBlockEntity(fryerPos);
+                if (!(be instanceof ContinuousFryerBlockEntity fryer))
+                    continue;
+                FluidTank tank = fryer.tankInventory;
+                if (tank != null && !tank.getFluid().isEmpty()) {
+                    FluidStack fluid = tank.getFluid();
+                    if (mergedFluid.isEmpty()) {
+                        mergedFluid = fluid.copy();
+                    } else if (mergedFluid.getFluid().isSame(fluid.getFluid())) {
+                        mergedFluid.grow(fluid.getAmount());
+                    }
+                    tank.setFluid(FluidStack.EMPTY);
+                }
+            }
+
+            controllerBE.applyFluidTankSize(length);
+            if (!mergedFluid.isEmpty()) {
+                int capacity = controllerBE.tankInventory.getCapacity();
+                if (mergedFluid.getAmount() > capacity)
+                    mergedFluid.setAmount(capacity);
+                controllerBE.tankInventory.setFluid(mergedFluid);
+            }
+
             controllerBE.notifyUpdate();
         }
     }
@@ -504,6 +545,26 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         }
     }
 
+    protected void onFluidStackChanged(FluidStack newFluidStack) {
+        if (level == null)
+            return;
+        if (!level.isClientSide) {
+            setChanged();
+            sendData();
+        }
+
+        if (isVirtual()) {
+            if (fluidLevel == null)
+                fluidLevel = LerpedFloat.linear()
+                        .startWithValue(getFillState());
+            fluidLevel.chase(getFillState(), .5f, LerpedFloat.Chaser.EXP);
+        }
+    }
+
+    public float getFillState() {
+        return (float) tankInventory.getFluidAmount() / tankInventory.getCapacity();
+    }
+
     @Override
     public void tick() {
         if ((level != null && !level.isClientSide) && (getControllerBE() == null || getFryerFacing().getAxis() != getControllerBE().getFryerFacing().getAxis())) {
@@ -511,6 +572,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             updateConnectivity();
             updateNeighbours();
         }
+        if (fluidLevel != null)
+            fluidLevel.tickChaser();
 
         super.tick();
         if (!isController())
@@ -553,23 +616,63 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             compound.put("Controller", NbtUtils.writeBlockPos(controller));
         compound.putBoolean("IsController", isController());
         compound.putInt("Length", fryerLength);
-        if (isController())
+        if (isController()) {
             compound.put("ItemInventory", getItemInventory().write(registries));
+            compound.put("TankContent", tankInventory.writeToNBT(registries, new CompoundTag()));
+        }
         super.write(compound, registries, clientPacket);
+
+        if (!clientPacket)
+            return;
+        if (forceFluidLevelUpdate)
+            compound.putBoolean("ForceFluidLevel", true);
+        forceFluidLevelUpdate = false;
     }
 
     @Override
     protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        super.read(compound, registries, clientPacket);
+
+        BlockPos controllerBefore = controller;
+        int prevLength = fryerLength;
+
         if (compound.getBoolean("IsController"))
             controller = worldPosition;
         if (!isController())
             controller = NBTHelper.readBlockPos(compound, "Controller");
         fryerLength = compound.getInt("Length");
 
-        if (isController())
+        if (isController()){
             getItemInventory().read(compound.getCompound("ItemInventory"), registries, level);
+            tankInventory.setCapacity(fryerLength * getCapacityMultiplier());
+            tankInventory.readFromNBT(registries, compound.getCompound("TankContent"));
+            if (tankInventory.getSpace() < 0)
+                tankInventory.drain(-tankInventory.getSpace(), IFluidHandler.FluidAction.EXECUTE);
+        }
 
-        super.read(compound, registries, clientPacket);
+        if (compound.contains("ForceFluidLevel") || fluidLevel == null)
+            fluidLevel = LerpedFloat.linear()
+                    .startWithValue(getFillState());
+
+
+        if (!clientPacket)
+            return;
+
+        boolean changeOfController = !Objects.equals(controllerBefore, controller);
+        if (changeOfController || prevLength != fryerLength) {
+            if (hasLevel())
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 16);
+            if (isController())
+                tankInventory.setCapacity(getCapacityMultiplier() * fryerLength);
+            invalidateRenderBoundingBox();
+        }
+        if (isController()) {
+            float fillState = getFillState();
+            if (compound.contains("ForceFluidLevel") || fluidLevel == null)
+                fluidLevel = LerpedFloat.linear()
+                        .startWithValue(fillState);
+            fluidLevel.chase(fillState, 0.5f, LerpedFloat.Chaser.EXP);
+        }
     }
 
     public Direction getMovementFacing() {
