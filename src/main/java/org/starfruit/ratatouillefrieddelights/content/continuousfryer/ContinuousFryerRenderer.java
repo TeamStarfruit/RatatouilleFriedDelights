@@ -119,10 +119,12 @@ public class ContinuousFryerRenderer extends KineticBlockEntityRenderer<Continuo
             }
 
         }
+        renderFluid(be, partialTicks, ms, buffer, light, overlay);
         renderItems(be, partialTicks, ms, buffer, light, overlay);
+    }
 
-
-        // fluid
+    private void renderFluid(ContinuousFryerBlockEntity be, float partialTicks, PoseStack ms,
+                             MultiBufferSource buffer, int light, int overlay) {
         if (!be.isController())
             return;
 
@@ -140,7 +142,7 @@ public class ContinuousFryerRenderer extends KineticBlockEntityRenderer<Continuo
             return;
 
         float tankHullWidth = 2 / 16f;
-        float maxFluidHeight = 8 / 16f;
+        float maxFluidHeight = 6.5f / 16f;
         float fluidHeight = maxFluidHeight * Mth.clamp(level, 0, 1);
 
         Direction facing = be.getFryerFacing();
@@ -174,7 +176,6 @@ public class ContinuousFryerRenderer extends KineticBlockEntityRenderer<Continuo
                 false, true
         );
         ms.popPose();
-
     }
 
     protected void renderItems(ContinuousFryerBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer,
