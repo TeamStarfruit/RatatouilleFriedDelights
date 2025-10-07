@@ -79,7 +79,10 @@ public class ContinuousFryerVisual extends KineticBlockEntityVisual<ContinuousFr
     }
 
     private ScrollInstance setup(ScrollInstance key) {
-        Direction facing = blockState.getValue(ContinuousFryerBlock.HORIZONTAL_FACING);
+        Direction facing = blockState.getValue(ContinuousFryerBlock.HORIZONTAL_FACING).getAxis()
+                == Direction.Axis.X
+                ? Direction.EAST
+                : Direction.SOUTH;
         boolean alongX = facing.getAxis() == Direction.Axis.X;
 
         float speed = blockEntity.getSpeed();
