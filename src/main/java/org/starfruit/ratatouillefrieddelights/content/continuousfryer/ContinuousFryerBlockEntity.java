@@ -60,6 +60,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     public VersionedInventoryTrackerBehaviour invVersionTracker;
     private LerpedFloat fluidLevel;
     protected boolean forceFluidLevelUpdate;
+
+    private boolean updateConnectivity = true;
     public ContinuousFryerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         controller = pos;
@@ -574,6 +576,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         }
         if (fluidLevel != null)
             fluidLevel.tickChaser();
+        if (updateConnectivity)
+            updateConnectivity();
 
         super.tick();
         if (!isController())
@@ -612,6 +616,9 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
     @Override
     public void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        super.write(compound, registries, clientPacket);
+        if (updateConnectivity)
+            compound.putBoolean("Uninitialized", true);
         if (controller != null)
             compound.put("Controller", NbtUtils.writeBlockPos(controller));
         compound.putBoolean("IsController", isController());
@@ -621,8 +628,6 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             compound.put("ItemInventory", getItemInventory().write(registries));
             compound.put("TankContent", tankInventory.writeToNBT(registries, new CompoundTag()));
         }
-        super.write(compound, registries, clientPacket);
-
         if (!clientPacket)
             return;
         if (forceFluidLevelUpdate)
@@ -633,6 +638,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     @Override
     protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
         super.read(compound, registries, clientPacket);
+
+        updateConnectivity = compound.contains("Uninitialized");
 
         BlockPos controllerBefore = controller;
         int prevLength = fryerLength;
