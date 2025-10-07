@@ -616,6 +616,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             compound.put("Controller", NbtUtils.writeBlockPos(controller));
         compound.putBoolean("IsController", isController());
         compound.putInt("Length", fryerLength);
+        compound.putInt("Index", index);
         if (isController()) {
             compound.put("ItemInventory", getItemInventory().write(registries));
             compound.put("TankContent", tankInventory.writeToNBT(registries, new CompoundTag()));
@@ -641,6 +642,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         if (!isController())
             controller = NBTHelper.readBlockPos(compound, "Controller");
         fryerLength = compound.getInt("Length");
+        index = compound.getInt("Index");
 
         if (isController()){
             getItemInventory().read(compound.getCompound("ItemInventory"), registries, level);
