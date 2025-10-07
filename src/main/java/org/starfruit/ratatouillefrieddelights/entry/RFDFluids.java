@@ -11,6 +11,7 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidStack;
+import org.forsteri.ratatouille.content.NoPlaceBucketItem;
 import org.joml.Vector3f;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 
@@ -18,23 +19,32 @@ import java.util.function.Supplier;
 
 public class RFDFluids {
 
-    public static final FluidEntry<VirtualFluid> COLA_SYRUP =
+    public static final FluidEntry<BaseFlowingFluid.Flowing> COLA_SYRUP =
             RatatouilleFriedDelights.REGISTRATE
-                    .virtualFluid("cola_syrup")
+                    .standardFluid("cola_syrup")
+                    .properties(p -> p
+                            .density(1450))
                     .lang("Cola Syrup")
-                    .register();
+                    .source(BaseFlowingFluid.Source::new).block().build()
+                    .bucket().build().register();
 
-    public static final FluidEntry<VirtualFluid> SUNFLOWER_OIL =
+    public static final FluidEntry<BaseFlowingFluid.Flowing> SUNFLOWER_OIL =
             RatatouilleFriedDelights.REGISTRATE
-                    .virtualFluid("sunflower_oil")
+                    .standardFluid("sunflower_oil")
+                    .properties(p -> p
+                            .density(1450))
                     .lang("Sunflower Oil")
-                    .register();
+                    .source(BaseFlowingFluid.Source::new).block().build()
+                    .bucket().build().register();
 
-    public static final FluidEntry<VirtualFluid> MAYONNAISE =
+    public static final FluidEntry<BaseFlowingFluid.Flowing> MAYONNAISE =
             RatatouilleFriedDelights.REGISTRATE
-                    .virtualFluid("mayonnaise")
+                    .standardFluid("mayonnaise")
+                    .properties(p -> p
+                            .density(1050))
                     .lang("Mayonnaise")
-                    .register();
+                    .source(BaseFlowingFluid.Source::new).block().build()
+                    .bucket().build().register();
 
     public static final FluidEntry<BaseFlowingFluid.Flowing> TARTAR_SAUCE =
             RatatouilleFriedDelights.REGISTRATE
@@ -50,15 +60,18 @@ public class RFDFluids {
                     .standardFluid("ketchup")
                     .properties(p -> p
                             .density(1050))
-                    .lang("ketchup")
+                    .lang("Ketchup")
                     .source(BaseFlowingFluid.Source::new).block().build()
                     .bucket().build().register();
 
-    public static final FluidEntry<VirtualFluid> ICE_CREAM_BASE =
+    public static final FluidEntry<BaseFlowingFluid.Flowing> ICE_CREAM_BASE =
             RatatouilleFriedDelights.REGISTRATE
-                    .virtualFluid("ice_cream_base")
+                    .standardFluid("ice_cream_base")
+                    .properties(p -> p
+                            .density(1050))
                     .lang("Ice Cream Base")
-                    .register();
+                    .source(BaseFlowingFluid.Source::new).block().build()
+                    .bucket().build().register();
 
     static {
         RatatouilleFriedDelights.REGISTRATE.setCreativeTab(RFDCreativeModeTabs.BASE_CREATIVE_TAB);

@@ -48,6 +48,18 @@ public final class RFDStandardRecipeGen extends BaseRecipeProvider {
                     .viaShapeless(b -> b
                             .requires(RFDItems.TOP_BURGER_BUN.get())
             ),
+            BREADED_ORIGINAL_DRUMSTICK = create(RFDItems.BREADED_ORIGINAL_DRUMSTICK)
+                    .unlockedBy(RFDItems.BATTERED_ORIGINAL_DRUMSTICK::asItem) // mandatory
+                    .viaShapeless(b -> b
+                            .requires(RFDItems.BATTERED_ORIGINAL_DRUMSTICK.get())
+                            .requires(RFDItems.BREADCRUMB.get())
+                    ),
+            BREADED_ORIGINAL_KEEL = create(RFDItems.BREADED_ORIGINAL_KEEL)
+                    .unlockedBy(RFDItems.BATTERED_ORIGINAL_KEEL::asItem) // mandatory
+                    .viaShapeless(b -> b
+                            .requires(RFDItems.BATTERED_ORIGINAL_KEEL.get())
+                            .requires(RFDItems.BREADCRUMB.get())
+            ),
             SUNFLOWER_SEEDS = create(RFDItems.SUNFLOWER_SEEDS)
                     .unlockedBy(Items.SUNFLOWER::asItem) // mandatory
                     .viaShapeless(b -> b
