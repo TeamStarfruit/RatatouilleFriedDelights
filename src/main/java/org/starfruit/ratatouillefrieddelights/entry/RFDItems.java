@@ -253,9 +253,9 @@ public class RFDItems {
 
     private static final Supplier<List<ItemStack>> defaultBurger = () -> List.of(
             new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
-            new ItemStack(ModItems.BEEF_PATTY),
+            new ItemStack(ModItems.BEEF_PATTY.get()),
             new ItemStack(RFDItems.CHEESE_SLICE.get()),
-            new ItemStack(ModItems.CABBAGE_LEAF),
+            new ItemStack(ModItems.CABBAGE_LEAF.get()),
             new ItemStack(RFDItems.TOMATO_SLICES.get()),
             new ItemStack(RFDItems.TOP_BURGER_BUN.get())
     );
