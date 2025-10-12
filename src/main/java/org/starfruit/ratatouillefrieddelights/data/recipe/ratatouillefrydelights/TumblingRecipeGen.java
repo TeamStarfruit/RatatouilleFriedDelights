@@ -1,6 +1,7 @@
 package org.starfruit.ratatouillefrieddelights.data.recipe.ratatouillefrydelights;
 
 import com.simibubi.create.AllItems;
+import net.neoforged.neoforge.items.IItemHandler;
 import com.simibubi.create.api.data.recipe.StandardProcessingRecipeGen;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.minecraft.core.HolderLookup;
@@ -45,6 +46,7 @@ public class TumblingRecipeGen extends StandardProcessingRecipeGen<TumblingRecip
                     "peeled_potato",
                     b -> b
                             .require(Items.POTATO)
+                            .require(Items.SAND)
                             .output(RFDItems.PEELED_POTATO)
                             .duration(100)
 

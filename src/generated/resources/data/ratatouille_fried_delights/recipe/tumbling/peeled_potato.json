@@ -3,6 +3,9 @@
   "ingredients": [
     {
       "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:sand"
     }
   ],
   "processing_time": 100,
