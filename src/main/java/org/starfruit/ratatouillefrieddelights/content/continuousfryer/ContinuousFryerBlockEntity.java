@@ -288,6 +288,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
     public void updateConnectivity() {
         if (level == null || level.isClientSide) return;
+        updateConnectivity = false;
         if (!isController())
             return;
 
@@ -617,8 +618,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     @Override
     public void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
         super.write(compound, registries, clientPacket);
-        if (updateConnectivity)
-            compound.putBoolean("Uninitialized", true);
+//        compound.putBoolean("Uninitialized", updateConnectivity);
         if (controller != null)
             compound.put("Controller", NbtUtils.writeBlockPos(controller));
         compound.putBoolean("IsController", isController());
@@ -639,7 +639,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
         super.read(compound, registries, clientPacket);
 
-        updateConnectivity = compound.contains("Uninitialized");
+//        updateConnectivity = compound.getBoolean("Uninitialized");
 
         BlockPos controllerBefore = controller;
         int prevLength = fryerLength;
