@@ -4,18 +4,25 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
+import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
+import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.item.ItemHelper;
+import com.simibubi.create.foundation.utility.CreateLang;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.createmod.catnip.data.Pair;
 import net.createmod.catnip.gui.element.GuiGameElement;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryingRecipe;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
@@ -24,6 +31,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FryingCategory extends CreateRecipeCategory<FryingRecipe> {
+
+    private static final int Y_OFFSET = -15;
+    private static final int INPUT_Y_ADJUST = -10;
+
     public FryingCategory(Info<FryingRecipe> info) {
         super(info);
     }
@@ -31,59 +42,72 @@ public class FryingCategory extends CreateRecipeCategory<FryingRecipe> {
     @Override
     protected void setRecipe(IRecipeLayoutBuilder builder, FryingRecipe recipe, IFocusGroup focuses) {
         List<Pair<Ingredient, MutableInt>> condensedIngredients = ItemHelper.condenseIngredients(recipe.getIngredients());
-
-        int size = condensedIngredients.size();
-        int xOffset = size < 3 ? (3 - size) * 19 / 2 : 0;
-        int i = 0;
-
-        for (Pair<Ingredient, MutableInt> pair : condensedIngredients) {
+        if (!condensedIngredients.isEmpty()) {
+            Pair<Ingredient, MutableInt> pair = condensedIngredients.get(0);
             List<ItemStack> stacks = new ArrayList<>();
             for (ItemStack itemStack : pair.getFirst().getItems()) {
                 ItemStack copy = itemStack.copy();
                 copy.setCount(pair.getSecond().getValue());
                 stacks.add(copy);
             }
-
-            builder
-                    .addSlot(RecipeIngredientRole.INPUT, 0 + xOffset + (i % 3) * 19, 2 - (i / 3) * 19)
+            builder.addSlot(RecipeIngredientRole.INPUT, 20, 35 + Y_OFFSET + INPUT_Y_ADJUST)
                     .setBackground(getRenderedSlot(), -1, -1)
                     .addItemStacks(stacks);
-            i++;
         }
-        List<ProcessingOutput> results = recipe.getRollableResults();
-        boolean single = results.size() == 1;
-        int y = 0;
-        for (ProcessingOutput output : results) {
-            int xOffset2 = y % 2 == 0 ? 0 : 19;
-            int yOffset2 = (y / 2) * -19;
 
-            builder
-                    .addSlot(RecipeIngredientRole.OUTPUT, single ? 139 : 133 + xOffset2, 27 + yOffset2)
+        if (!recipe.getFluidIngredients().isEmpty()) {
+            FluidIngredient fluidIn = recipe.getFluidIngredients().get(0);
+            addFluidSlot(builder, 20, 55 + Y_OFFSET + INPUT_Y_ADJUST, fluidIn);
+        }
+
+        List<ProcessingOutput> results = recipe.getRollableResults();
+        if (!results.isEmpty()) {
+            ProcessingOutput output = results.get(0);
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 140, 35 + Y_OFFSET)
                     .setBackground(getRenderedSlot(output), -1, -1)
                     .addItemStack(output.getStack())
                     .addRichTooltipCallback(addStochasticTooltip(output));
+        }
 
-            y++;
+        HeatCondition requiredHeat = recipe.getRequiredHeat();
+        if (!requiredHeat.testBlazeBurner(HeatLevel.NONE)) {
+            builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 100, 52 + Y_OFFSET)
+                    .addItemStack(com.simibubi.create.AllBlocks.BLAZE_BURNER.asStack());
+        }
+        if (!requiredHeat.testBlazeBurner(HeatLevel.KINDLED)) {
+            builder.addSlot(RecipeIngredientRole.CATALYST, 120, 52 + Y_OFFSET)
+                    .addItemStack(com.simibubi.create.AllItems.BLAZE_CAKE.asStack());
         }
     }
 
     @Override
     protected void draw(FryingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gui, double mouseX, double mouseY) {
-        int blockX = 30;
-        int blocky = 38;
-        AllGuiTextures.JEI_ARROW.render(gui, 85, 30);
-        AllGuiTextures.JEI_SHADOW.render(gui, blockX, blocky);
-        AllGuiTextures.JEI_DOWN_ARROW.render(gui, blockX + 12, blocky - 32);
+        int blockX = 40;
+        int blockY = 50 + Y_OFFSET;
+
+        AllGuiTextures.JEI_ARROW.render(gui, 85, 35 + Y_OFFSET);
+        AllGuiTextures.JEI_SHADOW.render(gui, blockX, blockY);
+        AllGuiTextures.JEI_DOWN_ARROW.render(gui, blockX + 10, blockY - 32);
+
         PoseStack stack = gui.pose();
         stack.pushPose();
-        stack.translate(blockX -5, blocky - 5, 0);
+        stack.translate(blockX - 8, blockY - 5, 0);
         stack.mulPose(Axis.XP.rotationDegrees(-12.5f));
         stack.mulPose(Axis.YP.rotationDegrees(22.5f));
         GuiGameElement.of(RFDBlocks.CONTINUOUS_FRYER.getDefaultState())
-                .scale(22)
+                .scale(24)
                 .atLocal(0, 0, 2)
                 .lighting(AnimatedKinetics.DEFAULT_LIGHTING)
                 .render(gui);
         stack.popPose();
+
+        HeatCondition requiredHeat = recipe.getRequiredHeat();
+        boolean noHeat = requiredHeat == HeatCondition.NONE;
+
+        if (noHeat)
+            return;
+        gui.drawString(Minecraft.getInstance().font,
+                CreateLang.translateDirect(requiredHeat.getTranslationKey()),
+                90, 35 + Y_OFFSET + INPUT_Y_ADJUST, requiredHeat.getColor(), false);
     }
 }
