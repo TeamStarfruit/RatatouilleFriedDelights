@@ -9,10 +9,12 @@ import com.simibubi.create.content.logistics.box.PackageEntity;
 import com.simibubi.create.foundation.advancement.AdvancementBehaviour;
 import com.simibubi.create.foundation.block.IBE;
 
+import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.item.ItemHelper;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -111,6 +113,10 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
             if (fluidHandler == null)
                 return;
 
+            var controller = be.getControllerBE();
+            if (controller == null)
+                return;
+
             if (stack.is(RFDItems.SUNFLOWER_SEED_OIL_BOTTLE.get())) {
                 FluidStack oil = new FluidStack(
                         RFDFluids.SUNFLOWER_OIL,
@@ -133,7 +139,7 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
                     }
                 }
             }
-            if (stack.is(Items.GLASS_BOTTLE)) {
+            else if (stack.is(Items.GLASS_BOTTLE)) {
                 FluidStack drainSimulated = fluidHandler.drain(125, IFluidHandler.FluidAction.SIMULATE);
                 if (drainSimulated.isEmpty())
                     return;
@@ -151,6 +157,19 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
                     }
                     level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.5f, 1.0f);
                 }
+            }
+            else {
+                FluidStack before = fluidHandler.getFluidInTank(0).copy();
+
+                boolean emptied = FluidHelper.tryEmptyItemIntoBE(level, player, hand, stack, controller);
+                boolean filled  = !emptied && FluidHelper.tryFillItemFromBE(level, player, hand, stack, controller);
+
+                if (!emptied && !filled)
+                    return;
+
+                FluidStack after = fluidHandler.getFluidInTank(0);
+                SoundEvent sound = emptied ? FluidHelper.getEmptySound(after) : FluidHelper.getFillSound(before);
+                level.playSound(null, pos, sound, SoundSource.BLOCKS, 0.5F, 1.0F);
             }
         });
 
