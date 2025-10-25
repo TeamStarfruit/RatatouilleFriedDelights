@@ -7,23 +7,32 @@ import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
+import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.inventory.VersionedInventoryTrackerBehaviour;
-import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
 import com.simibubi.create.foundation.item.ItemHelper;
+import com.simibubi.create.foundation.recipe.RecipeApplier;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.animation.LerpedFloat;
 import net.createmod.catnip.nbt.NBTHelper;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,8 +47,11 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
+import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
+import org.starfruit.ratatouillefrieddelights.util.Lang;
 
 import static com.simibubi.create.content.fluids.tank.FluidTankBlockEntity.getCapacityMultiplier;
+import static com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel.*;
 import static net.minecraft.core.Direction.AxisDirection.NEGATIVE;
 import static net.minecraft.core.Direction.AxisDirection.POSITIVE;
 
@@ -64,7 +76,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     private boolean updateConnectivity = true;
     public ContinuousFryerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        controller = pos;
+//        controller = pos;
         tankInventory = createTankInventory();
         forceFluidLevelUpdate = true;
     }
@@ -87,6 +99,21 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         if (overflow > 0)
             tankInventory.drain(overflow, IFluidHandler.FluidAction.EXECUTE);
         forceFluidLevelUpdate = true;
+    }
+
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        var controllerBE = getControllerBE();
+        if (controllerBE == null || level == null)
+            return false;
+
+        containedFluidTooltip(tooltip, isPlayerSneaking, controllerBE.tankInventory);
+
+        BlazeBurnerBlock.HeatLevel heatLevel = controllerBE.getHeatLevel();
+        Lang.translate("fryer.heat_level").forGoggles(tooltip);
+        Lang.translate("fryer."+heatLevel.getSerializedName()).style(ChatFormatting.GOLD).forGoggles(tooltip, 1);
+
+        return super.addToGoggleTooltip(tooltip, isPlayerSneaking);
     }
 
     private List<ContinuousFryerBlockEntity> getConnectedChain() {
@@ -289,8 +316,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     public void updateConnectivity() {
         if (level == null || level.isClientSide) return;
         updateConnectivity = false;
-        if (!isController())
-            return;
+//        if (!isController())
+//            return;
 
         Direction.Axis axis = getBlockState()
                 .getValue(ContinuousFryerBlock.HORIZONTAL_FACING)
@@ -541,7 +568,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             if (neighbourState.getBlock() instanceof ContinuousFryerBlock) {
                 BlockEntity fryerBe = level.getBlockEntity(neighbourPos);
                 if (fryerBe instanceof ContinuousFryerBlockEntity fryer && !fryer.isRemoved()) {
-                    fryer.setController(fryer.getBlockPos());
+//                    fryer.setController(fryer.getBlockPos());
                     fryer.updateConnectivity();
                 }
             }
@@ -587,6 +614,11 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         invalidateRenderBoundingBox();
         getItemInventory().tick();
 
+        this.tickPassengers();
+        this.tickFryingItems();
+    }
+
+    private void tickPassengers() {
         if (getSpeed() == 0)
             return;
 
@@ -606,11 +638,91 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             FryerMovementHandler.transportEntity(this, entity, info);
         });
         toRemove.forEach(passengers::remove);
-
-
     }
 
-        @Override
+    public BlazeBurnerBlock.HeatLevel getHeatLevel() {
+        ContinuousFryerBlockEntity controller = getControllerBE();
+        if (controller == null || controller.level == null)
+            return BlazeBurnerBlock.HeatLevel.NONE;
+
+        Level level = controller.level;
+        BlazeBurnerBlock.HeatLevel strongest = BlazeBurnerBlock.HeatLevel.NONE;
+
+        for (ContinuousFryerBlockEntity fryer : controller.getConnectedChain()) {
+            BlockPos below = fryer.getBlockPos().below();
+            BlazeBurnerBlock.HeatLevel local = getHeatLevelAt(level, below);
+            if (local.ordinal() > strongest.ordinal())
+                strongest = local;
+        }
+
+        return strongest;
+    }
+
+    private static BlazeBurnerBlock.HeatLevel getHeatLevelAt(Level level, BlockPos pos) {
+        if (level == null)
+            return BlazeBurnerBlock.HeatLevel.NONE;
+
+        BlockState state = level.getBlockState(pos);
+
+        if (state.getBlock() instanceof BlazeBurnerBlock) {
+            return state.getValue(BlazeBurnerBlock.HEAT_LEVEL);
+        }
+        return BlazeBurnerBlock.HeatLevel.NONE;
+    }
+
+    private void tickFryingItems() {
+        FryerInventory inventory = getItemInventory();
+        if (inventory == null) return;
+
+        List<FryingItemStack> items = inventory.getTransportedItems();
+        if (items == null || items.isEmpty()) return;
+
+        for (FryingItemStack item : items) {
+            var heatLevel = getHeatLevel();
+            if (item.lastRecipe == null || !item.lastRecipe.matches(item.stack, tankInventory.getFluid(), heatLevel)) {
+                FryingRecipe recipe = RFDRecipeTypes.findFryingRecipe(level, item.stack, tankInventory.getFluid(), heatLevel);
+                if (recipe != null) {
+                    if (item.lastRecipe != recipe) {
+                        item.processingTime = 0;
+                    }
+                    item.lastRecipe = recipe;
+                }
+            }
+
+            item.processingTime++;
+
+            if (item.processingTime % 5 == 0 && level != null && !level.isClientSide) {
+                level.playSound(
+                        null,
+                        worldPosition.getX() + 0.5,
+                        worldPosition.getY() + 0.5,
+                        worldPosition.getZ() + 0.5,
+                        SoundEvents.BUBBLE_COLUMN_BUBBLE_POP,
+                        SoundSource.BLOCKS,
+                        1.0f,
+                        0.9f + level.random.nextFloat() * 0.2f
+                );
+            }
+
+            // TODO: use another overcooked item
+            if (item.lastRecipe == null) {
+                if (item.processingTime > 100 && !item.stack.is(Items.CHARCOAL)) {
+                    item.processingTime = 0;
+                    item.stack = new ItemStack(Items.CHARCOAL, item.stack.getCount());
+                }
+                continue;
+            }
+
+            if (item.processingTime >= item.lastRecipe.getProcessingDuration()) {
+                item.stack = RecipeApplier.applyRecipeOn(level, item.stack, item.lastRecipe).getFirst();
+                tankInventory.drain(item.lastRecipe.getFluidIngredients().getFirst().getRequiredAmount(), IFluidHandler.FluidAction.EXECUTE);
+
+                item.clearFryerProcessingData();
+            }
+        }
+    }
+
+    @Override
     public void invalidate() {
         super.invalidate();
         invalidateCapabilities();
@@ -646,10 +758,11 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         BlockPos controllerBefore = controller;
         int prevLength = fryerLength;
 
-        if (compound.getBoolean("IsController"))
+        if (compound.getBoolean("IsController")) {
             controller = worldPosition;
-        if (!isController())
+        } else {
             controller = NBTHelper.readBlockPos(compound, "Controller");
+        }
         fryerLength = compound.getInt("Length");
         index = compound.getInt("Index");
 

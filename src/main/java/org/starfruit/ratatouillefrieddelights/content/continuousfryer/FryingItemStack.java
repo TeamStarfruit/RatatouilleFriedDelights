@@ -94,10 +94,7 @@ public class FryingItemStack implements Comparable<FryingItemStack>{
         nbt.putInt("Angle", angle);
         nbt.putInt("InDirection", insertedFrom.get3DDataValue());
 
-        if (lastRecipe != null) {
-            nbt.putString("LastRecipe", lastRecipe.toString());
-            nbt.putInt("FryerProcessingTime", processingTime);
-        }
+        nbt.putInt("FryerProcessingTime", processingTime);
 
         if (locked)
             nbt.putBoolean("Locked", locked);
@@ -117,16 +114,12 @@ public class FryingItemStack implements Comparable<FryingItemStack>{
         stack.insertedFrom = Direction.from3DDataValue(nbt.getInt("InDirection"));
         stack.locked = nbt.getBoolean("Locked");
         stack.lockedExternally = nbt.getBoolean("LockedExternally");
-
-        if (nbt.contains("LastRecipe")) {
-            stack.lastRecipe = (FryingRecipe) level.getRecipeManager().byKey(ResourceLocation.parse(nbt.getString("LastRecipe"))).orElse(null).value();
-            stack.processingTime = nbt.getInt("FryerProcessingTime");
-        }
+        stack.processingTime = nbt.getInt("FryerProcessingTime");
 
         return stack;
     }
 
-    public void clearFryerProcessingData() {
+    public void     clearFryerProcessingData() {
         lastRecipe = null;
         processingTime = 0;
     }

@@ -119,7 +119,7 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
 
             if (stack.is(RFDItems.SUNFLOWER_SEED_OIL_BOTTLE.get())) {
                 FluidStack oil = new FluidStack(
-                        RFDFluids.SUNFLOWER_OIL,
+                        RFDFluids.SUNFLOWER_OIL.get().getSource(),
                         125
                 );
 

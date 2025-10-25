@@ -6,5 +6,6 @@
   "ratatouille_fried_delights.configuration.logDirtBlock": "Log Dirt Block",
   "ratatouille_fried_delights.configuration.magicNumberIntroduction": "Magic Number Text",
   "ratatouille_fried_delights.configuration.magicNumber": "Magic Number",
-  "itemGroup.ratatouille_fried_delights.base": "Ratatouille: Fried Delights"
+  "itemGroup.ratatouille_fried_delights.base": "Ratatouille: Fried Delights",
+  "ratatouille_fried_delights.fryer.heat_level": "Heat Level:"
 }

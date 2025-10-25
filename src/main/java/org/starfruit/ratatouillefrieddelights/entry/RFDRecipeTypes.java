@@ -2,15 +2,18 @@ package org.starfruit.ratatouillefrieddelights.entry;
 
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.content.processing.recipe.StandardProcessingRecipe;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.createmod.catnip.lang.Lang;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
@@ -39,6 +42,7 @@ public enum RFDRecipeTypes implements IRecipeTypeInfo {
     private final @Nullable DeferredHolder<RecipeType<?>, RecipeType<?>> typeObject;
     private final Supplier<RecipeType<?>> type;
     public final Supplier<RecipeSerializer<?>> serializerSupplier;
+
 
     RFDRecipeTypes(StandardProcessingRecipe.Factory<?> processingFactory) {
         this(() -> new StandardProcessingRecipe.Serializer<>(processingFactory));
@@ -92,6 +96,21 @@ public enum RFDRecipeTypes implements IRecipeTypeInfo {
     public <I extends RecipeInput, R extends Recipe<I>> Optional<RecipeHolder<R>> find(I inv, Level world) {
         return world.getRecipeManager()
                 .getRecipeFor(getType(), inv, world);
+    }
+
+    public static @Nullable FryingRecipe findFryingRecipe(Level level, ItemStack item, FluidStack fluid, BlazeBurnerBlock.HeatLevel heatLevel) {
+        if (level == null || item.isEmpty() || fluid.isEmpty())
+            return null;
+
+        return level.getRecipeManager()
+                .getAllRecipesFor(RFDRecipeTypes.FRYING.getType())
+                .stream()
+                .map(RecipeHolder::value)
+                .filter(recipe -> recipe instanceof FryingRecipe frying &&
+                        frying.matches(item, fluid, heatLevel))
+                .map(recipe -> (FryingRecipe) recipe)
+                .findFirst()
+                .orElse(null);
     }
 
     private static class Registers {
