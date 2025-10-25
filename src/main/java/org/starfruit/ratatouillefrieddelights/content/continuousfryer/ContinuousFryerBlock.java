@@ -78,9 +78,33 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
         if (level.isClientSide)
             return ItemInteractionResult.SUCCESS;
 
+        if (stack.isEmpty() && hand == InteractionHand.MAIN_HAND) {
+            var fryer = FryerHelper.getSegmentBE(level, pos);
+            if (fryer == null)
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+
+            var controller = fryer.getControllerBE();
+            if (controller == null)
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+
+            var inventory = controller.getItemInventory();
+            if (inventory == null)
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+
+            final boolean[] taken = {false};
+            inventory.applyToEachWithin(fryer.index + 0.5f, 0.55f, transported -> {
+                player.getInventory().placeItemBackInInventory(transported.stack);
+                level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2f, 1f + level.random.nextFloat());
+                taken[0] = true;
+                return FryingItemStackHandlerBehaviour.FryingResult.removeItem();
+            });
+
+            if (taken[0])
+                return ItemInteractionResult.SUCCESS;
+        }
+
         if (stack.isEmpty())
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-
 
         withBlockEntityDo(level, pos, be -> {
             IFluidHandler fluidHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, state, be, null);
