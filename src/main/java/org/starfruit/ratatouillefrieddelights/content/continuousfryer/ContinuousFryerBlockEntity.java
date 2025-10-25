@@ -606,6 +606,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             FryerMovementHandler.transportEntity(this, entity, info);
         });
         toRemove.forEach(passengers::remove);
+
+
     }
 
         @Override

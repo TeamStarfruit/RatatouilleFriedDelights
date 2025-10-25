@@ -6,6 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryingRecipe;
+import org.starfruit.ratatouillefrieddelights.entry.RFDFluids;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
 
@@ -16,6 +17,7 @@ public class FryingRecipeGen extends StandardProcessingRecipeGen<FryingRecipe> {
             FRIED_APPLE_PIE = this.create("fried_apple_pie",
             b -> b
                     .require(RFDItems.RAW_APPLE_PIE.get())
+                    .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
                     .output(RFDItems.FRIED_APPLE_PIE.get())
                     .duration(200)),
 
