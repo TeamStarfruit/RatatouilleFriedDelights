@@ -13,7 +13,11 @@ import com.simibubi.create.foundation.item.ItemHelper;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,6 +25,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -33,6 +38,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -41,10 +47,14 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.neoforged.neoforge.capabilities.Capabilities;
 
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
+import org.starfruit.ratatouillefrieddelights.entry.RFDFluids;
+import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -60,6 +70,67 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
         return state.getValue(PART) != FryerPart.MIDDLE && face.getAxis() == getRotationAxis(state);
+    }
+
+    @Override
+    @ParametersAreNonnullByDefault
+    protected @NotNull ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.isClientSide)
+            return ItemInteractionResult.SUCCESS;
+
+        if (stack.isEmpty())
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+
+
+        withBlockEntityDo(level, pos, be -> {
+            IFluidHandler fluidHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, state, be, null);
+            if (fluidHandler == null)
+                return;
+
+            if (stack.is(RFDItems.SUNFLOWER_SEED_OIL_BOTTLE.get())) {
+                FluidStack oil = new FluidStack(
+                        RFDFluids.SUNFLOWER_OIL,
+                        125
+                );
+
+                int fillable = fluidHandler.fill(oil, IFluidHandler.FluidAction.SIMULATE);
+                if (fillable < oil.getAmount())
+                    return;
+
+                int filled = fluidHandler.fill(oil, IFluidHandler.FluidAction.EXECUTE);
+                if (filled > 0) {
+                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 0.6F, 1.0F);
+
+                    if (!player.isCreative()) {
+                        stack.shrink(1);
+                        ItemStack emptyBottle = new ItemStack(Items.GLASS_BOTTLE);
+                        if (!player.addItem(emptyBottle))
+                            player.drop(emptyBottle, false);
+                    }
+                }
+            }
+            if (stack.is(Items.GLASS_BOTTLE)) {
+                FluidStack drainSimulated = fluidHandler.drain(125, IFluidHandler.FluidAction.SIMULATE);
+                if (drainSimulated.isEmpty())
+                    return;
+
+                if (!drainSimulated.getFluid().isSame(RFDFluids.SUNFLOWER_OIL.get()))
+                    return;
+
+                FluidStack drained = fluidHandler.drain(125, IFluidHandler.FluidAction.EXECUTE);
+                if (!drained.isEmpty()) {
+                    if (!player.isCreative()) {
+                        stack.shrink(1);
+                        var bottle = new ItemStack(RFDItems.SUNFLOWER_SEED_OIL_BOTTLE.get());
+                        if (!player.addItem(bottle))
+                            player.drop(bottle, false);
+                    }
+                    level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.5f, 1.0f);
+                }
+            }
+        });
+
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
