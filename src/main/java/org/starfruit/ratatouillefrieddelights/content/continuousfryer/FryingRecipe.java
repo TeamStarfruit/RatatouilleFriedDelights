@@ -19,6 +19,21 @@ public class FryingRecipe extends StandardProcessingRecipe<RecipeInput> {
         return 1;
     }
 
+    @Override
+    protected int getMaxFluidInputCount() {
+        return 1;
+    }
+
+    @Override
+    protected int getMaxFluidOutputCount() {
+        return 0;
+    }
+
+    @Override
+    protected boolean canRequireHeat() {
+        return true;
+    }
+
     protected boolean canSpecifyDuration() {
         return true;
     }
