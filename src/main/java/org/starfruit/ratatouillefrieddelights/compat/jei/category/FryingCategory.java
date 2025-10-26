@@ -88,20 +88,13 @@ public class FryingCategory extends CreateRecipeCategory<FryingRecipe> {
         int blockY = 50 + Y_OFFSET;
 
         AllGuiTextures.JEI_ARROW.render(gui, 85, 35 + Y_OFFSET);
-        AllGuiTextures.JEI_SHADOW.render(gui, blockX, blockY);
+//        AllGuiTextures.JEI_SHADOW.render(gui, blockX, blockY);
         AllGuiTextures.JEI_DOWN_ARROW.render(gui, blockX + 10, blockY - 32);
 
         PoseStack stack = gui.pose();
         stack.pushPose();
         stack.translate(blockX - 8, blockY - 5, 0);
-        stack.mulPose(Axis.XP.rotationDegrees(-12.5f));
-        stack.mulPose(Axis.YP.rotationDegrees(22.5f));
-        GuiGameElement.of(RFDBlocks.CONTINUOUS_FRYER.getDefaultState())
-                .scale(24)
-                .atLocal(0, 0, 2)
-                .lighting(AnimatedKinetics.DEFAULT_LIGHTING)
-                .render(gui);
-        stack.popPose();
+        fryer.draw(gui, blockX - 18, blockY - 24);
 
         HeatCondition requiredHeat = recipe.getRequiredHeat();
         boolean noHeat = requiredHeat == HeatCondition.NONE;

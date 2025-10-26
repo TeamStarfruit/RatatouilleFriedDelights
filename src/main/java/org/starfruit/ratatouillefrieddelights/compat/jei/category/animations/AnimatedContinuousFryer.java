@@ -15,30 +15,30 @@ public class AnimatedContinuousFryer extends AnimatedKinetics {
         int scale = 22;
         matrixStack.pushPose();
         matrixStack.translate(xOffset, yOffset, 0);
-        AllGuiTextures.JEI_SHADOW.render(graphics, -16, 13);
+        AllGuiTextures.JEI_SHADOW.render(graphics, -15, -4);
 
-        matrixStack.pushPose();
-        matrixStack.translate(3, 11, 0);
-        matrixStack.mulPose(Axis.XP.rotationDegrees(-22.5F));
-        matrixStack.mulPose(Axis.YP.rotationDegrees(22.5F));
+        matrixStack.translate(0, 0, 0);
         blockElement(RFDPartialModels.FRYER_AXIS)
-                .rotateBlock(getCurrentAngle() * 2, 0, 0)
+                .rotateBlock(22.5F, 22.5F, 0)
                 .scale(scale)
                 .render(graphics);
-        matrixStack.popPose();
 
-        matrixStack.translate(-2, 18, 0);
+        matrixStack.translate(0, 0, 0);
         blockElement(RFDPartialModels.FRYER_BELT)
                 .rotateBlock(22.5, 22.5, 0)
                 .scale(scale)
                 .render(graphics);
         matrixStack.popPose();
 
-        matrixStack.translate(-2, 18, 0);
+        matrixStack.translate(xOffset, yOffset, 0);
         blockElement(RFDBlocks.CONTINUOUS_FRYER.getDefaultState())
                 .rotateBlock(22.5, 22.5, 0)
                 .scale(scale)
                 .render(graphics);
         matrixStack.popPose();
+    }
+
+    private static float getDegrees() {
+        return 22.5F;
     }
 }
