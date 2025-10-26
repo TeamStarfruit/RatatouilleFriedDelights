@@ -47,6 +47,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
+import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
 import org.starfruit.ratatouillefrieddelights.util.Lang;
 
@@ -58,6 +59,7 @@ import static net.minecraft.core.Direction.AxisDirection.POSITIVE;
 public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation {
     public Map<Entity, FryerMovementHandler.FringEntityInfo> passengers;
     private FryingRecipe lastRecipe;
+    private int overFryingTime = 500;
 
     public int fryerLength;
     public int index;
@@ -706,9 +708,9 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
             // TODO: use another overcooked item
             if (item.lastRecipe == null) {
-                if (item.processingTime > 100 && !item.stack.is(Items.CHARCOAL)) {
+                if (item.processingTime > overFryingTime && !item.stack.is(RFDItems.FRIED_RESIDUE)) {
                     item.processingTime = 0;
-                    item.stack = new ItemStack(Items.CHARCOAL, item.stack.getCount());
+                    item.stack = new ItemStack(RFDItems.FRIED_RESIDUE.get(), item.stack.getCount());
                 }
                 continue;
             }

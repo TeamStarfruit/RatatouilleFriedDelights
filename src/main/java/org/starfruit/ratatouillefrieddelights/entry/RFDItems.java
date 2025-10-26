@@ -170,6 +170,8 @@ public class RFDItems {
             .register();
     public static final ItemEntry<SequencedAssemblyItem> UNPROCESSED_RAW_APPLE_PIE = RatatouilleFriedDelights.REGISTRATE.item("unprocessed_raw_apple_pie", SequencedAssemblyItem::new).register();
 
+    public static final ItemEntry<Item> ONION_RINGS = RatatouilleFriedDelights.REGISTRATE.item("onion_rings", Item::new).register();
+    public static final ItemEntry<Item> BREADED_ONION_RINGS = RatatouilleFriedDelights.REGISTRATE.item("breaded_onion_rings", Item::new).register();
     public static final ItemEntry<Item> FRIED_DONUT = RatatouilleFriedDelights.REGISTRATE.item("fried_donut", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(7).saturationModifier(0.7f)
                     .alwaysEdible()
@@ -239,6 +241,9 @@ public class RFDItems {
             .register();
 
     public static final ItemEntry<Item> SUNFLOWER_SEED_OIL_BOTTLE = RatatouilleFriedDelights.REGISTRATE.item("sunflower_seed_oil_bottle", Item::new).register();
+
+    public static final ItemEntry<Item> NUMBER42_CONCRETE_MIXING_PASTA = RatatouilleFriedDelights.REGISTRATE.item("number42_concrete_mixing_pasta", Item::new).register();
+    public static final ItemEntry<Item> FRIED_RESIDUE = RatatouilleFriedDelights.REGISTRATE.item("fried_residue", Item::new).register();
 
     public static final ItemEntry<Item> TARTAR_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tartar_topping", Item::new).register();
     public static final ItemEntry<Item> KETCHUP_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("ketchup_topping", Item::new).register();

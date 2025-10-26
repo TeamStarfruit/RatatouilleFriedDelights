@@ -3,6 +3,8 @@ package org.starfruit.ratatouillefrieddelights.data.recipe.create;
 import com.simibubi.create.api.data.recipe.CompactingRecipeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.common.Tags;
 import org.forsteri.ratatouille.entry.CRItems;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.entry.RFDFluids;
@@ -21,6 +23,17 @@ public class RFDCompactingRecipeGen extends CompactingRecipeGen {
                     .require(CRItems.SALTY_DOUGH.get())
                     .require(RFDItems.BUTTER.get())
                     .output(RFDItems.DOUGH_RING.get())
+    ),
+            CHARCOAL_COMPACT = create("charcoal_compact", b -> b
+                    .require(RFDItems.FRIED_RESIDUE.get())
+                    .require(RFDItems.FRIED_RESIDUE.get())
+                    .require(RFDItems.FRIED_RESIDUE.get())
+                    .require(RFDItems.FRIED_RESIDUE.get())
+                    .require(RFDItems.FRIED_RESIDUE.get())
+                    .require(RFDItems.FRIED_RESIDUE.get())
+                    .require(RFDItems.FRIED_RESIDUE.get())
+                    .require(RFDItems.FRIED_RESIDUE.get())
+                    .output(Items.CHARCOAL)
     );
 
     public RFDCompactingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

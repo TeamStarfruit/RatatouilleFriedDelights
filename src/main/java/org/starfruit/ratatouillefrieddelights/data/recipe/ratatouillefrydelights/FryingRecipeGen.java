@@ -19,6 +19,7 @@ public class FryingRecipeGen extends StandardProcessingRecipeGen<FryingRecipe> {
             b -> b
                     .require(RFDItems.RAW_APPLE_PIE.get())
                     .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
+                    .requiresHeat(HeatCondition.HEATED)
                     .output(RFDItems.FRIED_APPLE_PIE.get())
                     .duration(200)),
 
@@ -33,31 +34,49 @@ public class FryingRecipeGen extends StandardProcessingRecipeGen<FryingRecipe> {
     FRENCH_FRIES = this.create("french_fries",
             b -> b
                     .require(RFDItems.RAW_POTATO_STICK.get())
+                    .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
+                    .requiresHeat(HeatCondition.HEATED)
                     .output(RFDItems.FRENCH_FRIES.get())
                     .duration(200)),
 
     CHICKEN_NUGGETS = this.create("chicken_nuggets",
             b -> b
                     .require(RFDItems.RAW_CHICKEN_NUGGETS.get())
+                    .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
+                    .requiresHeat(HeatCondition.HEATED)
                     .output(RFDItems.CHICKEN_NUGGETS.get())
                     .duration(200)),
 
     ORIGINAL_CHICKEN_DRUMSTICK = this.create("original_chicken_drumstick",
             b -> b
                     .require(RFDItems.BREADED_ORIGINAL_DRUMSTICK.get())
+                    .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
+                    .requiresHeat(HeatCondition.HEATED)
                     .output(RFDItems.ORIGINAL_CHICKEN_DRUMSTICK.get())
                     .duration(200)),
 
     ORIGINAL_CHICKEN_KEEL = this.create("original_chicken_keel",
             b -> b
                     .require(RFDItems.BREADED_ORIGINAL_KEEL.get())
+                    .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
+                    .requiresHeat(HeatCondition.HEATED)
                     .output(RFDItems.ORIGINAL_CHICKEN_KEEL.get())
                     .duration(200)),
 
     FRIED_DONUT = this.create("fried_donut",
-                                                             b -> b
+            b -> b
                     .require(RFDItems.DOUGH_RING.get())
+                    .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
+                    .requiresHeat(HeatCondition.HEATED)
                     .output(RFDItems.FRIED_DONUT.get())
+                    .duration(200)),
+
+    FRIED_ONION_RINGS = this.create("fried_onion_rings",
+            b -> b
+                    .require(RFDItems.BREADED_ONION_RINGS.get())
+                    .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
+                    .requiresHeat(HeatCondition.HEATED)
+                    .output(RFDItems.ONION_RINGS.get())
                     .duration(200))
     ;
 
