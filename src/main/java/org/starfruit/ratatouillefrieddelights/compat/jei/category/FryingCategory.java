@@ -24,14 +24,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.starfruit.ratatouillefrieddelights.compat.jei.category.animations.AnimatedContinuousFryer;
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryingRecipe;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
+import org.starfruit.ratatouillefrieddelights.entry.RFDPartialModels;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FryingCategory extends CreateRecipeCategory<FryingRecipe> {
-
+    private final AnimatedContinuousFryer fryer = new AnimatedContinuousFryer();
     private static final int Y_OFFSET = -15;
     private static final int INPUT_Y_ADJUST = -10;
 

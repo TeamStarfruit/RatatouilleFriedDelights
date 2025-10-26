@@ -1,6 +1,7 @@
 package org.starfruit.ratatouillefrieddelights.data.recipe.ratatouillefrydelights;
 
 import com.simibubi.create.api.data.recipe.StandardProcessingRecipeGen;
+import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -19,43 +20,50 @@ public class FryingRecipeGen extends StandardProcessingRecipeGen<FryingRecipe> {
                     .require(RFDItems.RAW_APPLE_PIE.get())
                     .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
                     .output(RFDItems.FRIED_APPLE_PIE.get())
-                    .duration(200)),
+                    .duration(200)
+                    .requiresHeat(HeatCondition.HEATED)),
 
     FILLET_O_FISH = this.create("fillet_o_fish",
                     b -> b
                 .require(RFDItems.BREADED_FISH_FILLET.get())
+                .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
                 .output(RFDItems.FILLET_O_FISH.get())
-                .duration(200)),
+                .duration(200).requiresHeat(HeatCondition.HEATED)),
 
     FRENCH_FRIES = this.create("french_fries",
             b -> b
                     .require(RFDItems.RAW_POTATO_STICK.get())
+                    .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
                     .output(RFDItems.FRENCH_FRIES.get())
-                    .duration(200)),
+                    .duration(200).requiresHeat(HeatCondition.HEATED)),
 
     CHICKEN_NUGGETS = this.create("chicken_nuggets",
             b -> b
                     .require(RFDItems.RAW_CHICKEN_NUGGETS.get())
+                    .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
                     .output(RFDItems.CHICKEN_NUGGETS.get())
-                    .duration(200)),
+                    .duration(200).requiresHeat(HeatCondition.HEATED)),
 
     ORIGINAL_CHICKEN_DRUMSTICK = this.create("original_chicken_drumstick",
             b -> b
                     .require(RFDItems.BREADED_ORIGINAL_DRUMSTICK.get())
+                    .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
                     .output(RFDItems.ORIGINAL_CHICKEN_DRUMSTICK.get())
-                    .duration(200)),
+                    .duration(200).requiresHeat(HeatCondition.HEATED)),
 
     ORIGINAL_CHICKEN_KEEL = this.create("original_chicken_keel",
             b -> b
                     .require(RFDItems.BREADED_ORIGINAL_KEEL.get())
+                    .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
                     .output(RFDItems.ORIGINAL_CHICKEN_KEEL.get())
-                    .duration(200)),
+                    .duration(200).requiresHeat(HeatCondition.HEATED)),
 
     FRIED_DONUT = this.create("fried_donut",
-                                                             b -> b
+            b -> b
                     .require(RFDItems.DOUGH_RING.get())
+                    .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
                     .output(RFDItems.FRIED_DONUT.get())
-                    .duration(200))
+                    .duration(200).requiresHeat(HeatCondition.HEATED))
     ;
 
 

@@ -6,7 +6,7 @@
     },
     {
       "type": "fluid_stack",
-      "amount": 100,
+      "amount": 125,
       "fluid": "ratatouille_fried_delights:sunflower_oil"
     }
   ],

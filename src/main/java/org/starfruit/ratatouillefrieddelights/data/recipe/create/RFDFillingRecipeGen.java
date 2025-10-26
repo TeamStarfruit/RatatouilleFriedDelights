@@ -49,7 +49,7 @@ public class RFDFillingRecipeGen extends FillingRecipeGen {
 
     SUNFLOWER_SEED_OIL_BOTTLE = create("sunflower_seed_oil_bottle", b -> b
             .require(Items.GLASS_BOTTLE)
-            .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
+            .require(RFDFluids.SUNFLOWER_OIL.get(), 125)
             .output(RFDItems.SUNFLOWER_SEED_OIL_BOTTLE.get())
     );
 

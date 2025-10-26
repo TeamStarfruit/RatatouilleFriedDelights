@@ -1,8 +1,14 @@
 {
   "type": "ratatouille_fried_delights:frying",
+  "heat_requirement": "heated",
   "ingredients": [
     {
       "item": "ratatouille_fried_delights:raw_potato_stick"
+    },
+    {
+      "type": "fluid_stack",
+      "amount": 100,
+      "fluid": "ratatouille_fried_delights:sunflower_oil"
     }
   ],
   "processing_time": 200,
