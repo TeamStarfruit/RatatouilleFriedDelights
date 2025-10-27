@@ -242,7 +242,13 @@ public class RFDItems {
 
     public static final ItemEntry<Item> SUNFLOWER_SEED_OIL_BOTTLE = RatatouilleFriedDelights.REGISTRATE.item("sunflower_seed_oil_bottle", Item::new).register();
 
-    public static final ItemEntry<Item> NUMBER42_CONCRETE_MIXING_PASTA = RatatouilleFriedDelights.REGISTRATE.item("number42_concrete_mixing_pasta", Item::new).register();
+    public static final ItemEntry<Item> NUMBER42_CONCRETE_MIXING_PASTA = RatatouilleFriedDelights.REGISTRATE.item("number42_concrete_mixing_pasta", Item::new).properties(p -> p.food(new FoodProperties.Builder()
+                    .nutrition(4).saturationModifier(0.2f)
+                    .alwaysEdible()
+                    .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 20 * 10, 1), 1.0f)
+                    .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 10, 1), 1.0f)
+                    .build()))
+            .register();
     public static final ItemEntry<Item> FRIED_RESIDUE = RatatouilleFriedDelights.REGISTRATE.item("fried_residue", Item::new).register();
 
     public static final ItemEntry<Item> TARTAR_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tartar_topping", Item::new).register();
