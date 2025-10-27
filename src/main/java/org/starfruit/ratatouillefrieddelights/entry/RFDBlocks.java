@@ -29,6 +29,7 @@ import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerGener
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerModel;
 import org.starfruit.ratatouillefrieddelights.content.drumprocessor.DrumProcessorBlock;
 import org.starfruit.ratatouillefrieddelights.content.food.BoxedFriesBlock;
+import org.starfruit.ratatouillefrieddelights.content.food.KetchupDipCupBlock;
 import org.starfruit.ratatouillefrieddelights.content.food.PlaceableEdibleItem;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
@@ -39,6 +40,15 @@ public class RFDBlocks {
     static {
         RatatouilleFriedDelights.REGISTRATE.setCreativeTab(RFDCreativeModeTabs.BASE_CREATIVE_TAB);
     }
+
+    public static final BlockEntry<KetchupDipCupBlock> KETCHUP_DIP_CUP = RatatouilleFriedDelights.REGISTRATE
+            .block("ketchup_dip_cup", KetchupDipCupBlock::new)
+            .initialProperties(()-> Blocks.CAKE)
+            .properties(BlockBehaviour.Properties::noLootTable)
+            .defaultBlockstate()
+            .item()
+            .build()
+            .register();
 
     public static final BlockEntry<BoxedFriesBlock> BOXED_FRIES = RatatouilleFriedDelights.REGISTRATE
             .block("boxed_fries", BoxedFriesBlock::new)
