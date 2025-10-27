@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import org.forsteri.ratatouille.Ratatouille;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import net.minecraft.world.item.Item;
-import org.starfruit.ratatouillefrieddelights.content.DrinkableItem;
+import org.starfruit.ratatouillefrieddelights.content.food.DrinkableItem;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerContents;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerItem;
 import org.starfruit.ratatouillefrieddelights.content.colafruit.ColaFruitItem;

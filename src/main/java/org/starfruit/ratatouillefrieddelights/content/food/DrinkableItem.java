@@ -1,4 +1,4 @@
-package org.starfruit.ratatouillefrieddelights.content;
+package org.starfruit.ratatouillefrieddelights.content.food;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
