@@ -40,6 +40,11 @@ public class RFDItems {
                     .build()))
             .register();
 
+    public static final ItemEntry<Item> A_FRIES = RatatouilleFriedDelights.REGISTRATE.item("a_fries", Item::new).properties(p -> p.food(new FoodProperties.Builder()
+                    .nutrition(2).saturationModifier(0.2f)
+                    .alwaysEdible()
+                    .build()))
+            .register();
     public static final ItemEntry<Item> BOXED_FRIES = RatatouilleFriedDelights.REGISTRATE.item("boxed_fries", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(6).saturationModifier(0.6f)
                     .alwaysEdible()
