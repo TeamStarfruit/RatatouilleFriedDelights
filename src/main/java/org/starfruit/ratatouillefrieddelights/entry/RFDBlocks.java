@@ -45,7 +45,7 @@ public class RFDBlocks {
             .block("ketchup_dip_cup", KetchupDipCupBlock::new)
             .initialProperties(()-> Blocks.CAKE)
             .properties(BlockBehaviour.Properties::noLootTable)
-            .defaultBlockstate()
+            .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.standardModel(c, p)))
             .item()
             .build()
             .register();

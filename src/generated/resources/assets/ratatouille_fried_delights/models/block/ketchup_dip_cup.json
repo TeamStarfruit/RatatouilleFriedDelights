@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "ratatouille_fried_delights:block/ketchup_dip_cup"
-  }
-}

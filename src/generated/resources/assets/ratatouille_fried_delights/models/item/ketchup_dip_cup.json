@@ -1,3 +1,6 @@
 {
-  "parent": "ratatouille_fried_delights:block/ketchup_dip_cup"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ratatouille_fried_delights:block/ketchup_dip_cup"
+  }
 }
