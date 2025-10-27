@@ -7,7 +7,9 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -26,6 +28,8 @@ import org.starfruit.ratatouillefrieddelights.content.continuousfryer.Continuous
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerGenerator;
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerModel;
 import org.starfruit.ratatouillefrieddelights.content.drumprocessor.DrumProcessorBlock;
+import org.starfruit.ratatouillefrieddelights.content.food.BoxedFriesBlock;
+import org.starfruit.ratatouillefrieddelights.content.food.PlaceableEdibleItem;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -35,6 +39,28 @@ public class RFDBlocks {
     static {
         RatatouilleFriedDelights.REGISTRATE.setCreativeTab(RFDCreativeModeTabs.BASE_CREATIVE_TAB);
     }
+
+    public static final BlockEntry<BoxedFriesBlock> BOXED_FRIES = RatatouilleFriedDelights.REGISTRATE
+            .block("boxed_fries", BoxedFriesBlock::new)
+            .initialProperties(()->Blocks.CAKE)
+            .properties(BlockBehaviour.Properties::noLootTable)
+            .blockstate((ctx, prov) -> prov.horizontalBlock(
+                    ctx.getEntry(),
+                    state -> prov.models().getExistingFile(
+                            prov.modLoc("block/boxed_fries/boxed_fries_" + state.getValue(BoxedFriesBlock.REMAINING_BITES))
+                    )
+            ))
+            .item(PlaceableEdibleItem::new)
+            .properties(p -> p.food(
+                new FoodProperties.Builder()
+                    .nutrition(6).saturationModifier(0.6f)
+                    .alwaysEdible()
+                    .build()))
+            .model(
+                    (c, p) ->
+                            p.generated(c, p.modLoc("item/" + p.name(c))))
+            .build()
+            .register();
 
      public static final BlockEntry<ContinuousFryerBlock> CONTINUOUS_FRYER = RatatouilleFriedDelights.REGISTRATE
             .block("continuous_fryer", ContinuousFryerBlock::new)

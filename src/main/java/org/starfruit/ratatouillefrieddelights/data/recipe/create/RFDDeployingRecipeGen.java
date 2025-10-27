@@ -5,6 +5,7 @@ import com.simibubi.create.api.data.recipe.DeployingRecipeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
+import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 
 import java.util.concurrent.CompletableFuture;
@@ -19,7 +20,7 @@ public class RFDDeployingRecipeGen extends DeployingRecipeGen {
             BOXED_FRIES = create("boxed_fries", b -> b
                     .require(RFDItems.FRENCH_FRIES.get())
                     .require(AllItems.CARDBOARD.get())
-                    .output(RFDItems.BOXED_FRIES.get(), 1)
+                    .output(RFDBlocks.BOXED_FRIES.get(), 1)
     ),
             BOXED_CHICKEN_NUGGETS = create("boxed_chicken_nuggets", b -> b
                     .require(RFDItems.CHICKEN_NUGGETS.get())
