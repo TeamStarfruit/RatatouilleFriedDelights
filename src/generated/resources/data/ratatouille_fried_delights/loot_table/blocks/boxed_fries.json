@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "ratatouille_fried_delights:boxed_fries"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ratatouille_fried_delights:blocks/boxed_fries"
+}
