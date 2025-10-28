@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.pathfinder.PathComputationType;
@@ -20,7 +21,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class KetchupDipCupBlock extends HorizontalDirectionalBlock {
-    public static final Property<Integer> REMAINING_DIP = IntegerProperty.create("remaining_dip", 1, 4);
+    public static final Property<Integer> REMAINING_DIP = IntegerProperty.create("remaining_dip", 1, 3);
+    public static final Property<Boolean> OPENED = BooleanProperty.create("opened");
     public static final MapCodec<HorizontalDirectionalBlock> CODEC = simpleCodec(KetchupDipCupBlock::new);
     private static final VoxelShape[] SHAPES = new VoxelShape[]{
             // SOUTH
@@ -40,7 +42,12 @@ public class KetchupDipCupBlock extends HorizontalDirectionalBlock {
 
     public KetchupDipCupBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(REMAINING_DIP, 3).setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(
+                this.stateDefinition.any()
+                        .setValue(REMAINING_DIP, 3)
+                        .setValue(FACING, Direction.NORTH)
+                        .setValue(OPENED, false)
+        );
     }
 
     @Override
@@ -75,6 +82,7 @@ public class KetchupDipCupBlock extends HorizontalDirectionalBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(REMAINING_DIP)
+                .add(OPENED)
                 .add(FACING);
         super.createBlockStateDefinition(builder);
     }

@@ -33,6 +33,8 @@ import org.starfruit.ratatouillefrieddelights.content.food.BoxedFriesBlock;
 import org.starfruit.ratatouillefrieddelights.content.food.KetchupDipCupBlock;
 import org.starfruit.ratatouillefrieddelights.content.food.PlaceableEdibleItem;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
+
+import static com.simibubi.create.foundation.data.AssetLookup.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -46,8 +48,9 @@ public class RFDBlocks {
             .block("ketchup_dip_cup", KetchupDipCupBlock::new)
             .initialProperties(()-> Blocks.CAKE)
             .properties(BlockBehaviour.Properties::noLootTable)
-            .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.standardModel(c, p)))
+            .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
             .item()
+            .model(AssetLookup::customItemModel)
             .build()
             .register();
 
