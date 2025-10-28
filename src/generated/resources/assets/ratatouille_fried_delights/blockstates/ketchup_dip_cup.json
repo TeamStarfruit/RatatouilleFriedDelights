@@ -12,6 +12,10 @@
       "model": "ratatouille_fried_delights:block/ketchup_dip_cup",
       "y": 90
     },
+    "facing=east,remaining_dip=4": {
+      "model": "ratatouille_fried_delights:block/ketchup_dip_cup",
+      "y": 90
+    },
     "facing=north,remaining_dip=1": {
       "model": "ratatouille_fried_delights:block/ketchup_dip_cup"
     },
@@ -19,6 +23,9 @@
       "model": "ratatouille_fried_delights:block/ketchup_dip_cup"
     },
     "facing=north,remaining_dip=3": {
+      "model": "ratatouille_fried_delights:block/ketchup_dip_cup"
+    },
+    "facing=north,remaining_dip=4": {
       "model": "ratatouille_fried_delights:block/ketchup_dip_cup"
     },
     "facing=south,remaining_dip=1": {
@@ -33,6 +40,10 @@
       "model": "ratatouille_fried_delights:block/ketchup_dip_cup",
       "y": 180
     },
+    "facing=south,remaining_dip=4": {
+      "model": "ratatouille_fried_delights:block/ketchup_dip_cup",
+      "y": 180
+    },
     "facing=west,remaining_dip=1": {
       "model": "ratatouille_fried_delights:block/ketchup_dip_cup",
       "y": 270
@@ -42,6 +53,10 @@
       "y": 270
     },
     "facing=west,remaining_dip=3": {
+      "model": "ratatouille_fried_delights:block/ketchup_dip_cup",
+      "y": 270
+    },
+    "facing=west,remaining_dip=4": {
       "model": "ratatouille_fried_delights:block/ketchup_dip_cup",
       "y": 270
     }

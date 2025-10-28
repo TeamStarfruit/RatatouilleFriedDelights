@@ -1,5 +1,6 @@
 package org.starfruit.ratatouillefrieddelights.entry;
 
+import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -53,11 +54,15 @@ public class RFDBlocks {
     public static final BlockEntry<BoxedFriesBlock> BOXED_FRIES = RatatouilleFriedDelights.REGISTRATE
             .block("boxed_fries", BoxedFriesBlock::new)
             .initialProperties(()->Blocks.CAKE)
-            .properties(BlockBehaviour.Properties::noLootTable)
             .blockstate((ctx, prov) -> prov.horizontalBlock(
                     ctx.getEntry(),
                     state -> prov.models().getExistingFile(
                             prov.modLoc("block/boxed_fries/boxed_fries_" + state.getValue(BoxedFriesBlock.REMAINING_BITES))
+                    )
+            ))
+            .loot((lt, block) -> lt.add(block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
                     )
             ))
             .item(PlaceableEdibleItem::new)
