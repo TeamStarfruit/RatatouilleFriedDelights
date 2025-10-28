@@ -4,7 +4,7 @@
 	"textures": {
 		"0": "ratatouille_fried_delights:block/dip_cup",
 		"1": "ratatouille_fried_delights:block/source",
-		"2": "ratatouille_fried_delights:block/ketchup_dip_cup_top",
+		"2": "ratatouille_fried_delights:block/dip_cup_top/ketchup_dip_cup_top",
 		"particle": "ratatouille_fried_delights:block/dip_cup"
 	},
 	"elements": [
