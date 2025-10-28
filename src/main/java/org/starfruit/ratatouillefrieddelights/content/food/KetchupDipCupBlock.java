@@ -20,17 +20,17 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class KetchupDipCupBlock extends HorizontalDirectionalBlock {
-    public static final Property<Integer> REMAINING_DIP = IntegerProperty.create("remaining_dip", 1, 3);
+    public static final Property<Integer> REMAINING_DIP = IntegerProperty.create("remaining_dip", 1, 4);
     public static final MapCodec<HorizontalDirectionalBlock> CODEC = simpleCodec(KetchupDipCupBlock::new);
     private static final VoxelShape[] SHAPES = new VoxelShape[]{
             // SOUTH
-            Block.box(5, 0, 6, 11, 10, 10),
+            Block.box(6, 0, 5, 10, 3, 11),
             // WEST
-            Block.box(6, 0, 5, 10, 10, 11),
+            Block.box(5, 0, 6, 11, 3, 10),
             // NORTH
-            Block.box(5, 0, 6, 11, 10, 10),
+            Block.box(6, 0, 5, 10, 3, 11),
             // EAST
-            Block.box(6, 0, 5, 10, 10, 11)
+            Block.box(5, 0, 6, 11, 3, 10)
     };
 
     @Override
@@ -50,7 +50,7 @@ public class KetchupDipCupBlock extends HorizontalDirectionalBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getClockWise());
     }
 
     @Override
