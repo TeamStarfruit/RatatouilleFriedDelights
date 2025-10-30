@@ -1,6 +1,8 @@
 {
 	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
+    "ambientocclusion": false,
+    "render_type": "minecraft:cutout",
 	"textures": {
 		"0": "ratatouille_fried_delights:block/boxed_chicken_nuggets_block",
 		"particle": "ratatouille_fried_delights:block/boxed_chicken_nuggets_block"

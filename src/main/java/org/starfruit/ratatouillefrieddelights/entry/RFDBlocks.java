@@ -29,6 +29,7 @@ import org.starfruit.ratatouillefrieddelights.content.continuousfryer.Continuous
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerGenerator;
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerModel;
 import org.starfruit.ratatouillefrieddelights.content.drumprocessor.DrumProcessorBlock;
+import org.starfruit.ratatouillefrieddelights.content.food.BoxedChickenNuggetsBlock;
 import org.starfruit.ratatouillefrieddelights.content.food.BoxedFriesBlock;
 import org.starfruit.ratatouillefrieddelights.content.food.KetchupDipCupBlock;
 import org.starfruit.ratatouillefrieddelights.content.food.PlaceableEdibleItem;
@@ -53,6 +54,33 @@ public class RFDBlocks {
             .model(AssetLookup::customItemModel)
             .build()
             .register();
+
+    public static final BlockEntry<BoxedChickenNuggetsBlock> BOXED_CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE
+            .block("boxed_chicken_nuggets", BoxedChickenNuggetsBlock::new)
+            .initialProperties(()->Blocks.CAKE)
+            .blockstate((ctx, prov) -> prov.horizontalBlock(
+                    ctx.getEntry(),
+                    state -> prov.models().getExistingFile(
+                            prov.modLoc("block/boxed_chicken_nuggets/boxed_chicken_nuggets_" + state.getValue(BoxedChickenNuggetsBlock.REMAINING_BITES))
+                    )
+            ))
+            .loot((lt, block) -> lt.add(block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
+                    )
+            ))
+            .item(PlaceableEdibleItem::new)
+            .properties(p -> p.food(
+                    new FoodProperties.Builder()
+                            .nutrition(5).saturationModifier(0.6f)
+                            .alwaysEdible()
+                            .build()))
+            .model(
+                    (c, p) ->
+                            p.generated(c, p.modLoc("item/" + p.name(c))))
+            .build()
+            .register();
+
 
     public static final BlockEntry<BoxedFriesBlock> BOXED_FRIES = RatatouilleFriedDelights.REGISTRATE
             .block("boxed_fries", BoxedFriesBlock::new)

@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=east,remaining_bites=0": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_0",
+      "y": 90
+    },
+    "facing=east,remaining_bites=1": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_1",
+      "y": 90
+    },
+    "facing=east,remaining_bites=2": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_2",
+      "y": 90
+    },
+    "facing=east,remaining_bites=3": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_3",
+      "y": 90
+    },
+    "facing=north,remaining_bites=0": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_0"
+    },
+    "facing=north,remaining_bites=1": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_1"
+    },
+    "facing=north,remaining_bites=2": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_2"
+    },
+    "facing=north,remaining_bites=3": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_3"
+    },
+    "facing=south,remaining_bites=0": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_0",
+      "y": 180
+    },
+    "facing=south,remaining_bites=1": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_1",
+      "y": 180
+    },
+    "facing=south,remaining_bites=2": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_2",
+      "y": 180
+    },
+    "facing=south,remaining_bites=3": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_3",
+      "y": 180
+    },
+    "facing=west,remaining_bites=0": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_0",
+      "y": 270
+    },
+    "facing=west,remaining_bites=1": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_1",
+      "y": 270
+    },
+    "facing=west,remaining_bites=2": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_2",
+      "y": 270
+    },
+    "facing=west,remaining_bites=3": {
+      "model": "ratatouille_fried_delights:block/boxed_chicken_nuggets/boxed_chicken_nuggets_3",
+      "y": 270
+    }
+  }
+}

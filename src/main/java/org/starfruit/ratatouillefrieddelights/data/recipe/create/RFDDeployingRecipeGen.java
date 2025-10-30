@@ -25,7 +25,7 @@ public class RFDDeployingRecipeGen extends DeployingRecipeGen {
             BOXED_CHICKEN_NUGGETS = create("boxed_chicken_nuggets", b -> b
                     .require(RFDItems.CHICKEN_NUGGETS.get())
                     .require(AllItems.CARDBOARD.get())
-                    .output(RFDItems.BOXED_CHICKEN_NUGGETS.get(), 1)
+                    .output(RFDBlocks.BOXED_CHICKEN_NUGGETS.get(), 1)
     );
 
     public RFDDeployingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

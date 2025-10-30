@@ -1,4 +1,5 @@
 {
+  "block.ratatouille_fried_delights.boxed_chicken_nuggets": "Boxed Chicken Nuggets",
   "block.ratatouille_fried_delights.boxed_fries": "Boxed Fries",
   "block.ratatouille_fried_delights.cola_fruit_block": "Cola Fruit Block",
   "block.ratatouille_fried_delights.cola_leaves": "Cola Leaves",
@@ -31,7 +32,6 @@
   "item.ratatouille_fried_delights.boba_cup": "Boba Cup",
   "item.ratatouille_fried_delights.boba_topping": "Boba Topping",
   "item.ratatouille_fried_delights.bottom_burger_bun": "Bottom Burger Bun",
-  "item.ratatouille_fried_delights.boxed_chicken_nuggets": "Boxed Chicken Nuggets",
   "item.ratatouille_fried_delights.breadcrumb": "Breadcrumb",
   "item.ratatouille_fried_delights.breaded_fish_fillet": "Breaded Fish Fillet",
   "item.ratatouille_fried_delights.breaded_onion_rings": "Breaded Onion Rings",
