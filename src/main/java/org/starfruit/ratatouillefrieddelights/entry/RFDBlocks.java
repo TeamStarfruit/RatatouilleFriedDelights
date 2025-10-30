@@ -32,7 +32,6 @@ import org.starfruit.ratatouillefrieddelights.content.drumprocessor.DrumProcesso
 import org.starfruit.ratatouillefrieddelights.content.food.*;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
 
-import static com.simibubi.create.foundation.data.AssetLookup.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -42,15 +41,25 @@ public class RFDBlocks {
         RatatouilleFriedDelights.REGISTRATE.setCreativeTab(RFDCreativeModeTabs.BASE_CREATIVE_TAB);
     }
 
-    public static final BlockEntry<KetchupDipCupBlock> KETCHUP_DIP_CUP = RatatouilleFriedDelights.REGISTRATE
-            .block("ketchup_dip_cup", KetchupDipCupBlock::new)
-            .initialProperties(()-> Blocks.CAKE)
-            .properties(BlockBehaviour.Properties::noLootTable)
-            .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
-            .item()
-            .model(AssetLookup::customItemModel)
-            .build()
-            .register();
+//    public static final BlockEntry<DipCupBlock> KETCHUP_DIP_CUP = RatatouilleFriedDelights.REGISTRATE
+//            .block("ketchup_dip_cup", DipCupBlock::new)
+//            .initialProperties(()-> Blocks.CAKE)
+//            .properties(BlockBehaviour.Properties::noLootTable)
+//            .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
+//            .item()
+//            .model(AssetLookup::customItemModel)
+//            .build()
+//            .register();
+
+    public static final BlockEntry<DipCupBlock> DIP_CUP = RatatouilleFriedDelights.REGISTRATE
+        .block("dip_cup", DipCupBlock::new)
+        .initialProperties(()-> Blocks.CAKE)
+        .properties(BlockBehaviour.Properties::noLootTable)
+        .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
+        .item()
+        .model(AssetLookup::customItemModel)
+        .build()
+        .register();
 
     public static final BlockEntry<DuoChickenBucketBlock> DUO_CHICKEN_BUCKET = RatatouilleFriedDelights.REGISTRATE
             .block("duo_chicken_bucket", DuoChickenBucketBlock::new)

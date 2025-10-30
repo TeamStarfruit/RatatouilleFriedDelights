@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "ratatouille_fried_delights:dip_cup"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ratatouille_fried_delights:blocks/dip_cup"
+}

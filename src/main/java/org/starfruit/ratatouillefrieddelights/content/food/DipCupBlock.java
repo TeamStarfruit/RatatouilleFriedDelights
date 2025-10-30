@@ -1,8 +1,15 @@
 package org.starfruit.ratatouillefrieddelights.content.food;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -11,19 +18,25 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 
-public class KetchupDipCupBlock extends HorizontalDirectionalBlock {
+public class DipCupBlock extends HorizontalDirectionalBlock {
+    private final ResourceLocation cup_seal;
+    private final int dip_color;
+
     public static final Property<Integer> REMAINING_DIP = IntegerProperty.create("remaining_dip", 1, 3);
     public static final Property<Boolean> OPENED = BooleanProperty.create("opened");
-    public static final MapCodec<HorizontalDirectionalBlock> CODEC = simpleCodec(KetchupDipCupBlock::new);
+    public static final MapCodec<HorizontalDirectionalBlock> CODEC = simpleCodec(DipCupBlock::new);
     private static final VoxelShape[] SHAPES = new VoxelShape[]{
             // SOUTH
             Block.box(6, 0, 5, 10, 3, 11),
@@ -40,8 +53,14 @@ public class KetchupDipCupBlock extends HorizontalDirectionalBlock {
         return SHAPES[state.getValue(FACING).get2DDataValue()];
     }
 
-    public KetchupDipCupBlock(Properties properties) {
-        super(properties);
+    public DipCupBlock(BlockBehaviour.Properties props) {
+        this(RatatouilleFriedDelights.asResource("block/ketchup_dip_cup"), 0xFFFFFF);
+    }
+
+    public DipCupBlock(ResourceLocation cup_seal, int dip_color) {
+        super(Properties.ofFullCopy(Blocks.CAKE));
+        this.cup_seal = cup_seal;
+        this.dip_color = dip_color;
         this.registerDefaultState(
                 this.stateDefinition.any()
                         .setValue(REMAINING_DIP, 3)
@@ -87,4 +106,22 @@ public class KetchupDipCupBlock extends HorizontalDirectionalBlock {
         super.createBlockStateDefinition(builder);
     }
 
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (level.isClientSide) {
+            return InteractionResult.PASS;
+        }
+
+        boolean opened = state.getValue(OPENED);
+        if (opened) {
+            return InteractionResult.PASS;
+        }
+
+        level.setBlock(pos, state.setValue(OPENED, true), 3);
+        level.playSound(null, pos,
+                SoundEvents.WOODEN_TRAPDOOR_OPEN,
+                SoundSource.BLOCKS, 0.6F, 1.0F);
+
+        return InteractionResult.SUCCESS;
+    }
 }
