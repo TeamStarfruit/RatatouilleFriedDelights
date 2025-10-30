@@ -1,6 +1,7 @@
 package org.starfruit.ratatouillefrieddelights.content.food;
 
 import com.mojang.serialization.MapCodec;
+import com.simibubi.create.AllShapes;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,44 +18,35 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 
 @MethodsReturnNonnullByDefault
-public class BoxedFriesBlock extends HorizontalDirectionalBlock {
-    public static final Property<Integer> REMAINING_BITES = IntegerProperty.create("remaining_bites", 0, 3);
-    public static final MapCodec<BoxedFriesBlock> CODEC = simpleCodec(BoxedFriesBlock::new);
-    private static final VoxelShape[] SHAPES = new VoxelShape[]{
-            // SOUTH
-            Block.box(5, 0, 6, 11, 10, 10),
-            // WEST
-            Block.box(6, 0, 5, 10, 10, 11),
-            // NORTH
-            Block.box(5, 0, 6, 11, 10, 10),
-            // EAST
-            Block.box(6, 0, 5, 10, 10, 11)
-    };
-    private static final VoxelShape[] SHELLS = new VoxelShape[]{
-            // SOUTH
-            Block.box(5, 0, 6, 11, 6, 10),
-            // WEST
-            Block.box(6, 0, 5, 10, 6, 11),
-            // NORTH
-            Block.box(5, 0, 6, 11, 6, 10),
-            // EAST
-            Block.box(6, 0, 5, 10, 6, 11)
-    };
+public class DuoChickenBucketBlock extends HorizontalDirectionalBlock {
+    public static final Property<Integer> REMAINING_BITES = IntegerProperty.create("remaining_bites", 0, 4);
+    public static final MapCodec<DuoChickenBucketBlock> CODEC = simpleCodec(DuoChickenBucketBlock::new);
+    private static final VoxelShape SHAPE =Shapes.join(
+            Shapes.join(
+                    Block.box(2.75, 0, 2.75, 13.25, 3, 13.25)
+                    , Shapes.join(
+                            Block.box(2.25, 3, 2.25, 13.75, 11, 13.75),
+                            Block.box(2,11,2,14,12,14)
+                            , BooleanOp.OR
+                    ), BooleanOp.OR),
+            Block.box(3, 6, 3, 13, 12, 13),
+            BooleanOp.ONLY_FIRST
+    );
 
-    public BoxedFriesBlock(Properties properties) {
+    public DuoChickenBucketBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(REMAINING_BITES, 3).setValue(FACING, Direction.NORTH));
     }
@@ -66,7 +58,7 @@ public class BoxedFriesBlock extends HorizontalDirectionalBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-        return state.getValue(REMAINING_BITES) == 0 ? SHELLS[state.getValue(FACING).get2DDataValue()]: SHAPES[state.getValue(FACING).get2DDataValue()];
+        return SHAPE;
     }
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -77,7 +69,7 @@ public class BoxedFriesBlock extends HorizontalDirectionalBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
     }
 
     @Override
@@ -112,13 +104,17 @@ public class BoxedFriesBlock extends HorizontalDirectionalBlock {
         if (bites == 0) {
             level.destroyBlock(pos, true, player);
         } else {
-            ItemStack fry = new ItemStack(RFDItems.A_FRY.get());
-            if (!player.addItem(fry)) {
-                player.drop(fry, false);
+            ItemStack item = ItemStack.EMPTY;
+            item = switch (bites) {
+                case 4, 2 -> new ItemStack(RFDItems.ORIGINAL_CHICKEN_KEEL.get(), 2);
+                case 3, 1 -> new ItemStack(RFDItems.ORIGINAL_CHICKEN_DRUMSTICK.get(), 2);
+                default -> item;
+            };
+            if (!player.addItem(item)) {
+                player.drop(item, false);
             }
-            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.6F, 1.0F);
-
             level.setBlock(pos, state.setValue(REMAINING_BITES, bites - 1), 3);
+            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.6F, 1.0F);
         }
 
         return InteractionResult.SUCCESS;

@@ -1,0 +1,79 @@
+{
+  "variants": {
+    "facing=east,remaining_bites=0": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_0",
+      "y": 90
+    },
+    "facing=east,remaining_bites=1": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_1",
+      "y": 90
+    },
+    "facing=east,remaining_bites=2": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_2",
+      "y": 90
+    },
+    "facing=east,remaining_bites=3": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_3",
+      "y": 90
+    },
+    "facing=east,remaining_bites=4": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_4",
+      "y": 90
+    },
+    "facing=north,remaining_bites=0": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_0"
+    },
+    "facing=north,remaining_bites=1": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_1"
+    },
+    "facing=north,remaining_bites=2": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_2"
+    },
+    "facing=north,remaining_bites=3": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_3"
+    },
+    "facing=north,remaining_bites=4": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_4"
+    },
+    "facing=south,remaining_bites=0": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_0",
+      "y": 180
+    },
+    "facing=south,remaining_bites=1": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_1",
+      "y": 180
+    },
+    "facing=south,remaining_bites=2": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_2",
+      "y": 180
+    },
+    "facing=south,remaining_bites=3": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_3",
+      "y": 180
+    },
+    "facing=south,remaining_bites=4": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_4",
+      "y": 180
+    },
+    "facing=west,remaining_bites=0": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_0",
+      "y": 270
+    },
+    "facing=west,remaining_bites=1": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_1",
+      "y": 270
+    },
+    "facing=west,remaining_bites=2": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_2",
+      "y": 270
+    },
+    "facing=west,remaining_bites=3": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_3",
+      "y": 270
+    },
+    "facing=west,remaining_bites=4": {
+      "model": "ratatouille_fried_delights:block/duo_chicken_bucket/duo_chicken_bucket_4",
+      "y": 270
+    }
+  }
+}

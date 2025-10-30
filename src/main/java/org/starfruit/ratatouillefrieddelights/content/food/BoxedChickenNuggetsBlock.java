@@ -87,15 +87,16 @@ public class BoxedChickenNuggetsBlock extends HorizontalDirectionalBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide) return InteractionResult.SUCCESS;
         int bites = state.getValue(REMAINING_BITES);
-        ItemStack nuggets = new ItemStack(RFDItems.A_CHICKEN_NUGGET.get(), 2);
-        if (!player.addItem(nuggets)) {
-            player.drop(nuggets, false);
-        }
-        level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.6F, 1.0F);
 
         if (bites == 0) {
             level.destroyBlock(pos, true, player);
         } else {
+            ItemStack nuggets = new ItemStack(RFDItems.A_CHICKEN_NUGGET.get(), 2);
+            if (!player.addItem(nuggets)) {
+                player.drop(nuggets, false);
+            }
+            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.6F, 1.0F);
+
             level.setBlock(pos, state.setValue(REMAINING_BITES, bites - 1), 3);
         }
 

@@ -29,10 +29,7 @@ import org.starfruit.ratatouillefrieddelights.content.continuousfryer.Continuous
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerGenerator;
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerModel;
 import org.starfruit.ratatouillefrieddelights.content.drumprocessor.DrumProcessorBlock;
-import org.starfruit.ratatouillefrieddelights.content.food.BoxedChickenNuggetsBlock;
-import org.starfruit.ratatouillefrieddelights.content.food.BoxedFriesBlock;
-import org.starfruit.ratatouillefrieddelights.content.food.KetchupDipCupBlock;
-import org.starfruit.ratatouillefrieddelights.content.food.PlaceableEdibleItem;
+import org.starfruit.ratatouillefrieddelights.content.food.*;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
 
 import static com.simibubi.create.foundation.data.AssetLookup.customItemModel;
@@ -52,6 +49,32 @@ public class RFDBlocks {
             .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
             .item()
             .model(AssetLookup::customItemModel)
+            .build()
+            .register();
+
+    public static final BlockEntry<DuoChickenBucketBlock> DUO_CHICKEN_BUCKET = RatatouilleFriedDelights.REGISTRATE
+            .block("duo_chicken_bucket", DuoChickenBucketBlock::new)
+            .initialProperties(()->Blocks.CAKE)
+            .blockstate((ctx, prov) -> prov.horizontalBlock(
+                    ctx.getEntry(),
+                    state -> prov.models().getExistingFile(
+                            prov.modLoc("block/"+ctx.getName()+"/"+ctx.getName()+"_" + state.getValue(DuoChickenBucketBlock.REMAINING_BITES))
+                    )
+            ))
+            .loot((lt, block) -> lt.add(block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
+                    )
+            ))
+            .item(PlaceableEdibleItem::new)
+            .properties(p -> p.food(
+                    new FoodProperties.Builder()
+                            .nutrition(5).saturationModifier(0.6f)
+                            .alwaysEdible()
+                            .build()))
+            .model(
+                    (c, p) ->
+                            p.generated(c, p.modLoc("item/" + p.name(c))))
             .build()
             .register();
 
