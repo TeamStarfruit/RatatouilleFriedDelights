@@ -1,5 +1,9 @@
 {
   "variants": {
+    "facing=east,remaining_bites=0": {
+      "model": "ratatouille_fried_delights:block/boxed_fries/boxed_fries_0",
+      "y": 90
+    },
     "facing=east,remaining_bites=1": {
       "model": "ratatouille_fried_delights:block/boxed_fries/boxed_fries_1",
       "y": 90
@@ -12,6 +16,9 @@
       "model": "ratatouille_fried_delights:block/boxed_fries/boxed_fries_3",
       "y": 90
     },
+    "facing=north,remaining_bites=0": {
+      "model": "ratatouille_fried_delights:block/boxed_fries/boxed_fries_0"
+    },
     "facing=north,remaining_bites=1": {
       "model": "ratatouille_fried_delights:block/boxed_fries/boxed_fries_1"
     },
@@ -20,6 +27,10 @@
     },
     "facing=north,remaining_bites=3": {
       "model": "ratatouille_fried_delights:block/boxed_fries/boxed_fries_3"
+    },
+    "facing=south,remaining_bites=0": {
+      "model": "ratatouille_fried_delights:block/boxed_fries/boxed_fries_0",
+      "y": 180
     },
     "facing=south,remaining_bites=1": {
       "model": "ratatouille_fried_delights:block/boxed_fries/boxed_fries_1",
@@ -32,6 +43,10 @@
     "facing=south,remaining_bites=3": {
       "model": "ratatouille_fried_delights:block/boxed_fries/boxed_fries_3",
       "y": 180
+    },
+    "facing=west,remaining_bites=0": {
+      "model": "ratatouille_fried_delights:block/boxed_fries/boxed_fries_0",
+      "y": 270
     },
     "facing=west,remaining_bites=1": {
       "model": "ratatouille_fried_delights:block/boxed_fries/boxed_fries_1",

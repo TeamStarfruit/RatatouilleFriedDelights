@@ -31,7 +31,7 @@ import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 
 @MethodsReturnNonnullByDefault
 public class BoxedFriesBlock extends HorizontalDirectionalBlock {
-    public static final Property<Integer> REMAINING_BITES = IntegerProperty.create("remaining_bites", 1, 3);
+    public static final Property<Integer> REMAINING_BITES = IntegerProperty.create("remaining_bites", 0, 3);
     public static final MapCodec<BoxedFriesBlock> CODEC = simpleCodec(BoxedFriesBlock::new);
     private static final VoxelShape[] SHAPES = new VoxelShape[]{
             // SOUTH
@@ -42,6 +42,16 @@ public class BoxedFriesBlock extends HorizontalDirectionalBlock {
             Block.box(5, 0, 6, 11, 10, 10),
             // EAST
             Block.box(6, 0, 5, 10, 10, 11)
+    };
+    private static final VoxelShape[] SHELLS = new VoxelShape[]{
+            // SOUTH
+            Block.box(5, 0, 6, 11, 6, 10),
+            // WEST
+            Block.box(6, 0, 5, 10, 6, 11),
+            // NORTH
+            Block.box(5, 0, 6, 11, 6, 10),
+            // EAST
+            Block.box(6, 0, 5, 10, 6, 11)
     };
 
     public BoxedFriesBlock(Properties properties) {
@@ -56,7 +66,7 @@ public class BoxedFriesBlock extends HorizontalDirectionalBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-        return SHAPES[state.getValue(FACING).get2DDataValue()];
+        return state.getValue(REMAINING_BITES) == 0 ? SHELLS[state.getValue(FACING).get2DDataValue()]: SHAPES[state.getValue(FACING).get2DDataValue()];
     }
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -104,8 +114,8 @@ public class BoxedFriesBlock extends HorizontalDirectionalBlock {
         }
         level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.6F, 1.0F);
 
-        if (bites <= 1) {
-            level.removeBlock(pos, false);
+        if (bites == 0) {
+            level.destroyBlock(pos, true, player);
         } else {
             level.setBlock(pos, state.setValue(REMAINING_BITES, bites - 1), 3);
         }
