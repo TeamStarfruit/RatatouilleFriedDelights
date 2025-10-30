@@ -175,7 +175,11 @@ public class RFDItems {
             .register();
     public static final ItemEntry<SequencedAssemblyItem> UNPROCESSED_RAW_APPLE_PIE = RatatouilleFriedDelights.REGISTRATE.item("unprocessed_raw_apple_pie", SequencedAssemblyItem::new).register();
 
-    public static final ItemEntry<Item> ONION_RINGS = RatatouilleFriedDelights.REGISTRATE.item("onion_rings", Item::new).register();
+    public static final ItemEntry<Item> ONION_RINGS = RatatouilleFriedDelights.REGISTRATE.item("onion_rings", Item::new).properties(p -> p.food(new FoodProperties.Builder()
+                    .nutrition(8).saturationModifier(0.6f)
+                    .alwaysEdible()
+                    .build()))
+            .register();
     public static final ItemEntry<Item> BREADED_ONION_RINGS = RatatouilleFriedDelights.REGISTRATE.item("breaded_onion_rings", Item::new).register();
     public static final ItemEntry<Item> FRIED_DONUT = RatatouilleFriedDelights.REGISTRATE.item("fried_donut", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(7).saturationModifier(0.7f)
@@ -254,7 +258,13 @@ public class RFDItems {
                     .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 10, 1), 1.0f)
                     .build()))
             .register();
-    public static final ItemEntry<Item> FRIED_RESIDUE = RatatouilleFriedDelights.REGISTRATE.item("fried_residue", Item::new).register();
+    public static final ItemEntry<Item> FRIED_RESIDUE = RatatouilleFriedDelights.REGISTRATE.item("fried_residue", Item::new).properties(p -> p.food(new FoodProperties.Builder()
+                    .nutrition(2).saturationModifier(0.1f)
+                    .alwaysEdible()
+                    .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 20 * 5, 1), 0.5f)
+                    .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 5, 1), 0.5f)
+                    .build()))
+            .register();
 
     public static final ItemEntry<Item> TARTAR_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tartar_topping", Item::new).register();
     public static final ItemEntry<Item> KETCHUP_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("ketchup_topping", Item::new).register();
