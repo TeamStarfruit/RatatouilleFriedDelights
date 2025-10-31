@@ -7,5 +7,9 @@
   "ratatouille_fried_delights.configuration.magicNumberIntroduction": "Magic Number Text",
   "ratatouille_fried_delights.configuration.magicNumber": "Magic Number",
   "itemGroup.ratatouille_fried_delights.base": "Ratatouille: Fried Delights",
-  "ratatouille_fried_delights.fryer.heat_level": "Heat Level:"
+  "ratatouille_fried_delights.fryer.heat_level": "Heat Level:",
+  "ratatouille_fried_delights.fryer.smouldering": "Idle",
+  "ratatouille_fried_delights.fryer.kindled": "Heating",
+  "ratatouille_fried_delights.fryer.seething": "Super Heating",
+  "ratatouille_fried_delights.fryer.none": "No heat source"
 }

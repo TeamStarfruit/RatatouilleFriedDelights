@@ -110,5 +110,10 @@
   "ratatouille_fried_delights.configuration.magicNumberIntroduction": "魔法数字介绍文本",
   "ratatouille_fried_delights.configuration.section.ratatouille_fried_delights.common.toml": "齿轮与麦穗 炸物盛宴配置",
   "ratatouille_fried_delights.configuration.section.ratatouille_fried_delights.common.toml.title": "齿轮与麦穗 炸物盛宴配置",
-  "ratatouille_fried_delights.configuration.title": "齿轮与麦穗 炸物盛宴配置"
+  "ratatouille_fried_delights.configuration.title": "齿轮与麦穗 炸物盛宴配置",
+  "ratatouille_fried_delights.fryer.heat_level": "加热状态:",
+  "ratatouille_fried_delights.fryer.smouldering": "待机",
+  "ratatouille_fried_delights.fryer.kindled": "加热",
+  "ratatouille_fried_delights.fryer.seething": "超级加热",
+  "ratatouille_fried_delights.fryer.none": "无热源"
 }

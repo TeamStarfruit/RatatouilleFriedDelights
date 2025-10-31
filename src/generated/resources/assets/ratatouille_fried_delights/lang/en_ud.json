@@ -116,5 +116,9 @@
   "ratatouille_fried_delights.configuration.section.ratatouille_fried_delights.common.toml": "sbıɟuoƆ sʇɥbıןǝᗡ pǝıɹℲ ǝןןınoʇɐʇɐᴚ",
   "ratatouille_fried_delights.configuration.section.ratatouille_fried_delights.common.toml.title": "sbıɟuoƆ sʇɥbıןǝᗡ pǝıɹℲ ǝןןınoʇɐʇɐᴚ",
   "ratatouille_fried_delights.configuration.title": "sbıɟuoƆ sʇɥbıןǝᗡ pǝıɹℲ ǝןןınoʇɐʇɐᴚ",
-  "ratatouille_fried_delights.fryer.heat_level": ":ןǝʌǝꞀ ʇɐǝH"
+  "ratatouille_fried_delights.fryer.heat_level": ":ןǝʌǝꞀ ʇɐǝH",
+  "ratatouille_fried_delights.fryer.kindled": "buıʇɐǝH",
+  "ratatouille_fried_delights.fryer.none": "ǝɔɹnos ʇɐǝɥ oN",
+  "ratatouille_fried_delights.fryer.seething": "buıʇɐǝH ɹǝdnS",
+  "ratatouille_fried_delights.fryer.smouldering": "ǝןpI"
 }

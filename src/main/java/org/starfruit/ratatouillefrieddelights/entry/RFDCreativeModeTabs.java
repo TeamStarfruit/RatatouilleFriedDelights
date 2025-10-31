@@ -85,6 +85,13 @@ public class RFDCreativeModeTabs {
             exclusions.add(RFDItems.UNPROCESSED_COLA.get());
             exclusions.add(RFDItems.TARTAR_TOPPING.get());
             exclusions.add(RFDItems.KETCHUP_TOPPING.get());
+            exclusions.add(RFDItems.BOBA_TOPPING.get());
+            exclusions.add(RFDItems.GLOW_BERRIES_BALL_TOPPING.get());
+            exclusions.add(RFDItems.CHORUS_BOBA_TOPPING.get());
+            exclusions.add(RFDItems.SLIME_JELLY_TOPPING.get());
+            exclusions.add(RFDItems.COOKIES_TOPPING.get());
+            exclusions.add(RFDItems.TEA_BOTTOM_TOPPING.get());
+            exclusions.add(RFDItems.TEA_TOP_TOPPING.get());
 
             return ((Predicate<Item>) exclusions::contains).or(RFDTags.AllItemTags.RATATOUILLE_TAB_INVISIBLE::matches);
         }

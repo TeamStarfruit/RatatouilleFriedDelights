@@ -61,89 +61,12 @@ public class RFDBlocks {
         .build()
         .register();
 
-    public static final BlockEntry<DuoChickenBucketBlock> DUO_CHICKEN_BUCKET = RatatouilleFriedDelights.REGISTRATE
-            .block("duo_chicken_bucket", DuoChickenBucketBlock::new)
-            .initialProperties(()->Blocks.CAKE)
-            .blockstate((ctx, prov) -> prov.horizontalBlock(
-                    ctx.getEntry(),
-                    state -> prov.models().getExistingFile(
-                            prov.modLoc("block/"+ctx.getName()+"/"+ctx.getName()+"_" + state.getValue(DuoChickenBucketBlock.REMAINING_BITES))
-                    )
-            ))
-            .loot((lt, block) -> lt.add(block, LootTable.lootTable()
-                    .withPool(LootPool.lootPool()
-                            .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
-                    )
-            ))
-            .item()
-            .properties(p -> p.food(
-                    new FoodProperties.Builder()
-                            .nutrition(5).saturationModifier(0.6f)
-                            .alwaysEdible()
-                            .build()))
-            .model(
-                    (c, p) ->
-                            p.generated(c, p.modLoc("item/" + p.name(c))))
-            .build()
-            .register();
 
-    public static final BlockEntry<BoxedChickenNuggetsBlock> BOXED_CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE
-            .block("boxed_chicken_nuggets", BoxedChickenNuggetsBlock::new)
-            .initialProperties(()->Blocks.CAKE)
-            .blockstate((ctx, prov) -> prov.horizontalBlock(
-                    ctx.getEntry(),
-                    state -> prov.models().getExistingFile(
-                            prov.modLoc("block/boxed_chicken_nuggets/boxed_chicken_nuggets_" + state.getValue(BoxedChickenNuggetsBlock.REMAINING_BITES))
-                    )
-            ))
-            .loot((lt, block) -> lt.add(block, LootTable.lootTable()
-                    .withPool(LootPool.lootPool()
-                            .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
-                    )
-            ))
-            .item()
-            .properties(p -> p.food(
-                    new FoodProperties.Builder()
-                            .nutrition(5).saturationModifier(0.6f)
-                            .alwaysEdible()
-                            .build()))
-            .model(
-                    (c, p) ->
-                            p.generated(c, p.modLoc("item/" + p.name(c))))
-            .build()
-            .register();
-
-
-    public static final BlockEntry<BoxedFriesBlock> BOXED_FRIES = RatatouilleFriedDelights.REGISTRATE
-            .block("boxed_fries", BoxedFriesBlock::new)
-            .initialProperties(()->Blocks.CAKE)
-            .blockstate((ctx, prov) -> prov.horizontalBlock(
-                    ctx.getEntry(),
-                    state -> prov.models().getExistingFile(
-                            prov.modLoc("block/boxed_fries/boxed_fries_" + state.getValue(BoxedFriesBlock.REMAINING_BITES))
-                    )
-            ))
-            .loot((lt, block) -> lt.add(block, LootTable.lootTable()
-                    .withPool(LootPool.lootPool()
-                            .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
-                    )
-            ))
-            .item()
-            .properties(p -> p.food(
-                new FoodProperties.Builder()
-                    .nutrition(6).saturationModifier(0.6f)
-                    .alwaysEdible()
-                    .build()))
-            .model(
-                    (c, p) ->
-                            p.generated(c, p.modLoc("item/" + p.name(c))))
-            .build()
-            .register();
 
      public static final BlockEntry<ContinuousFryerBlock> CONTINUOUS_FRYER = RatatouilleFriedDelights.REGISTRATE
             .block("continuous_fryer", ContinuousFryerBlock::new)
             .initialProperties(SharedProperties::copperMetal)
-            .properties(p -> p.mapColor(MapColor.METAL).sound(SoundType.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL).sound(SoundType.COPPER))
             .transform(pickaxeOnly())
             .blockstate(new FryerGenerator()::generate)
             .transform(RFDStress.setImpact(4F))
@@ -317,6 +240,85 @@ public class RFDBlocks {
                     .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/cola_fruit_block/item")))
                     .build()
                     .register();
+
+    public static final BlockEntry<DuoChickenBucketBlock> DUO_CHICKEN_BUCKET = RatatouilleFriedDelights.REGISTRATE
+            .block("duo_chicken_bucket", DuoChickenBucketBlock::new)
+            .initialProperties(()->Blocks.CAKE)
+            .blockstate((ctx, prov) -> prov.horizontalBlock(
+                    ctx.getEntry(),
+                    state -> prov.models().getExistingFile(
+                            prov.modLoc("block/"+ctx.getName()+"/"+ctx.getName()+"_" + state.getValue(DuoChickenBucketBlock.REMAINING_BITES))
+                    )
+            ))
+            .loot((lt, block) -> lt.add(block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
+                    )
+            ))
+            .item()
+            .properties(p -> p.food(
+                    new FoodProperties.Builder()
+                            .nutrition(5).saturationModifier(0.6f)
+                            .alwaysEdible()
+                            .build()))
+            .model(
+                    (c, p) ->
+                            p.generated(c, p.modLoc("item/" + p.name(c))))
+            .build()
+            .register();
+
+    public static final BlockEntry<BoxedChickenNuggetsBlock> BOXED_CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE
+            .block("boxed_chicken_nuggets", BoxedChickenNuggetsBlock::new)
+            .initialProperties(()->Blocks.CAKE)
+            .blockstate((ctx, prov) -> prov.horizontalBlock(
+                    ctx.getEntry(),
+                    state -> prov.models().getExistingFile(
+                            prov.modLoc("block/boxed_chicken_nuggets/boxed_chicken_nuggets_" + state.getValue(BoxedChickenNuggetsBlock.REMAINING_BITES))
+                    )
+            ))
+            .loot((lt, block) -> lt.add(block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
+                    )
+            ))
+            .item()
+            .properties(p -> p.food(
+                    new FoodProperties.Builder()
+                            .nutrition(5).saturationModifier(0.6f)
+                            .alwaysEdible()
+                            .build()))
+            .model(
+                    (c, p) ->
+                            p.generated(c, p.modLoc("item/" + p.name(c))))
+            .build()
+            .register();
+
+
+    public static final BlockEntry<BoxedFriesBlock> BOXED_FRIES = RatatouilleFriedDelights.REGISTRATE
+            .block("boxed_fries", BoxedFriesBlock::new)
+            .initialProperties(()->Blocks.CAKE)
+            .blockstate((ctx, prov) -> prov.horizontalBlock(
+                    ctx.getEntry(),
+                    state -> prov.models().getExistingFile(
+                            prov.modLoc("block/boxed_fries/boxed_fries_" + state.getValue(BoxedFriesBlock.REMAINING_BITES))
+                    )
+            ))
+            .loot((lt, block) -> lt.add(block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
+                    )
+            ))
+            .item()
+            .properties(p -> p.food(
+                    new FoodProperties.Builder()
+                            .nutrition(6).saturationModifier(0.6f)
+                            .alwaysEdible()
+                            .build()))
+            .model(
+                    (c, p) ->
+                            p.generated(c, p.modLoc("item/" + p.name(c))))
+            .build()
+            .register();
 
 
     public static void register() {
