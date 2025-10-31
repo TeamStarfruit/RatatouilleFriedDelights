@@ -48,7 +48,7 @@ public class DuoChickenBucketBlock extends HorizontalDirectionalBlock {
 
     public DuoChickenBucketBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(REMAINING_BITES, 3).setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(REMAINING_BITES, 4).setValue(FACING, Direction.NORTH));
     }
 
     @Override
@@ -106,8 +106,8 @@ public class DuoChickenBucketBlock extends HorizontalDirectionalBlock {
         } else {
             ItemStack item = ItemStack.EMPTY;
             item = switch (bites) {
-                case 4, 2 -> new ItemStack(RFDItems.ORIGINAL_CHICKEN_KEEL.get(), 2);
-                case 3, 1 -> new ItemStack(RFDItems.ORIGINAL_CHICKEN_DRUMSTICK.get(), 2);
+                case 4, 2 -> new ItemStack(RFDItems.ORIGINAL_CHICKEN_KEEL.get(), 1);
+                case 3, 1 -> new ItemStack(RFDItems.ORIGINAL_CHICKEN_DRUMSTICK.get(), 1);
                 default -> item;
             };
             if (!player.addItem(item)) {
