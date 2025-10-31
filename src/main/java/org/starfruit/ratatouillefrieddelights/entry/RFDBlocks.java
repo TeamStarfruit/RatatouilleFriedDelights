@@ -75,7 +75,7 @@ public class RFDBlocks {
                             .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
                     )
             ))
-            .item(PlaceableEdibleItem::new)
+            .item()
             .properties(p -> p.food(
                     new FoodProperties.Builder()
                             .nutrition(5).saturationModifier(0.6f)
@@ -101,7 +101,7 @@ public class RFDBlocks {
                             .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
                     )
             ))
-            .item(PlaceableEdibleItem::new)
+            .item()
             .properties(p -> p.food(
                     new FoodProperties.Builder()
                             .nutrition(5).saturationModifier(0.6f)
@@ -128,7 +128,7 @@ public class RFDBlocks {
                             .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
                     )
             ))
-            .item(PlaceableEdibleItem::new)
+            .item()
             .properties(p -> p.food(
                 new FoodProperties.Builder()
                     .nutrition(6).saturationModifier(0.6f)
