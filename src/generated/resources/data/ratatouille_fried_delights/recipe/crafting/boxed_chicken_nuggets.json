@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:chicken_nuggets"
+    },
+    {
+      "item": "create:cardboard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ratatouille_fried_delights:boxed_chicken_nuggets"
+  }
+}

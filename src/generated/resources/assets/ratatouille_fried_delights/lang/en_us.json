@@ -31,6 +31,7 @@
   "item.ratatouille_fried_delights.battered_original_drumstick": "Battered Original Drumstick",
   "item.ratatouille_fried_delights.battered_original_keel": "Battered Original Keel",
   "item.ratatouille_fried_delights.boba_cup": "Boba Cup",
+  "item.ratatouille_fried_delights.boba_cup.tooltip.summary": "On dev...",
   "item.ratatouille_fried_delights.boba_topping": "Boba Topping",
   "item.ratatouille_fried_delights.bottom_burger_bun": "Bottom Burger Bun",
   "item.ratatouille_fried_delights.breadcrumb": "Breadcrumb",
@@ -74,7 +75,8 @@
   "item.ratatouille_fried_delights.ketchup_bucket": "Ketchup Bucket",
   "item.ratatouille_fried_delights.ketchup_topping": "Ketchup Topping",
   "item.ratatouille_fried_delights.mayonnaise_bucket": "Mayonnaise Bucket",
-  "item.ratatouille_fried_delights.number42_concrete_mixing_pasta": "Number42 Concrete Mixing Pasta",
+  "item.ratatouille_fried_delights.no.42_concrete_mixing_pasta": "No.42 Concrete Mixing Pasta",
+  "item.ratatouille_fried_delights.no.42_concrete_mixing_pasta.tooltip.summary": "I beg to differ. Personally, I believe this spaghetti should be mixed with No. 42 concrete. Due to the length of this screw, it can easily affect the torque of the excavator. When you hammer it in, it will instantly generate a large amount of high-energy protein—commonly known as UFOs—which will severely impact economic development.\n\nBy your logic, chicken nuggets should be fried in 92-octane gasoline. After all, we can't detect Socrates with an optical lens. If dihydrogen monoxide keeps corroding this machine component, it's only a matter of time before we have to install collagen on the Fibonacci curve. Otherwise, we won’t be able to change the superposition state between Mixue Ice Cream City and Albuquerque.\n\nAs we all know, Chicken-loving Mo people often use hydrogen isotopes as bait when hunting giant whales, but the freshness of atomic bombs directly affects the monsoons and ocean currents in southeastern China. Therefore, opening an agricultural college in Siberia is clearly unreasonable.\n\nI know you’re going to argue back, and tell me what the underlying philosophy of agriculture is: no fertilizer, no pesticide, no seeds—but also includes the source of life, nitrogen, converting methane molecules into pure elements that can capture β radiation, and bending gamma rays at 78° with pliers at room temperature. Otherwise, when observing cellular structures with a telescope, there’s no way to discover how many layers of spacetime overlap are needed to make a Roujiamo from Tongguan extra crispy.",
   "item.ratatouille_fried_delights.onion_rings": "Onion Rings",
   "item.ratatouille_fried_delights.original_chicken_drumstick": "Original Chicken Drumstick",
   "item.ratatouille_fried_delights.original_chicken_keel": "Original Chicken Keel",
@@ -105,6 +107,7 @@
   "item.ratatouille_fried_delights.tomato_slices": "Tomato Slices",
   "item.ratatouille_fried_delights.top_burger_bun": "Top Burger Bun",
   "item.ratatouille_fried_delights.unprocessed_cola": "Unprocessed Cola",
+  "item.ratatouille_fried_delights.unprocessed_duo_chicken_bucket": "Unprocessed Duo Chicken Bucket",
   "item.ratatouille_fried_delights.unprocessed_hotcake_meal": "Unprocessed Hotcake Meal",
   "item.ratatouille_fried_delights.unprocessed_raw_apple_pie": "Unprocessed Raw Apple Pie",
   "item.ratatouille_fried_delights.vanilla_cone": "Vanilla Cone",
@@ -120,5 +123,6 @@
   "ratatouille_fried_delights.fryer.kindled": "Heating",
   "ratatouille_fried_delights.fryer.none": "No heat source",
   "ratatouille_fried_delights.fryer.seething": "Super Heating",
-  "ratatouille_fried_delights.fryer.smouldering": "Idle"
+  "ratatouille_fried_delights.fryer.smouldering": "Idle",
+  "ratatouille_fried_delights.jei.info.cola_fruits": "Cola fruits grow on cola trees, which can be found in jungle and savanna biomes."
 }

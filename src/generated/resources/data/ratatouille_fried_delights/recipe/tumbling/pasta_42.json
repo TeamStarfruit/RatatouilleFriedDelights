@@ -1,5 +1,5 @@
 {
-  "type": "ratatouille_fried_delights:coating",
+  "type": "ratatouille_fried_delights:tumbling",
   "ingredients": [
     {
       "item": "farmersdelight:raw_pasta"
@@ -11,7 +11,7 @@
   "processing_time": 200,
   "results": [
     {
-      "id": "ratatouille_fried_delights:number42_concrete_mixing_pasta"
+      "id": "ratatouille_fried_delights:no.42_concrete_mixing_pasta"
     }
   ]
 }

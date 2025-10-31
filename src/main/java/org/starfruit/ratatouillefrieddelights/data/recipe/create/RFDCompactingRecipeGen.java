@@ -19,11 +19,6 @@ public class RFDCompactingRecipeGen extends CompactingRecipeGen {
             .require(RFDItems.SUNFLOWER_SEEDS.get())
             .output(RFDFluids.SUNFLOWER_OIL.get(), 100)
     ),
-            DOUGH_RING = create("dough_ring", b -> b
-                    .require(CRItems.SALTY_DOUGH.get())
-                    .require(RFDItems.BUTTER.get())
-                    .output(RFDItems.DOUGH_RING.get())
-    ),
             CHARCOAL_COMPACT = create("charcoal_compact", b -> b
                     .require(RFDItems.FRIED_RESIDUE.get())
                     .require(RFDItems.FRIED_RESIDUE.get())

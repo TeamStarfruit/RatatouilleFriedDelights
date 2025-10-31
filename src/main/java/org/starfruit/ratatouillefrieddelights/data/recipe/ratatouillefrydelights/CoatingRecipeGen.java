@@ -48,14 +48,6 @@ public class CoatingRecipeGen extends StandardProcessingRecipeGen<CoatingRecipe>
                             .require(RFDItems.BREADCRUMB)
                             .output(RFDItems.BREADED_ONION_RINGS.get())
                             .duration(200)
-            ),
-            PASTA42 = this.create(
-                    "pasta_42",
-                    b -> b
-                            .require(ModItems.RAW_PASTA.get())
-                            .require(Tags.Items.CONCRETES)
-                            .output(RFDItems.NUMBER42_CONCRETE_MIXING_PASTA.get())
-                            .duration(200)
             );
 
     public CoatingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

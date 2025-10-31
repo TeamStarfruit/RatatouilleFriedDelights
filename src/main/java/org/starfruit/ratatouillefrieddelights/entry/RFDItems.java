@@ -1,8 +1,10 @@
 package org.starfruit.ratatouillefrieddelights.entry;
 
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
+import com.simibubi.create.foundation.item.ItemDescription;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -40,11 +42,6 @@ public class RFDItems {
                     .build()))
             .register();
 
-    public static final ItemEntry<Item> A_FRY = RatatouilleFriedDelights.REGISTRATE.item("a_fry", Item::new).properties(p -> p.food(new FoodProperties.Builder()
-                    .nutrition(2).saturationModifier(0.2f)
-                    .alwaysEdible()
-                    .build()))
-            .register();
     public static final ItemEntry<Item> A_CHICKEN_NUGGET = RatatouilleFriedDelights.REGISTRATE.item("a_chicken_nugget", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(2).saturationModifier(0.2f)
                     .alwaysEdible()
@@ -70,7 +67,7 @@ public class RFDItems {
                     .alwaysEdible()
                     .build()))
             .register();
-
+    public static final ItemEntry<SequencedAssemblyItem> UNPROCESSED_DUO_CHICKEN_BUCKET = RatatouilleFriedDelights.REGISTRATE.item("unprocessed_duo_chicken_bucket", SequencedAssemblyItem::new).register();
     public static final ItemEntry<Item> ORIGINAL_CHICKEN_DRUMSTICK = RatatouilleFriedDelights.REGISTRATE.item("original_chicken_drumstick", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(7).saturationModifier(0.8f)
                     .alwaysEdible()
@@ -95,6 +92,11 @@ public class RFDItems {
 //                    .alwaysEdible()
 //                    .build()))
 //            .register();
+    public static final ItemEntry<Item> A_FRY = RatatouilleFriedDelights.REGISTRATE.item("a_fry", Item::new).properties(p -> p.food(new FoodProperties.Builder()
+                .nutrition(2).saturationModifier(0.2f)
+                .alwaysEdible()
+                .build()))
+        .register();
     public static final ItemEntry<Item> CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE.item("chicken_nuggets", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(5).saturationModifier(0.6f)
                     .alwaysEdible()
@@ -227,7 +229,9 @@ public class RFDItems {
 
     public static final ItemEntry<Item> ICE_CUBES = RatatouilleFriedDelights.REGISTRATE.item("ice_cubes", Item::new).register();
     public static final ItemEntry<Item> CARDBOARD_STRAW = RatatouilleFriedDelights.REGISTRATE.item("cardboard_straw", Item::new).register();
-    public static final ItemEntry<Item> BOBA_CUP = RatatouilleFriedDelights.REGISTRATE.item("boba_cup", Item::new).register();
+    public static final ItemEntry<Item> BOBA_CUP = RatatouilleFriedDelights.REGISTRATE.item("boba_cup", Item::new)
+            .onRegisterAfter(Registries.ITEM, item -> ItemDescription.useKey(item, "item.ratatouille_fried_delights.boba_cup"))
+            .register();
     public static final ItemEntry<Item> TALL_CUP = RatatouilleFriedDelights.REGISTRATE.item("tall_cup", Item::new).register();
     public static final ItemEntry<Item> SHORT_CUP = RatatouilleFriedDelights.REGISTRATE.item("short_cup", Item::new).register();
     public static final ItemEntry<DrinkableItem> COLA = RatatouilleFriedDelights.REGISTRATE.item("cola", DrinkableItem::new).properties(p -> p.food(new FoodProperties.Builder()
@@ -256,12 +260,13 @@ public class RFDItems {
 
     public static final ItemEntry<Item> SUNFLOWER_SEED_OIL_BOTTLE = RatatouilleFriedDelights.REGISTRATE.item("sunflower_seed_oil_bottle", Item::new).register();
 
-    public static final ItemEntry<Item> NUMBER42_CONCRETE_MIXING_PASTA = RatatouilleFriedDelights.REGISTRATE.item("number42_concrete_mixing_pasta", Item::new).properties(p -> p.food(new FoodProperties.Builder()
+    public static final ItemEntry<Item> NO42_CONCRETE_MIXING_PASTA = RatatouilleFriedDelights.REGISTRATE.item("no.42_concrete_mixing_pasta", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(4).saturationModifier(0.2f)
                     .alwaysEdible()
                     .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 20 * 10, 1), 1.0f)
                     .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 10, 1), 1.0f)
                     .build()))
+            .onRegisterAfter(Registries.ITEM, item -> ItemDescription.useKey(item, "item.ratatouille_fried_delights.no.42_concrete_mixing_pasta"))
             .register();
     public static final ItemEntry<Item> FRIED_RESIDUE = RatatouilleFriedDelights.REGISTRATE.item("fried_residue", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(2).saturationModifier(0.1f)

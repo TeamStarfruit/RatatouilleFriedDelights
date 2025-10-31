@@ -1,6 +1,7 @@
 package org.starfruit.ratatouillefrieddelights.data.recipe.create;
 
 import com.simibubi.create.AllFluids;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.api.data.recipe.DeployingRecipeGen;
 import com.simibubi.create.api.data.recipe.SequencedAssemblyRecipeGen;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
@@ -12,6 +13,7 @@ import org.forsteri.ratatouille.Ratatouille;
 import org.forsteri.ratatouille.entry.CRFluids;
 import org.forsteri.ratatouille.entry.CRItems;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
+import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
 import org.starfruit.ratatouillefrieddelights.entry.RFDFluids;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 
@@ -60,6 +62,17 @@ public class RFDSequencedAssemblyRecipeGen extends SequencedAssemblyRecipeGen {
                             .require(RFDItems.ICE_CUBES.get()))
             .addStep(FillingRecipe::new, rb -> rb
                     .require(RFDFluids.COLA_SYRUP.get(), 100))
+    ),
+
+    DUO_CHICKEN_BUCKET = create("duo_chicken_bucket", b -> b
+            .require(AllItems.CARDBOARD.get())
+            .transitionTo(RFDItems.UNPROCESSED_DUO_CHICKEN_BUCKET.get())
+            .addOutput(RFDBlocks.DUO_CHICKEN_BUCKET.get(), 1)
+            .loops(2)
+            .addStep(DeployerApplicationRecipe::new, rb -> rb
+                    .require(RFDItems.ORIGINAL_CHICKEN_DRUMSTICK.get()))
+            .addStep(DeployerApplicationRecipe::new, rb -> rb
+                    .require(RFDItems.ORIGINAL_CHICKEN_KEEL.get()))
     );
 
     public RFDSequencedAssemblyRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

@@ -87,7 +87,7 @@ public class FryingCategory extends CreateRecipeCategory<FryingRecipe> {
         int blockX = 40;
         int blockY = 50 + Y_OFFSET;
 
-        AllGuiTextures.JEI_ARROW.render(gui, 85, 35 + Y_OFFSET);
+        AllGuiTextures.JEI_ARROW.render(gui, 90, 38 + Y_OFFSET);
 //        AllGuiTextures.JEI_SHADOW.render(gui, blockX, blockY);
         AllGuiTextures.JEI_DOWN_ARROW.render(gui, blockX + 10, blockY - 32);
 
@@ -103,6 +103,6 @@ public class FryingCategory extends CreateRecipeCategory<FryingRecipe> {
             return;
         gui.drawString(Minecraft.getInstance().font,
                 CreateLang.translateDirect(requiredHeat.getTranslationKey()),
-                90, 35 + Y_OFFSET + INPUT_Y_ADJUST, requiredHeat.getColor(), false);
+                100, 35 + Y_OFFSET + INPUT_Y_ADJUST, requiredHeat.getColor(), false);
     }
 }

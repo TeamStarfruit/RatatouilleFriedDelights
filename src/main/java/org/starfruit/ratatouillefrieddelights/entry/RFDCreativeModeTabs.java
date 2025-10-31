@@ -83,6 +83,7 @@ public class RFDCreativeModeTabs {
             exclusions.add(RFDItems.UNPROCESSED_HOTCAKE_MEAL.get());
             exclusions.add(RFDItems.UNPROCESSED_RAW_APPLE_PIE.get());
             exclusions.add(RFDItems.UNPROCESSED_COLA.get());
+            exclusions.add(RFDItems.UNPROCESSED_DUO_CHICKEN_BUCKET.get());
             exclusions.add(RFDItems.TARTAR_TOPPING.get());
             exclusions.add(RFDItems.KETCHUP_TOPPING.get());
             exclusions.add(RFDItems.BOBA_TOPPING.get());

@@ -84,6 +84,27 @@ public final class RFDStandardRecipeGen extends BaseRecipeProvider {
                             .requires(CRItems.SALT)
                             .requires(ModItems.ONION.get())
             ),
+            BOXED_FRIES = create(RFDBlocks.BOXED_FRIES).returns(1)
+                    .unlockedBy(RFDItems.FRENCH_FRIES::asItem) // mandatory
+                    .viaShapeless(b -> b
+                            .requires(RFDItems.FRENCH_FRIES.get())
+                            .requires(AllItems.CARDBOARD)
+                    ),
+            BOXED_CHICKEN_NUGGETS = create(RFDBlocks.BOXED_CHICKEN_NUGGETS).returns(1)
+                    .unlockedBy(RFDItems.CHICKEN_NUGGETS::asItem) // mandatory
+                    .viaShapeless(b -> b
+                            .requires(RFDItems.CHICKEN_NUGGETS.get())
+                            .requires(AllItems.CARDBOARD)
+                    ),
+            DUO_CHICKEN_BUCKET = create(RFDBlocks.DUO_CHICKEN_BUCKET).returns(1)
+                    .unlockedBy(RFDItems.ORIGINAL_CHICKEN_DRUMSTICK::asItem) // mandatory
+                    .viaShapeless(b -> b
+                            .requires(RFDItems.ORIGINAL_CHICKEN_DRUMSTICK.get())
+                            .requires(RFDItems.ORIGINAL_CHICKEN_DRUMSTICK.get())
+                            .requires(RFDItems.ORIGINAL_CHICKEN_KEEL.get())
+                            .requires(RFDItems.ORIGINAL_CHICKEN_KEEL.get())
+                            .requires(AllItems.CARDBOARD)
+                    ),
             TALL_CUP = create(RFDItems.TALL_CUP).returns(3)
             .unlockedBy(Items.GLASS::asItem) // mandatory
             .viaShaped(b -> b
