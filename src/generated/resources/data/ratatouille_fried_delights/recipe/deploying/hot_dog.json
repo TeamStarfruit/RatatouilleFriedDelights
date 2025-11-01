@@ -1,0 +1,16 @@
+{
+  "type": "create:deploying",
+  "ingredients": [
+    {
+      "item": "minecraft:bread"
+    },
+    {
+      "item": "ratatouille:sausage"
+    }
+  ],
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:hot_dog"
+    }
+  ]
+}

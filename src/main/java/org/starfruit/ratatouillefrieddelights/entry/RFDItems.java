@@ -188,6 +188,22 @@ public class RFDItems {
                     .build()))
             .register();
     public static final ItemEntry<Item> BREADED_ONION_RINGS = RatatouilleFriedDelights.REGISTRATE.item("breaded_onion_rings", Item::new).register();
+
+    public static final ItemEntry<Item> HOT_DOG = RatatouilleFriedDelights.REGISTRATE.item("hot_dog", Item::new).properties(p -> p.food(new FoodProperties.Builder()
+                    .nutrition(6).saturationModifier(0.4f)
+                    .alwaysEdible()
+                    .build()))
+            .register();
+    public static final ItemEntry<Item> CHOCOLATE_DONUT = RatatouilleFriedDelights.REGISTRATE.item("chocolate_donut", Item::new).properties(p -> p.food(new FoodProperties.Builder()
+                    .nutrition(9).saturationModifier(0.9f)
+                    .alwaysEdible()
+                    .build()))
+            .register();
+    public static final ItemEntry<Item> CREAMY_DONUT = RatatouilleFriedDelights.REGISTRATE.item("creamy_donut", Item::new).properties(p -> p.food(new FoodProperties.Builder()
+                    .nutrition(9).saturationModifier(0.9f)
+                    .alwaysEdible()
+                    .build()))
+            .register();
     public static final ItemEntry<Item> FRIED_DONUT = RatatouilleFriedDelights.REGISTRATE.item("fried_donut", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(7).saturationModifier(0.7f)
                     .alwaysEdible()

@@ -5,6 +5,7 @@ import com.simibubi.create.api.data.recipe.FillingRecipeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.common.Tags;
 import org.forsteri.ratatouille.Ratatouille;
 import org.forsteri.ratatouille.entry.CRFluids;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
@@ -51,6 +52,18 @@ public class RFDFillingRecipeGen extends FillingRecipeGen {
             .require(Items.GLASS_BOTTLE)
             .require(RFDFluids.SUNFLOWER_OIL.get(), 125)
             .output(RFDItems.SUNFLOWER_SEED_OIL_BOTTLE.get())
+    ),
+
+    CREAMY_DONUT = create("creamy_donut", b -> b
+            .require(RFDItems.FRIED_DONUT.get())
+            .require(Tags.Fluids.MILK, 250)
+            .output(RFDItems.CREAMY_DONUT.get())
+    ),
+
+    CHOCOLATE_DONUT = create("chocolate_donut", b -> b
+            .require(RFDItems.FRIED_DONUT.get())
+            .require(AllFluids.CHOCOLATE.get(), 250)
+            .output(RFDItems.CHOCOLATE_DONUT.get())
     );
 
     public RFDFillingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

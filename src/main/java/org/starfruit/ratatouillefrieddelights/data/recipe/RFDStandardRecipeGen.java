@@ -105,6 +105,12 @@ public final class RFDStandardRecipeGen extends BaseRecipeProvider {
                             .requires(RFDItems.ORIGINAL_CHICKEN_KEEL.get())
                             .requires(AllItems.CARDBOARD)
                     ),
+            HOT_DOG = create(RFDItems.HOT_DOG).returns(1)
+                    .unlockedBy(CRItems.SAUSAGE::asItem) // mandatory
+                    .viaShapeless(b -> b
+                            .requires(Items.BREAD)
+                            .requires(CRItems.SAUSAGE.get())
+                    ),
             TALL_CUP = create(RFDItems.TALL_CUP).returns(3)
             .unlockedBy(Items.GLASS::asItem) // mandatory
             .viaShaped(b -> b

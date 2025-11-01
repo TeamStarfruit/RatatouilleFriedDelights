@@ -4,6 +4,8 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.api.data.recipe.DeployingRecipeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.Items;
+import org.forsteri.ratatouille.entry.CRItems;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
@@ -26,7 +28,12 @@ public class RFDDeployingRecipeGen extends DeployingRecipeGen {
                     .require(RFDItems.CHICKEN_NUGGETS.get())
                     .require(AllItems.CARDBOARD.get())
                     .output(RFDBlocks.BOXED_CHICKEN_NUGGETS.get(), 1)
-    );
+    ),
+            HOT_DOG = create("hot_dog", b -> b
+                    .require(Items.BREAD)
+                    .require(CRItems.SAUSAGE.get())
+                    .output(RFDItems.HOT_DOG.get(), 1)
+            );
 
     public RFDDeployingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, RatatouilleFriedDelights.MOD_ID);
