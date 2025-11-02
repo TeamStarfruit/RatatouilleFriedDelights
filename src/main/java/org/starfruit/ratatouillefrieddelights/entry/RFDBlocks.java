@@ -367,7 +367,8 @@ public class RFDBlocks {
                 );
             })
             .item()
-            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/dip_cup/item")))
+            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/dip_cup/item"))
+                    .texture("2", p.modLoc("block/dip_cup_top/honey_dip_cup_top")))
             .build()
             .register();
 
@@ -396,7 +397,8 @@ public class RFDBlocks {
                 );
             })
             .item()
-            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/dip_cup/item")))
+            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/dip_cup/item"))
+                    .texture("2", p.modLoc("block/dip_cup_top/tartar_sauce_dip_cup_top")))
             .build()
             .register();
 

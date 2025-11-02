@@ -1,3 +1,6 @@
 {
-  "parent": "ratatouille_fried_delights:block/dip_cup/item"
+  "parent": "ratatouille_fried_delights:block/dip_cup/item",
+  "textures": {
+    "2": "ratatouille_fried_delights:block/dip_cup_top/tartar_sauce_dip_cup_top"
+  }
 }
