@@ -42,16 +42,11 @@ public class RFDItems {
                     .build()))
             .register();
 
-    public static final ItemEntry<Item> A_CHICKEN_NUGGET = RatatouilleFriedDelights.REGISTRATE.item("a_chicken_nugget", Item::new).properties(p -> p.food(new FoodProperties.Builder()
+    public static final ItemEntry<Item> A_FRY = RatatouilleFriedDelights.REGISTRATE.item("a_fry", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(2).saturationModifier(0.2f)
                     .alwaysEdible()
                     .build()))
             .register();
-//    public static final ItemEntry<Item> BOXED_FRIES = RatatouilleFriedDelights.REGISTRATE.item("boxed_fries", Item::new).properties(p -> p.food(new FoodProperties.Builder()
-//                    .nutrition(6).saturationModifier(0.6f)
-//                    .alwaysEdible()
-//                    .build()))
-//            .register();
     public static final ItemEntry<Item> FRENCH_FRIES = RatatouilleFriedDelights.REGISTRATE.item("french_fries", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(6).saturationModifier(0.6f)
                     .alwaysEdible()
@@ -87,12 +82,7 @@ public class RFDItems {
     public static final ItemEntry<Item> BUTTER = RatatouilleFriedDelights.REGISTRATE.item("butter", Item::new).register();
     public static final ItemEntry<Item> BREADCRUMB = RatatouilleFriedDelights.REGISTRATE.item("breadcrumb", Item::new).register();
 
-//    public static final ItemEntry<Item> BOXED_CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE.item("boxed_chicken_nuggets", Item::new).properties(p -> p.food(new FoodProperties.Builder()
-//                    .nutrition(5).saturationModifier(0.6f)
-//                    .alwaysEdible()
-//                    .build()))
-//            .register();
-    public static final ItemEntry<Item> A_FRY = RatatouilleFriedDelights.REGISTRATE.item("a_fry", Item::new).properties(p -> p.food(new FoodProperties.Builder()
+    public static final ItemEntry<Item> A_CHICKEN_NUGGET = RatatouilleFriedDelights.REGISTRATE.item("a_chicken_nugget", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                 .nutrition(2).saturationModifier(0.2f)
                 .alwaysEdible()
                 .build()))

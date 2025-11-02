@@ -75,7 +75,7 @@ public final class RFDStandardRecipeGen extends BaseRecipeProvider {
                     .viaShapeless(b -> b
                             .requires(RFDBlocks.COLA_LOG)
                     ),
-            SECRET_SEASONING_POWDER = create(RFDItems.SECRET_SEASONING_POWDER).returns(3)
+            SECRET_SEASONING_POWDER = create(RFDItems.SECRET_SEASONING_POWDER).returns(5)
                     .unlockedBy(Items.DRIED_KELP::asItem) // mandatory
                     .viaShapeless(b -> b
                             .requires(AllItems.WHEAT_FLOUR.get())

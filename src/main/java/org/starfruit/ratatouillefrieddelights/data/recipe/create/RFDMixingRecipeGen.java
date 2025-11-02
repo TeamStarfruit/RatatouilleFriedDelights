@@ -51,15 +51,6 @@ public class RFDMixingRecipeGen extends MixingRecipeGen {
             .output(RFDItems.RAW_CHICKEN_NUGGETS.get())
             ),
 
-    SECRET_SEASONING_POWDER = create("secret_seasoning_powder", b -> b
-            .require(AllItems.WHEAT_FLOUR.get())
-            .require(Items.BEETROOT)
-            .require(Items.DRIED_KELP)
-            .require(CRItems.SALT)
-            .require(ModItems.ONION.get())
-            .output(RFDItems.SECRET_SEASONING_POWDER.get(), 5)
-    ),
-
     PUFF_PASTRY = create("puff_pastry", b -> b
             .require(AllItems.WHEAT_FLOUR.get())
             .require(Items.SUGAR)
@@ -70,7 +61,6 @@ public class RFDMixingRecipeGen extends MixingRecipeGen {
     CHICKEN_SO_BEAUTIFUL = create("chicken_so_beautiful", b -> b
             .require(Items.CHICKEN)
             .require(RFDItems.SECRET_SEASONING_POWDER)
-            .require(Items.EGG)
             .output(RFDItems.BATTERED_ORIGINAL_DRUMSTICK.get())
             .output(RFDItems.BATTERED_ORIGINAL_KEEL.get())
     ),

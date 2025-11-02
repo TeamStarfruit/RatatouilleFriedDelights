@@ -36,7 +36,7 @@ public class TumblingRecipeGen extends StandardProcessingRecipeGen<TumblingRecip
                     .duration(500)
 
             ),
-            copper = this.create(
+            COPPER_BLOCK = this.create(
                     "copper_polishing",
                     b -> b
                             .require(Items.EXPOSED_COPPER)
