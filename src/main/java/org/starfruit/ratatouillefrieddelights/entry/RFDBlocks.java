@@ -28,6 +28,8 @@ import org.starfruit.ratatouillefrieddelights.content.colatree.RFDFlammableRotat
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.ContinuousFryerBlock;
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerGenerator;
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerModel;
+import org.starfruit.ratatouillefrieddelights.content.dipcup.DipCupBakedModel;
+import org.starfruit.ratatouillefrieddelights.content.dipcup.DipCupBlock;
 import org.starfruit.ratatouillefrieddelights.content.drumprocessor.DrumProcessorBlock;
 import org.starfruit.ratatouillefrieddelights.content.food.*;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
@@ -41,25 +43,27 @@ public class RFDBlocks {
         RatatouilleFriedDelights.REGISTRATE.setCreativeTab(RFDCreativeModeTabs.BASE_CREATIVE_TAB);
     }
 
-//    public static final BlockEntry<DipCupBlock> KETCHUP_DIP_CUP = RatatouilleFriedDelights.REGISTRATE
-//            .block("ketchup_dip_cup", DipCupBlock::new)
-//            .initialProperties(()-> Blocks.CAKE)
-//            .properties(BlockBehaviour.Properties::noLootTable)
-//            .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
-//            .item()
-//            .model(AssetLookup::customItemModel)
-//            .build()
-//            .register();
+    public static final BlockEntry<DipCupBlock> KETCHUP_DIP_CUP = RatatouilleFriedDelights.REGISTRATE
+            .block("ketchup_dip_cup", (p) -> new DipCupBlock(p, 0xD32F2FFF, RFDSpriteShifts.DIP_CUP_KETCHUP))
+            .initialProperties(()-> Blocks.CAKE)
+            .properties(BlockBehaviour.Properties::noLootTable)
+            .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), p.models()
+                    .getExistingFile(p.modLoc("block/dip_cup/block"))))
+            .onRegister(CreateRegistrate.blockModel(() -> DipCupBakedModel::new))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/dip_cup/item")))
+            .build()
+            .register();
 
-    public static final BlockEntry<DipCupBlock> DIP_CUP = RatatouilleFriedDelights.REGISTRATE
-        .block("dip_cup", DipCupBlock::new)
-        .initialProperties(()-> Blocks.CAKE)
-        .properties(BlockBehaviour.Properties::noLootTable)
-        .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
-        .item()
-        .model(AssetLookup::customItemModel)
-        .build()
-        .register();
+//    public static final BlockEntry<DipCupBlock> DIP_CUP = RatatouilleFriedDelights.REGISTRATE
+//        .block("dip_cup", DipCupBlock::new)
+//        .initialProperties(()-> Blocks.CAKE)
+//        .properties(BlockBehaviour.Properties::noLootTable)
+//        .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
+//        .item()
+//        .model(AssetLookup::customItemModel)
+//        .build()
+//        .register();
 
 
 
