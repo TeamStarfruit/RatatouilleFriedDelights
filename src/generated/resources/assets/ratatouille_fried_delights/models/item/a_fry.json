@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ratatouille_fried_delights:item/a_fry"
+    "layer0": "ratatouille_fried_delights:item/a_fry",
+    "layer1": "ratatouille_fried_delights:item/a_fry_partial",
+    "layer2": "ratatouille_fried_delights:item/a_fry_dip"
   }
 }

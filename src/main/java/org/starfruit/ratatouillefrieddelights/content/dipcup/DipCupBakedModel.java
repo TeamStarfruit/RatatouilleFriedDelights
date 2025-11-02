@@ -100,7 +100,7 @@ public class DipCupBakedModel extends BakedModelWrapperWithData {
                 ? state.getValue(DipCupBlock.FACING)
                 : Direction.NORTH;
 
-        int color = ((DipCupBlock) state.getBlock()).dipColor;
+        int color = DipCupBlock.rgbaToAbgr(((DipCupBlock) state.getBlock()).dipColor);
         TextureAtlasSprite sprite = RFDSpriteShifts.DIP_CUP_SOURCE.getTarget();
         int[] vertexData = new int[BakedQuadHelper.VERTEX_STRIDE * 4];
 

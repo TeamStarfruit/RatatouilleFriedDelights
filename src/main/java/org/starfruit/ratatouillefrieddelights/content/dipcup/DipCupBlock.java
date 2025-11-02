@@ -31,7 +31,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.starfruit.ratatouillefrieddelights.entry.RFDSpriteShifts;
 
 public class DipCupBlock extends HorizontalDirectionalBlock {
-    public static final Property<Integer> REMAINING_DIP = IntegerProperty.create("remaining_dip", 1, 3);
+    public static final Property<Integer> REMAINING_DIP = IntegerProperty.create("remaining_dip", 0, 3);
     public static final Property<Boolean> OPENED = BooleanProperty.create("opened");
     public static final MapCodec<HorizontalDirectionalBlock> CODEC = simpleCodec(DipCupBlock::new);
     private static final VoxelShape[] SHAPES = new VoxelShape[]{
@@ -44,7 +44,7 @@ public class DipCupBlock extends HorizontalDirectionalBlock {
             // EAST
             Block.box(5, 0, 6, 11, 3, 10)
     };
-    // RGBA
+    // ARGB
     public final int dipColor;
     public final SpriteShiftEntry sealSprite;
 
@@ -57,6 +57,15 @@ public class DipCupBlock extends HorizontalDirectionalBlock {
         this(props, 0xFFFFFF, RFDSpriteShifts.DIP_CUP_KETCHUP);
     }
 
+    public static int rgbaToArgb(int rgba) {
+        int r = (rgba >> 24) & 0xFF;
+        int g = (rgba >> 16) & 0xFF;
+        int b = (rgba >> 8) & 0xFF;
+        int a = rgba & 0xFF;
+
+        return (a << 24) | (r << 16) | (g << 8) | b;
+    }
+
     public static int rgbaToAbgr(int rgba) {
         int r = (rgba >> 24) & 0xFF;
         int g = (rgba >> 16) & 0xFF;
@@ -67,7 +76,7 @@ public class DipCupBlock extends HorizontalDirectionalBlock {
 
     public DipCupBlock(BlockBehaviour.Properties props, int dipColor, SpriteShiftEntry sealSprite) {
         super(props);
-        this.dipColor = rgbaToAbgr(dipColor);
+        this.dipColor = dipColor;
         this.sealSprite = sealSprite;
         this.registerDefaultState(
                 this.stateDefinition.any()
@@ -117,12 +126,23 @@ public class DipCupBlock extends HorizontalDirectionalBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
+            return InteractionResult.PASS;
         }
 
         boolean opened = state.getValue(OPENED);
-        if (opened) {
+
+        if (opened && state.getValue(REMAINING_DIP) == 0) {
+            level.destroyBlock(pos, true);
+//            level.playSound(null, pos,
+//                    SoundEvents.ITEM_FRAME_REMOVE_ITEM,
+//                    SoundSource.BLOCKS,
+//                    0.7F + level.random.nextFloat() * 0.3F,
+//                    0.9F + level.random.nextFloat() * 0.2F);
             return InteractionResult.SUCCESS;
+        }
+
+        if (opened) {
+            return InteractionResult.PASS;
         }
 
         level.setBlock(pos, state.setValue(OPENED, true), 3);

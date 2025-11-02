@@ -2,16 +2,22 @@ package org.starfruit.ratatouillefrieddelights.entry;
 
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.foundation.item.ItemDescription;
+import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import org.forsteri.ratatouille.Ratatouille;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import net.minecraft.world.item.Item;
+import org.starfruit.ratatouillefrieddelights.content.dipcup.DipColor;
+import org.starfruit.ratatouillefrieddelights.content.dipcup.DipableItem;
 import org.starfruit.ratatouillefrieddelights.content.food.DrinkableItem;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerContents;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerItem;
@@ -42,10 +48,19 @@ public class RFDItems {
                     .build()))
             .register();
 
-    public static final ItemEntry<Item> A_CHICKEN_NUGGET = RatatouilleFriedDelights.REGISTRATE.item("a_chicken_nugget", Item::new).properties(p -> p.food(new FoodProperties.Builder()
+    public static final ItemEntry<DipableItem> A_CHICKEN_NUGGET = RatatouilleFriedDelights.REGISTRATE.item("a_chicken_nugget",
+                    DipableItem::new)
+            .properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(2).saturationModifier(0.2f)
                     .alwaysEdible()
                     .build()))
+            .model((ctx, prov) -> {
+                prov.withExistingParent(ctx.getName(), "item/generated")
+                        .texture("layer0", prov.modLoc("item/" + ctx.getName()))
+                        .texture("layer1", prov.modLoc("item/" + ctx.getName() + "_partial"))
+                        .texture("layer2", prov.modLoc("item/" + ctx.getName() + "_dip"));
+            })
+            .color(() -> DipColor::new)
             .register();
 //    public static final ItemEntry<Item> BOXED_FRIES = RatatouilleFriedDelights.REGISTRATE.item("boxed_fries", Item::new).properties(p -> p.food(new FoodProperties.Builder()
 //                    .nutrition(6).saturationModifier(0.6f)
@@ -92,11 +107,20 @@ public class RFDItems {
 //                    .alwaysEdible()
 //                    .build()))
 //            .register();
-    public static final ItemEntry<Item> A_FRY = RatatouilleFriedDelights.REGISTRATE.item("a_fry", Item::new).properties(p -> p.food(new FoodProperties.Builder()
-                .nutrition(2).saturationModifier(0.2f)
-                .alwaysEdible()
-                .build()))
-        .register();
+    public static final ItemEntry<DipableItem> A_FRY = RatatouilleFriedDelights.REGISTRATE
+            .item("a_fry", DipableItem::new)
+            .properties(p -> p.food(new FoodProperties.Builder()
+                    .nutrition(2).saturationModifier(0.2f)
+                    .alwaysEdible()
+                    .build()))
+            .model((ctx, prov) -> {
+                prov.withExistingParent(ctx.getName(), "item/generated")
+                        .texture("layer0", prov.modLoc("item/" + ctx.getName()))
+                        .texture("layer1", prov.modLoc("item/" + ctx.getName() + "_partial"))
+                        .texture("layer2", prov.modLoc("item/" + ctx.getName() + "_dip"));
+            })
+            .color(() -> DipColor::new)
+            .register();
     public static final ItemEntry<Item> CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE.item("chicken_nuggets", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(5).saturationModifier(0.6f)
                     .alwaysEdible()
@@ -321,7 +345,5 @@ public class RFDItems {
             .tag(RFDTags.AllItemTags.BURGER_BASE.tag, RFDTags.AllItemTags.BURGER_TOPPINGS.tag) // Yes, this is how I implemented it, don't question
             .model((ctx, prov) -> prov.getBuilder("item/" + ctx.getName()).texture("particle", RatatouilleFriedDelights.asResource("item/empty")))
             .register();
-
-
     public static void register() {}
 }

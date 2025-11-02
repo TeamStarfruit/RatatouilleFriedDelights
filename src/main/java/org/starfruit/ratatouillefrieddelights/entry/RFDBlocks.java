@@ -43,18 +43,6 @@ public class RFDBlocks {
         RatatouilleFriedDelights.REGISTRATE.setCreativeTab(RFDCreativeModeTabs.BASE_CREATIVE_TAB);
     }
 
-    public static final BlockEntry<DipCupBlock> KETCHUP_DIP_CUP = RatatouilleFriedDelights.REGISTRATE
-            .block("ketchup_dip_cup", (p) -> new DipCupBlock(p, 0xD32F2FFF, RFDSpriteShifts.DIP_CUP_KETCHUP))
-            .initialProperties(()-> Blocks.CAKE)
-            .properties(BlockBehaviour.Properties::noLootTable)
-            .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), p.models()
-                    .getExistingFile(p.modLoc("block/dip_cup/block"))))
-            .onRegister(CreateRegistrate.blockModel(() -> DipCupBakedModel::new))
-            .item()
-            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/dip_cup/item")))
-            .build()
-            .register();
-
 //    public static final BlockEntry<DipCupBlock> DIP_CUP = RatatouilleFriedDelights.REGISTRATE
 //        .block("dip_cup", DipCupBlock::new)
 //        .initialProperties(()-> Blocks.CAKE)
@@ -324,6 +312,93 @@ public class RFDBlocks {
             .build()
             .register();
 
+    // RGBA color
+    public static final BlockEntry<DipCupBlock> KETCHUP_DIP_CUP = RatatouilleFriedDelights.REGISTRATE
+            .block("ketchup_dip_cup", (p) -> new DipCupBlock(p, 0xD32F2FFF, RFDSpriteShifts.DIP_CUP_KETCHUP))
+            .initialProperties(()-> Blocks.CAKE)
+            .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), p.models()
+                    .getExistingFile(p.modLoc("block/dip_cup/block"))))
+            .onRegister(CreateRegistrate.blockModel(() -> DipCupBakedModel::new))
+            .loot((lt, block) -> {
+                LootItemCondition.Builder opened = LootItemBlockStatePropertyCondition
+                        .hasBlockStateProperties(block)
+                        .setProperties(StatePropertiesPredicate.Builder.properties()
+                                .hasProperty(DipCupBlock.OPENED, true));
+
+                lt.add(block,
+                        LootTable.lootTable()
+                                .withPool(LootPool.lootPool()
+                                        .when(opened)
+                                        .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
+                                )
+                                .withPool(LootPool.lootPool()
+                                        .when(InvertedLootItemCondition.invert(opened))
+                                        .add(LootItem.lootTableItem(block))
+                                )
+                );
+            })
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/dip_cup/item")))
+            .build()
+            .register();
+
+    public static final BlockEntry<DipCupBlock> HONEY_DIP_CUP = RatatouilleFriedDelights.REGISTRATE
+            .block("honey_dip_cup", (p) -> new DipCupBlock(p, 0xE6B422FF, RFDSpriteShifts.DIP_CUP_HONEY))
+            .initialProperties(()-> Blocks.CAKE)
+            .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), p.models()
+                    .getExistingFile(p.modLoc("block/dip_cup/block"))))
+            .onRegister(CreateRegistrate.blockModel(() -> DipCupBakedModel::new))
+            .loot((lt, block) -> {
+                LootItemCondition.Builder opened = LootItemBlockStatePropertyCondition
+                        .hasBlockStateProperties(block)
+                        .setProperties(StatePropertiesPredicate.Builder.properties()
+                                .hasProperty(DipCupBlock.OPENED, true));
+
+                lt.add(block,
+                        LootTable.lootTable()
+                                .withPool(LootPool.lootPool()
+                                        .when(opened)
+                                        .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
+                                )
+                                .withPool(LootPool.lootPool()
+                                        .when(InvertedLootItemCondition.invert(opened))
+                                        .add(LootItem.lootTableItem(block))
+                                )
+                );
+            })
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/dip_cup/item")))
+            .build()
+            .register();
+
+    public static final BlockEntry<DipCupBlock> TARTAR_DIP_CUP = RatatouilleFriedDelights.REGISTRATE
+            .block("tartar_dip_cup", (p) -> new DipCupBlock(p, 0xD0E6D1FF, RFDSpriteShifts.DIP_CUP_TARTAR))
+            .initialProperties(()-> Blocks.CAKE)
+            .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), p.models()
+                    .getExistingFile(p.modLoc("block/dip_cup/block"))))
+            .onRegister(CreateRegistrate.blockModel(() -> DipCupBakedModel::new))
+            .loot((lt, block) -> {
+                LootItemCondition.Builder opened = LootItemBlockStatePropertyCondition
+                        .hasBlockStateProperties(block)
+                        .setProperties(StatePropertiesPredicate.Builder.properties()
+                                .hasProperty(DipCupBlock.OPENED, true));
+
+                lt.add(block,
+                        LootTable.lootTable()
+                                .withPool(LootPool.lootPool()
+                                        .when(opened)
+                                        .add(LootItem.lootTableItem(AllItems.CARDBOARD.get()))
+                                )
+                                .withPool(LootPool.lootPool()
+                                        .when(InvertedLootItemCondition.invert(opened))
+                                        .add(LootItem.lootTableItem(block))
+                                )
+                );
+            })
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/dip_cup/item")))
+            .build()
+            .register();
 
     public static void register() {
     }
