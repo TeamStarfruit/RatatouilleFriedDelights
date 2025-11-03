@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import org.starfruit.ratatouillefrieddelights.entry.RFDDataComponents;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -48,7 +49,7 @@ public class BurgerItem extends Item {
     public static FoodProperties foodPropertiesFromComponents(List<ItemStack> items, @Nullable LivingEntity entity) {
         Supplier<Stream<FoodProperties>> properties = () -> items.stream().map(
                 itemStack -> itemStack.getFoodProperties(entity)
-        );
+        ).filter(Objects::nonNull);
         return new FoodProperties(
                 properties.get().map(FoodProperties::nutrition).reduce(Integer::sum).orElse(0),
                 properties.get().map(FoodProperties::saturation).reduce(Float::sum).orElse(0F),

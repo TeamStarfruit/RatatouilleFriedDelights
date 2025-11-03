@@ -157,6 +157,7 @@ public class RFDJei implements IModPlugin {
             return this;
         }
 
+        @SuppressWarnings("Unchecked")
         public CreateRecipeCategory<T> build(String name, CreateRecipeCategory.Factory<T> factory) {
             Supplier<List<RecipeHolder<T>>> recipesSupplier;
             if (predicate.test(AllConfigs.server().recipes)) {
