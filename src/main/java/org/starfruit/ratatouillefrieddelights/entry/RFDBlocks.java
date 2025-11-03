@@ -258,7 +258,9 @@ public class RFDBlocks {
                 );
             })
             .item()
-            .model((c, p) -> p.withExistingParent(c.getName(), RatatouilleFriedDelights.asResource("block/dip_cup/item")))
+            .model(
+                    (c, p) ->
+                            p.generated(c, p.modLoc("item/" + p.name(c))))
             .build()
             .register();
 
