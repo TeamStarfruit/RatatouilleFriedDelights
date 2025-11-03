@@ -296,7 +296,7 @@ public class RFDBlocks {
             .register();
 
     public static final BlockEntry<DipCupBlock> TARTAR_DIP_CUP = RatatouilleFriedDelights.REGISTRATE
-            .block("tartar_dip_cup", (p) -> new DipCupBlock(p, 0xD0E6D1FF, RFDSpriteShifts.DIP_CUP_TARTAR))
+            .block("tartar_dip_cup", (p) -> new DipCupBlock(p, 0xeff5dbFF, RFDSpriteShifts.DIP_CUP_TARTAR))
             .initialProperties(()-> Blocks.CAKE)
             .blockstate((c, p) -> p.horizontalBlock(c.getEntry(), p.models()
                     .getExistingFile(p.modLoc("block/dip_cup/block"))))
