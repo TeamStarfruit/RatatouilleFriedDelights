@@ -655,8 +655,9 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
         RandomSource random = level.getRandom();
         BlazeBurnerBlock.HeatLevel heatLevel = getHeatLevel();
+        if (heatLevel == BlazeBurnerBlock.HeatLevel.NONE) return;
 
-        if (heatLevel != BlazeBurnerBlock.HeatLevel.NONE && !tankInventory.isEmpty()) {
+        if (!tankInventory.isEmpty()) {
             for (ContinuousFryerBlockEntity fryer : getConnectedChain()) {
                 if (random.nextInt(5) == 0) {
                     Vec3 pos = Vec3.atCenterOf(fryer.getBlockPos()).add(

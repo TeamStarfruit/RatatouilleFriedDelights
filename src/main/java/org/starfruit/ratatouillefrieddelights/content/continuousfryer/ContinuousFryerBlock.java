@@ -12,6 +12,10 @@ import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.item.ItemHelper;
 import net.createmod.catnip.math.VecHelper;
+import net.createmod.catnip.placement.IPlacementHelper;
+import net.createmod.catnip.placement.PlacementHelpers;
+import net.createmod.catnip.placement.PlacementOffset;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -26,6 +30,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
@@ -52,6 +57,8 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
+import org.forsteri.ratatouille.content.oven_fan.OvenFanBlock;
+import org.forsteri.ratatouille.entry.CRBlocks;
 import org.jetbrains.annotations.NotNull;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
@@ -59,8 +66,12 @@ import org.starfruit.ratatouillefrieddelights.entry.RFDFluids;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
+import java.util.function.Predicate;
 
 public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<ContinuousFryerBlockEntity> {
+    private static final int placementHelperId = PlacementHelpers.register(new ContinuousFryerBlock.PlacementHelper());
+
     public static final Property<FryerPart> PART = EnumProperty.create("part", FryerPart.class);
     public static final VoxelShape SINGLE_SHAPE = Shapes.join(AllShapes.CASING_13PX.get(Direction.UP), Block.box(2, 11, 2, 14, 13, 14), BooleanOp.ONLY_FIRST);
 
@@ -77,6 +88,13 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
     @Override
     @ParametersAreNonnullByDefault
     protected @NotNull ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!player.isShiftKeyDown()) {
+            IPlacementHelper placementHelper = PlacementHelpers.get(placementHelperId);
+            if (placementHelper.matchesItem(stack))
+                return placementHelper.getOffset(player, level, state, pos, hitResult)
+                        .placeInWorld(level, (BlockItem) stack.getItem(), player, hand, hitResult);
+        }
+
         if (level.isClientSide)
             return ItemInteractionResult.SUCCESS;
 
@@ -360,6 +378,31 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
         } else {
             controller.passengers.put(entityIn, new FryerMovementHandler.FringEntityInfo(pos, state));
             entityIn.setOnGround(true);
+        }
+    }
+
+    @MethodsReturnNonnullByDefault
+    private static class PlacementHelper implements IPlacementHelper {
+        @Override
+        public Predicate<ItemStack> getItemPredicate() {
+            return RFDBlocks.CONTINUOUS_FRYER::isIn;
+        }
+
+        @Override
+        public Predicate<BlockState> getStatePredicate() {
+            return RFDBlocks.CONTINUOUS_FRYER::has;
+        }
+
+        @Override
+        public PlacementOffset getOffset(Player player, Level world, BlockState state, BlockPos pos, BlockHitResult ray) {
+            Direction.Axis axis = state.getValue(OvenFanBlock.HORIZONTAL_FACING).getAxis();
+
+            List<Direction> directions = IPlacementHelper.orderedByDistance(pos, ray.getLocation(),
+                    dir -> dir.getAxis() == axis && world.getBlockState(pos.relative(dir)).canBeReplaced());
+
+            return directions.isEmpty() ? PlacementOffset.fail()
+                    : PlacementOffset.success(pos.relative(directions.getFirst()), s ->
+                    s.setValue(HORIZONTAL_FACING, state.getValue(OvenFanBlock.HORIZONTAL_FACING)));
         }
     }
 }
