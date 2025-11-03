@@ -23,12 +23,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -613,6 +615,12 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         if (!isController())
             return;
 
+        if (level != null && level.isClientSide) {
+            if (!isVirtual())
+                spawnFryerParticles();
+            return;
+        }
+
         invalidateRenderBoundingBox();
         getItemInventory().tick();
 
@@ -640,6 +648,39 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             FryerMovementHandler.transportEntity(this, entity, info);
         });
         toRemove.forEach(passengers::remove);
+    }
+
+    private void spawnFryerParticles() {
+        if (level == null || !level.isClientSide) return;
+
+        RandomSource random = level.getRandom();
+        BlazeBurnerBlock.HeatLevel heatLevel = getHeatLevel();
+
+        if (heatLevel != BlazeBurnerBlock.HeatLevel.NONE && !tankInventory.isEmpty()) {
+            for (ContinuousFryerBlockEntity fryer : getConnectedChain()) {
+                if (random.nextInt(5) == 0) {
+                    Vec3 pos = Vec3.atCenterOf(fryer.getBlockPos()).add(
+                            (random.nextDouble() - 0.5) * 0.5,
+                            0.5,
+                            (random.nextDouble() - 0.5) * 0.5
+                    );
+                    level.addParticle(ParticleTypes.WHITE_SMOKE,
+                            pos.x, pos.y, pos.z, 0, 0.05, 0);
+                }
+            }
+        }
+
+        FryerInventory inventory = getItemInventory();
+        if (inventory != null) {
+            for (FryingItemStack item : inventory.getTransportedItems()) {
+                if (random.nextInt(3) == 0) {
+                    Vec3 itemPos = getWorldPositionOf(item);
+                    level.addParticle(ParticleTypes.SMOKE,
+                            itemPos.x, itemPos.y + 0.3, itemPos.z,
+                            0, 0.02, 0);
+                }
+            }
+        }
     }
 
     public BlazeBurnerBlock.HeatLevel getHeatLevel() {
