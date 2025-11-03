@@ -33,7 +33,7 @@ public class FryingRecipeGen extends StandardProcessingRecipeGen<FryingRecipe> {
 
     FRENCH_FRIES = this.create("french_fries",
             b -> b
-                    .require(RFDItems.RAW_POTATO_STICK.get())
+                    .require(RFDItems.RAW_POTATO_STICKS.get())
                     .require(RFDFluids.SUNFLOWER_OIL.get(), 100)
                     .requiresHeat(HeatCondition.HEATED)
                     .output(RFDItems.FRENCH_FRIES.get())

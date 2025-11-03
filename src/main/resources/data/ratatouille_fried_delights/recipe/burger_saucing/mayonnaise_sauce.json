@@ -1,0 +1,18 @@
+{
+  "type": "ratatouille_fried_delights:burger_saucing",
+  "ingredients": [
+    {
+      "tag": "ratatouille_fried_delights:burger_base"
+    },
+    {
+      "type": "fluid_stack",
+      "amount": 100,
+      "fluid": "ratatouille_fried_delights:mayonnaise"
+    }
+  ],
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:mayonnaise_topping"
+    }
+  ]
+}

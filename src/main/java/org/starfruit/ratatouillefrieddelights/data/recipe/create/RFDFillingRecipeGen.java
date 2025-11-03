@@ -1,6 +1,7 @@
 package org.starfruit.ratatouillefrieddelights.data.recipe.create;
 
 import com.simibubi.create.AllFluids;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.api.data.recipe.FillingRecipeGen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -9,6 +10,7 @@ import net.neoforged.neoforge.common.Tags;
 import org.forsteri.ratatouille.Ratatouille;
 import org.forsteri.ratatouille.entry.CRFluids;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
+import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
 import org.starfruit.ratatouillefrieddelights.entry.RFDFluids;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 
@@ -64,6 +66,24 @@ public class RFDFillingRecipeGen extends FillingRecipeGen {
             .require(RFDItems.FRIED_DONUT.get())
             .require(AllFluids.CHOCOLATE.get(), 250)
             .output(RFDItems.CHOCOLATE_DONUT.get())
+    ),
+
+    KETCHUP_DIP_CUP = create("ketchup_dip_cup", b -> b
+            .require(RFDFluids.KETCHUP.get(), 250)
+            .require(AllItems.CARDBOARD.get())
+            .output(RFDBlocks.KETCHUP_DIP_CUP.get())
+    ),
+
+    TARTAR_DIP_CUP = create("tartar_dip_cup", b -> b
+            .require(RFDFluids.TARTAR_SAUCE.get(), 250)
+            .require(AllItems.CARDBOARD.get())
+            .output(RFDBlocks.TARTAR_DIP_CUP.get())
+    ),
+
+    HONEY_DIP_CUP = create("honey_dip_cup", b -> b
+            .require(AllFluids.HONEY.get(), 250)
+            .require(AllItems.CARDBOARD.get())
+            .output(RFDBlocks.HONEY_DIP_CUP.get())
     );
 
     public RFDFillingRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

@@ -1,0 +1,18 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "create:cardboard"
+    },
+    {
+      "type": "fluid_stack",
+      "amount": 250,
+      "fluid": "ratatouille_fried_delights:tartar_sauce"
+    }
+  ],
+  "results": [
+    {
+      "id": "ratatouille_fried_delights:tartar_dip_cup"
+    }
+  ]
+}

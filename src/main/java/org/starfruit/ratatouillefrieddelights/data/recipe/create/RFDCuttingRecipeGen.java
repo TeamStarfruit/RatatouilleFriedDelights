@@ -18,7 +18,7 @@ public class RFDCuttingRecipeGen extends CuttingRecipeGen {
     GeneratedRecipe
             RAW_POTATO_STICK_CUT = create("raw_potato_stick_cut", b -> b
             .require(RFDItems.PEELED_POTATO.get())
-            .output(RFDItems.RAW_POTATO_STICK.get(), 2)
+            .output(RFDItems.RAW_POTATO_STICKS.get(), 2)
     ),
 
     CHEESE_SLICE_CUT = create("cheese_slice_cut", b -> b

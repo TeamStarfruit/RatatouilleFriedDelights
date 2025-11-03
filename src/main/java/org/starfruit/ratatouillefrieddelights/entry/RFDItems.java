@@ -2,10 +2,7 @@ package org.starfruit.ratatouillefrieddelights.entry;
 
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.foundation.item.ItemDescription;
-import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -13,7 +10,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import org.forsteri.ratatouille.Ratatouille;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import net.minecraft.world.item.Item;
@@ -67,11 +63,7 @@ public class RFDItems {
                     .alwaysEdible()
                     .build()))
             .register();
-    public static final ItemEntry<Item> RAW_POTATO_STICK = RatatouilleFriedDelights.REGISTRATE.item("raw_potato_stick", Item::new).properties(p -> p.food(new FoodProperties.Builder()
-                    .nutrition(1).saturationModifier(0.2f)
-                    .alwaysEdible()
-                    .build()))
-            .register();
+    public static final ItemEntry<Item> RAW_POTATO_STICKS = RatatouilleFriedDelights.REGISTRATE.item("raw_potato_sticks", Item::new).register();
     public static final ItemEntry<Item> PEELED_POTATO = RatatouilleFriedDelights.REGISTRATE.item("peeled_potato", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(2).saturationModifier(0.3f)
                     .alwaysEdible()
@@ -310,6 +302,7 @@ public class RFDItems {
 
     public static final ItemEntry<Item> TARTAR_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tartar_topping", Item::new).register();
     public static final ItemEntry<Item> KETCHUP_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("ketchup_topping", Item::new).register();
+    public static final ItemEntry<Item> MAYONNAISE_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("mayonnaise_topping", Item::new).register();
 
     public static final ItemEntry<Item> BOBA_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("boba_topping", Item::new).register();
     public static final ItemEntry<Item> GLOW_BERRIES_BALL_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("glow_berries_ball_topping", Item::new).register();

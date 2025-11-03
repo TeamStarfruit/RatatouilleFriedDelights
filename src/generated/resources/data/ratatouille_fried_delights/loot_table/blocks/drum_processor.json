@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ratatouille_fried_delights:drum_processor"
+          "name": "minecraft:air"
         }
       ],
       "rolls": 1.0

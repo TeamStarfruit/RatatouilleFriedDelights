@@ -56,5 +56,10 @@ public record SimpleBurgerRenderingProperties(int renderingPivot, int renderingH
                 RFDItems.KETCHUP_TOPPING.get(),
                 of(6, 1, RFDItems.KETCHUP_TOPPING::asStack)
         );
+
+        BURGER_RENDERING_PROPERTIES_MAP.put(
+                RFDItems.MAYONNAISE_TOPPING.get(),
+                of(6, 1, RFDItems.MAYONNAISE_TOPPING::asStack)
+        );
     }
 }
