@@ -26,6 +26,7 @@ public class RFDRegistrateTags {
 
     }
 
+    @SuppressWarnings("deprecated")
     private static void genItemTags(RegistrateTagsProvider<Item> provIn) {
         TagGen.CreateTagsProvider<Item> prov = new TagGen.CreateTagsProvider<>(provIn, Item::builtInRegistryHolder);
 

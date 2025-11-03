@@ -1,0 +1,17 @@
+{
+  "type": "ratatouille_fried_delights:tumbling",
+  "ingredients": [
+    {
+      "item": "create:oxidized_copper_shingle_slab"
+    },
+    {
+      "tag": "minecraft:sand"
+    }
+  ],
+  "processing_time": 200,
+  "results": [
+    {
+      "id": "create:weathered_copper_shingle_slab"
+    }
+  ]
+}

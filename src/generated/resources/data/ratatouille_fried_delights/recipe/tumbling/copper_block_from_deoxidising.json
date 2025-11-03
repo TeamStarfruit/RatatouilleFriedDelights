@@ -5,7 +5,7 @@
       "item": "minecraft:exposed_copper"
     },
     {
-      "item": "minecraft:sand"
+      "tag": "minecraft:sand"
     }
   ],
   "processing_time": 200,

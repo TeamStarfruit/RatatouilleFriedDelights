@@ -1,0 +1,47 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "ratatouille_fried_delights:honey_dip_cup",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "opened": "true"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "create:cardboard"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "block": "ratatouille_fried_delights:honey_dip_cup",
+            "condition": "minecraft:block_state_property",
+            "properties": {
+              "opened": "true"
+            }
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "ratatouille_fried_delights:honey_dip_cup"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ratatouille_fried_delights:blocks/honey_dip_cup"
+}

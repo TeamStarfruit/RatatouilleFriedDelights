@@ -109,6 +109,7 @@ public class RFDJei implements IModPlugin {
             this.recipeClass = recipeClass;
         }
 
+        @SuppressWarnings("unchecked")
         public <I extends RecipeInput, R extends Recipe<I>> RFDJei.CategoryBuilder<T> addTypedRecipes(Supplier<net.minecraft.world.item.crafting.RecipeType<R>> recipeType) {
             return addRecipeListConsumer(recipes -> CreateJEI.<T>consumeTypedRecipes(recipe -> {
                 if (recipeClass.isInstance(recipe.value()))

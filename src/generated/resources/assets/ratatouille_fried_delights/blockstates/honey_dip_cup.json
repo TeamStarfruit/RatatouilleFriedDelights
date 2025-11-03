@@ -1,5 +1,9 @@
 {
   "variants": {
+    "facing=east,opened=false,remaining_dip=0": {
+      "model": "ratatouille_fried_delights:block/dip_cup/block",
+      "y": 90
+    },
     "facing=east,opened=false,remaining_dip=1": {
       "model": "ratatouille_fried_delights:block/dip_cup/block",
       "y": 90
@@ -9,6 +13,10 @@
       "y": 90
     },
     "facing=east,opened=false,remaining_dip=3": {
+      "model": "ratatouille_fried_delights:block/dip_cup/block",
+      "y": 90
+    },
+    "facing=east,opened=true,remaining_dip=0": {
       "model": "ratatouille_fried_delights:block/dip_cup/block",
       "y": 90
     },
@@ -24,6 +32,9 @@
       "model": "ratatouille_fried_delights:block/dip_cup/block",
       "y": 90
     },
+    "facing=north,opened=false,remaining_dip=0": {
+      "model": "ratatouille_fried_delights:block/dip_cup/block"
+    },
     "facing=north,opened=false,remaining_dip=1": {
       "model": "ratatouille_fried_delights:block/dip_cup/block"
     },
@@ -31,6 +42,9 @@
       "model": "ratatouille_fried_delights:block/dip_cup/block"
     },
     "facing=north,opened=false,remaining_dip=3": {
+      "model": "ratatouille_fried_delights:block/dip_cup/block"
+    },
+    "facing=north,opened=true,remaining_dip=0": {
       "model": "ratatouille_fried_delights:block/dip_cup/block"
     },
     "facing=north,opened=true,remaining_dip=1": {
@@ -42,6 +56,10 @@
     "facing=north,opened=true,remaining_dip=3": {
       "model": "ratatouille_fried_delights:block/dip_cup/block"
     },
+    "facing=south,opened=false,remaining_dip=0": {
+      "model": "ratatouille_fried_delights:block/dip_cup/block",
+      "y": 180
+    },
     "facing=south,opened=false,remaining_dip=1": {
       "model": "ratatouille_fried_delights:block/dip_cup/block",
       "y": 180
@@ -51,6 +69,10 @@
       "y": 180
     },
     "facing=south,opened=false,remaining_dip=3": {
+      "model": "ratatouille_fried_delights:block/dip_cup/block",
+      "y": 180
+    },
+    "facing=south,opened=true,remaining_dip=0": {
       "model": "ratatouille_fried_delights:block/dip_cup/block",
       "y": 180
     },
@@ -66,6 +88,10 @@
       "model": "ratatouille_fried_delights:block/dip_cup/block",
       "y": 180
     },
+    "facing=west,opened=false,remaining_dip=0": {
+      "model": "ratatouille_fried_delights:block/dip_cup/block",
+      "y": 270
+    },
     "facing=west,opened=false,remaining_dip=1": {
       "model": "ratatouille_fried_delights:block/dip_cup/block",
       "y": 270
@@ -75,6 +101,10 @@
       "y": 270
     },
     "facing=west,opened=false,remaining_dip=3": {
+      "model": "ratatouille_fried_delights:block/dip_cup/block",
+      "y": 270
+    },
+    "facing=west,opened=true,remaining_dip=0": {
       "model": "ratatouille_fried_delights:block/dip_cup/block",
       "y": 270
     },
