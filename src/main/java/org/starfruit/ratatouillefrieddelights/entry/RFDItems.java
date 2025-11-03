@@ -12,12 +12,12 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import org.forsteri.ratatouille.Ratatouille;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import net.minecraft.world.item.Item;
-import org.starfruit.ratatouillefrieddelights.content.dipcup.DipColor;
-import org.starfruit.ratatouillefrieddelights.content.dipcup.DipableItem;
+import org.starfruit.ratatouillefrieddelights.content.dipcup.*;
 import org.starfruit.ratatouillefrieddelights.content.food.DrinkableItem;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerContents;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerItem;
@@ -48,8 +48,8 @@ public class RFDItems {
                     .build()))
             .register();
 
-    public static final ItemEntry<DipableItem> A_CHICKEN_NUGGET = RatatouilleFriedDelights.REGISTRATE.item("a_chicken_nugget",
-                    DipableItem::new)
+    public static final ItemEntry<DipableItem> A_FRY = RatatouilleFriedDelights.REGISTRATE
+            .item("a_fry", DipableItem::new)
             .properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(2).saturationModifier(0.2f)
                     .alwaysEdible()
@@ -62,11 +62,6 @@ public class RFDItems {
             })
             .color(() -> DipColor::new)
             .register();
-//    public static final ItemEntry<Item> BOXED_FRIES = RatatouilleFriedDelights.REGISTRATE.item("boxed_fries", Item::new).properties(p -> p.food(new FoodProperties.Builder()
-//                    .nutrition(6).saturationModifier(0.6f)
-//                    .alwaysEdible()
-//                    .build()))
-//            .register();
     public static final ItemEntry<Item> FRENCH_FRIES = RatatouilleFriedDelights.REGISTRATE.item("french_fries", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(6).saturationModifier(0.6f)
                     .alwaysEdible()
@@ -86,6 +81,7 @@ public class RFDItems {
     public static final ItemEntry<Item> ORIGINAL_CHICKEN_DRUMSTICK = RatatouilleFriedDelights.REGISTRATE.item("original_chicken_drumstick", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(7).saturationModifier(0.8f)
                     .alwaysEdible()
+                    .usingConvertsTo(Items.BONE)
                     .build()))
             .register();
     public static final ItemEntry<Item> BREADED_ORIGINAL_DRUMSTICK = RatatouilleFriedDelights.REGISTRATE.item("breaded_original_drumstick", Item::new).register();
@@ -93,6 +89,7 @@ public class RFDItems {
     public static final ItemEntry<Item> ORIGINAL_CHICKEN_KEEL = RatatouilleFriedDelights.REGISTRATE.item("original_chicken_keel", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(7).saturationModifier(0.8f)
                     .alwaysEdible()
+                    .usingConvertsTo(Items.BONE)
                     .build()))
             .register();
     public static final ItemEntry<Item> BREADED_ORIGINAL_KEEL = RatatouilleFriedDelights.REGISTRATE.item("breaded_original_keel", Item::new).register();
@@ -102,13 +99,8 @@ public class RFDItems {
     public static final ItemEntry<Item> BUTTER = RatatouilleFriedDelights.REGISTRATE.item("butter", Item::new).register();
     public static final ItemEntry<Item> BREADCRUMB = RatatouilleFriedDelights.REGISTRATE.item("breadcrumb", Item::new).register();
 
-//    public static final ItemEntry<Item> BOXED_CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE.item("boxed_chicken_nuggets", Item::new).properties(p -> p.food(new FoodProperties.Builder()
-//                    .nutrition(5).saturationModifier(0.6f)
-//                    .alwaysEdible()
-//                    .build()))
-//            .register();
-    public static final ItemEntry<DipableItem> A_FRY = RatatouilleFriedDelights.REGISTRATE
-            .item("a_fry", DipableItem::new)
+    public static final ItemEntry<DipableItem> A_CHICKEN_NUGGET = RatatouilleFriedDelights.REGISTRATE.item("a_chicken_nugget",
+                    DipableItem::new)
             .properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(2).saturationModifier(0.2f)
                     .alwaysEdible()
