@@ -2,16 +2,14 @@ package org.starfruit.ratatouillefrieddelights.data;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.simibubi.create.foundation.data.TagGen;
 import com.simibubi.create.foundation.utility.FilesHelper;
 import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -19,9 +17,8 @@ import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.data.recipe.RFDRecipeProvider;
 import org.starfruit.ratatouillefrieddelights.data.recipe.RFDStandardRecipeGen;
 import org.starfruit.ratatouillefrieddelights.data.recipe.create.RFDSequencedAssemblyRecipeGen;
-import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
+import org.starfruit.ratatouillefrieddelights.entry.RFDPonderPlugin;
 import org.starfruit.ratatouillefrieddelights.worldgen.*;
-import vectorwing.farmersdelight.common.registry.ModItems;
 
 import java.util.Map;
 import java.util.Set;
@@ -85,8 +82,8 @@ public class RFDDataGen {
     }
 
     private static void providePonderLang(BiConsumer<String, String> consumer) {
-//        PonderIndex.addPlugin(new CRPonderPlugin());
-//        PonderIndex.getLangAccess().provideLang(Ratatouille.MOD_ID, consumer);
+        PonderIndex.addPlugin(new RFDPonderPlugin());
+        PonderIndex.getLangAccess().provideLang(RatatouilleFriedDelights.MOD_ID, consumer);
     }
 
     public static void gatherData(GatherDataEvent event) {

@@ -50,12 +50,10 @@ public class RFDItems {
                     .nutrition(2).saturationModifier(0.2f)
                     .alwaysEdible()
                     .build()))
-            .model((ctx, prov) -> {
-                prov.withExistingParent(ctx.getName(), "item/generated")
-                        .texture("layer0", prov.modLoc("item/" + ctx.getName()))
-                        .texture("layer1", prov.modLoc("item/" + ctx.getName() + "_partial"))
-                        .texture("layer2", prov.modLoc("item/" + ctx.getName() + "_dip"));
-            })
+            .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), "item/generated")
+                    .texture("layer0", prov.modLoc("item/" + ctx.getName()))
+                    .texture("layer1", prov.modLoc("item/" + ctx.getName() + "_partial"))
+                    .texture("layer2", prov.modLoc("item/" + ctx.getName() + "_dip")))
             .color(() -> DipColor::new)
             .register();
     public static final ItemEntry<Item> FRENCH_FRIES = RatatouilleFriedDelights.REGISTRATE.item("french_fries", Item::new).properties(p -> p.food(new FoodProperties.Builder()
@@ -97,12 +95,10 @@ public class RFDItems {
                     .nutrition(2).saturationModifier(0.2f)
                     .alwaysEdible()
                     .build()))
-            .model((ctx, prov) -> {
-                prov.withExistingParent(ctx.getName(), "item/generated")
-                        .texture("layer0", prov.modLoc("item/" + ctx.getName()))
-                        .texture("layer1", prov.modLoc("item/" + ctx.getName() + "_partial"))
-                        .texture("layer2", prov.modLoc("item/" + ctx.getName() + "_dip"));
-            })
+            .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), "item/generated")
+                    .texture("layer0", prov.modLoc("item/" + ctx.getName()))
+                    .texture("layer1", prov.modLoc("item/" + ctx.getName() + "_partial"))
+                    .texture("layer2", prov.modLoc("item/" + ctx.getName() + "_dip")))
             .color(() -> DipColor::new)
             .register();
     public static final ItemEntry<Item> CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE.item("chicken_nuggets", Item::new).properties(p -> p.food(new FoodProperties.Builder()
@@ -288,7 +284,7 @@ public class RFDItems {
                     .nutrition(4).saturationModifier(0.2f)
                     .alwaysEdible()
                     .effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 20 * 10, 1), 1.0f)
-                    .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 10, 1), 1.0f)
+                    .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 10, 3), 1.0f)
                     .build()))
             .onRegisterAfter(Registries.ITEM, item -> ItemDescription.useKey(item, "item.ratatouille_fried_delights.no.42_concrete_mixing_pasta"))
             .register();

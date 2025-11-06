@@ -5,13 +5,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.Nullable;
 import org.starfruit.ratatouillefrieddelights.entry.RFDDataComponents;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -32,11 +32,6 @@ public class BurgerItem extends Item {
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack stack) {
-        return super.getUseAnimation(stack);
-    }
-
-    @Override
     public @Nullable FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
         return BurgerItem.foodProperties(stack, entity);
     }
@@ -54,11 +49,9 @@ public class BurgerItem extends Item {
                 properties.get().map(FoodProperties::nutrition).reduce(Integer::sum).orElse(0),
                 properties.get().map(FoodProperties::saturation).reduce(Float::sum).orElse(0F),
                 properties.get().map(FoodProperties::canAlwaysEat).reduce(Boolean::logicalOr).orElse(false),
-                properties.get().map(FoodProperties::eatSeconds).reduce(Float::sum).orElse(1.6F),
+                3, //properties.get().map(FoodProperties::eatSeconds).reduce(Float::sum).orElse(1.6F),
                 Optional.empty(),
-                List.of()
+                properties.get().map(FoodProperties::effects).flatMap(Collection::stream).toList()
         );
     }
-
-    // Copied from create
 }
