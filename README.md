@@ -1,3 +1,3 @@
 # Ratatouille - Fried Delights
-<img width="1152" height="1536" alt="修改图片文字" src="https://github.com/user-attachments/assets/f1ab58d8-3a38-4c60-9d32-814850d60bea" />
-
+![68AD68A520063718EA8BCDFAD8EC5A21.jpg](68AD68A520063718EA8BCDFAD8EC5A21.jpg)
+![FA11B09DC920A2451486E48203E41642.jpg](FA11B09DC920A2451486E48203E41642.jpg)
