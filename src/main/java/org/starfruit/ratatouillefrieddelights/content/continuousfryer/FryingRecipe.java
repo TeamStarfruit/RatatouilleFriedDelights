@@ -3,13 +3,15 @@ package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeParams;
 import com.simibubi.create.content.processing.recipe.StandardProcessingRecipe;
-import com.simibubi.create.foundation.fluid.FluidIngredient;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import org.jetbrains.annotations.NotNull;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
+
+import java.util.Arrays;
 
 public class FryingRecipe extends StandardProcessingRecipe<RecipeInput> {
     public FryingRecipe(ProcessingRecipeParams params) {
@@ -51,14 +53,14 @@ public class FryingRecipe extends StandardProcessingRecipe<RecipeInput> {
             return ingredients.getFirst().test(item)
                     && getRequiredHeat().testBlazeBurner(heatLevel);
         } else {
-            FluidIngredient fluidIngredient = fluidIngredients.getFirst();
+            SizedFluidIngredient fluidIngredient = fluidIngredients.getFirst();
 
-            boolean sameFluid = fluidIngredient.getMatchingFluidStacks().stream()
+            boolean sameFluid = Arrays.stream(fluidIngredient.getFluids())
                     .anyMatch(fs -> fs.getFluid().getFluidType() == fluid.getFluid().getFluidType());
 
             return ingredients.getFirst().test(item)
                     && sameFluid
-                    && fluid.getAmount() >= fluidIngredients.getFirst().getRequiredAmount()
+                    && fluid.getAmount() >= fluidIngredients.getFirst().amount()
                     && getRequiredHeat().testBlazeBurner(heatLevel);
         }
     }

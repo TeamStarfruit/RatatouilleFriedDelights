@@ -760,8 +760,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             }
 
             if (item.processingTime >= item.lastRecipe.getProcessingDuration()) {
-                item.stack = RecipeApplier.applyRecipeOn(level, item.stack, item.lastRecipe).getFirst();
-                tankInventory.drain(item.lastRecipe.getFluidIngredients().getFirst().getRequiredAmount(), IFluidHandler.FluidAction.EXECUTE);
+                item.stack = RecipeApplier.applyRecipeOn(level, item.stack, item.lastRecipe, true).getFirst();
+                tankInventory.drain(item.lastRecipe.getFluidIngredients().getFirst().amount(), IFluidHandler.FluidAction.EXECUTE);
 
                 item.clearFryerProcessingData();
             }

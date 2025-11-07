@@ -4,6 +4,7 @@ import com.simibubi.create.content.fluids.transfer.FillingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeParams;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import org.starfruit.ratatouillefrieddelights.entry.RFDDataComponents;
@@ -30,7 +31,7 @@ public class BurgerSaucingRecipe extends FillingRecipe {
             allItems.add(t.getItem(0));
         }
 
-        allItems.addAll(this.getRollableResults().stream().map(ProcessingOutput::rollOutput).toList());
+        allItems.addAll(this.getRollableResults().stream().map(x -> x.rollOutput(RandomSource.create())).toList());
 
         allItems = allItems.stream().map(ItemStack::copy).collect(Collectors.toList());
         allItems.forEach(allItem -> allItem.setCount(1));

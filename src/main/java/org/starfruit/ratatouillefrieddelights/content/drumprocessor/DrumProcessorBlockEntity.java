@@ -217,7 +217,7 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         in1.shrink(1);
         inputInv.setStackInSlot(0, in0);
         inputInv.setStackInSlot(1, in1);
-        this.lastRecipe.rollResults().forEach((stack) -> {
+        this.lastRecipe.rollResults(level.random).forEach((stack) -> {
             ItemHandlerHelper.insertItemStacked(this.outputInv, stack, false);
         });
 

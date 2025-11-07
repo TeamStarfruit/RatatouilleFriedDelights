@@ -2,6 +2,7 @@ package org.starfruit.ratatouillefrieddelights.mixin;
 
 import com.simibubi.create.content.fluids.spout.FillingBySpout;
 import com.simibubi.create.content.fluids.transfer.FillingRecipe;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
@@ -24,15 +25,15 @@ public abstract class BurgerSaucingMixin {
     @Unique
     private static Level ratafry$level;
 
-    @Inject(method = "fillItem", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/fluids/transfer/FillingRecipe;rollResults()Ljava/util/List;"))
+    @Inject(method = "fillItem", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/fluids/transfer/FillingRecipe;rollResults(Lnet/minecraft/util/RandomSource;)Ljava/util/List;"))
     private static void fillItem(Level world, int requiredAmount, ItemStack stack, FluidStack availableFluid, CallbackInfoReturnable<ItemStack> cir) {
         ratafry$injectingStack = stack;
         ratafry$level = world;
     }
 
-    @Redirect(method = "fillItem", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/fluids/transfer/FillingRecipe;rollResults()Ljava/util/List;"))
-    private static List<ItemStack> injected(FillingRecipe instance) {
-        if (!(instance instanceof BurgerSaucingRecipe recipe)) return instance.rollResults();
+    @Redirect(method = "fillItem", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/fluids/transfer/FillingRecipe;rollResults(Lnet/minecraft/util/RandomSource;)Ljava/util/List;"))
+    private static List<ItemStack> injected(FillingRecipe instance, RandomSource random) {
+        if (!(instance instanceof BurgerSaucingRecipe recipe)) return instance.rollResults(random);
         return List.of(recipe.assemble(new SingleRecipeInput(ratafry$injectingStack), ratafry$level.registryAccess()));
     }
 }
