@@ -413,6 +413,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
                 }
             }
             fryer.itemInventory = null;
+            fryer.updateConnectivity = false;
 
             level.setBlock(pos, newState, 6);
             fryer.detachKinetics();
