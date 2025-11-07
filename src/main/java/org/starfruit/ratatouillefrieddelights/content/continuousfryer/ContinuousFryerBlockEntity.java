@@ -615,14 +615,14 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         if (!isController())
             return;
 
+        invalidateRenderBoundingBox();
+        getItemInventory().tick();
+
         if (level != null && level.isClientSide) {
             if (!isVirtual())
                 spawnFryerParticles();
             return;
         }
-
-        invalidateRenderBoundingBox();
-        getItemInventory().tick();
 
         this.tickPassengers();
         this.tickFryingItems();
@@ -733,22 +733,23 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
                 }
             }
 
-            item.processingTime++;
+            if (item.lastRecipe != null || item.lastRecipe == null && !tankInventory.isEmpty() && heatLevel.isAtLeast(FADING)) {
+                item.processingTime++;
 
-            if (item.processingTime % 5 == 0 && level != null && !level.isClientSide) {
-                level.playSound(
-                        null,
-                        worldPosition.getX() + 0.5,
-                        worldPosition.getY() + 0.5,
-                        worldPosition.getZ() + 0.5,
-                        SoundEvents.BUBBLE_COLUMN_BUBBLE_POP,
-                        SoundSource.BLOCKS,
-                        1.0f,
-                        0.9f + level.random.nextFloat() * 0.2f
-                );
+                if (item.processingTime % 5 == 0 && level != null && !level.isClientSide) {
+                    level.playSound(
+                            null,
+                            worldPosition.getX() + 0.5,
+                            worldPosition.getY() + 0.5,
+                            worldPosition.getZ() + 0.5,
+                            SoundEvents.BUBBLE_COLUMN_BUBBLE_POP,
+                            SoundSource.BLOCKS,
+                            1.0f,
+                            0.9f + level.random.nextFloat() * 0.2f
+                    );
+                }
             }
 
-            // TODO: use another overcooked item
             if (item.lastRecipe == null) {
                 if (item.processingTime > overFryingTime && !item.stack.is(RFDItems.FRIED_RESIDUE)) {
                     item.processingTime = 0;
