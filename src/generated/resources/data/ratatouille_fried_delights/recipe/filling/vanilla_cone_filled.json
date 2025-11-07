@@ -5,7 +5,7 @@
       "item": "ratatouille_fried_delights:cone"
     },
     {
-      "type": "fluid_stack",
+      "type": "neoforge:single",
       "amount": 100,
       "fluid": "ratatouille_fried_delights:ice_cream_base"
     }

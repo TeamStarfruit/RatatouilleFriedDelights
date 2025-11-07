@@ -3,7 +3,6 @@
   "ingredient": {
     "item": "ratatouille_fried_delights:puff_pastry"
   },
-  "loops": 1,
   "results": [
     {
       "id": "ratatouille_fried_delights:raw_apple_pie"

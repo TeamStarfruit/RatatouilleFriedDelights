@@ -6,7 +6,7 @@
       "item": "ratatouille_fried_delights:breaded_onion_rings"
     },
     {
-      "type": "fluid_stack",
+      "type": "neoforge:single",
       "amount": 100,
       "fluid": "ratatouille_fried_delights:sunflower_oil"
     }

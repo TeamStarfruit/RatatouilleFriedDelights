@@ -3,7 +3,6 @@
   "ingredient": {
     "item": "ratatouille_fried_delights:pancake"
   },
-  "loops": 1,
   "results": [
     {
       "id": "ratatouille_fried_delights:hotcake_meal"
@@ -65,7 +64,7 @@
           "item": "ratatouille_fried_delights:unprocessed_hotcake_meal"
         },
         {
-          "type": "fluid_stack",
+          "type": "neoforge:single",
           "amount": 100,
           "fluid": "create:honey"
         }

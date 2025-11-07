@@ -6,7 +6,7 @@
       "item": "ratatouille_fried_delights:raw_potato_sticks"
     },
     {
-      "type": "fluid_stack",
+      "type": "neoforge:single",
       "amount": 100,
       "fluid": "ratatouille_fried_delights:sunflower_oil"
     }

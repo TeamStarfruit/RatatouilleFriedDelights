@@ -5,7 +5,7 @@
       "item": "minecraft:sea_pickle"
     },
     {
-      "type": "fluid_stack",
+      "type": "neoforge:single",
       "amount": 1000,
       "fluid": "ratatouille_fried_delights:mayonnaise"
     }

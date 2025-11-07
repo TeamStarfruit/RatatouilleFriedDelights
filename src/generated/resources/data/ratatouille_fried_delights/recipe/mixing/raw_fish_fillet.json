@@ -8,7 +8,7 @@
       "tag": "c:foods/raw_fish"
     },
     {
-      "type": "fluid_stack",
+      "type": "neoforge:single",
       "amount": 250,
       "fluid": "ratatouille:egg_yolk"
     }

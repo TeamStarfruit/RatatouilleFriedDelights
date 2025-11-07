@@ -5,7 +5,7 @@
       "item": "ratatouille_fried_delights:cone_mold"
     },
     {
-      "type": "fluid_stack",
+      "type": "neoforge:single",
       "amount": 50,
       "fluid": "ratatouille:cake_batter"
     }

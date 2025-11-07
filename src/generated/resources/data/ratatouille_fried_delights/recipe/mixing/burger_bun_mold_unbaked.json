@@ -14,7 +14,7 @@
       "item": "ratatouille_fried_delights:burger_bun_mold"
     },
     {
-      "type": "fluid_stack",
+      "type": "neoforge:single",
       "amount": 250,
       "fluid": "ratatouille:egg_yolk"
     }
