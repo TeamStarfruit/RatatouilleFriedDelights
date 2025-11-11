@@ -26,5 +26,14 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
+      - name: Run data gen
+        run: ./gradlew runData
+
       - name: Build with Gradle
         run: ./gradlew build
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ratatouille_fried_delights
+          path: build/libs/ratatouille_fried_delights-*.jar
