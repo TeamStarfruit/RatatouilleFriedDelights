@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 import org.forsteri.ratatouille.entry.CRTags;
+import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
@@ -51,7 +52,10 @@ public class RFDRegistrateTags {
                         RFDItems.ICE_CREAM.get(),
                         RFDItems.VANILLA_CONE.get(),
                         RFDItems.CHOCOLATE_SUNDAE.get(),
-                        RFDItems.COLA.get()
+                        RFDItems.COLA.get(),
+                        RFDBlocks.BOXED_CHICKEN_NUGGETS.asItem(),
+                        RFDBlocks.BOXED_FRIES.asItem(),
+                        RFDBlocks.DUO_CHICKEN_BUCKET.asItem()
                 );
 
         prov.tag(RFDTags.AllItemTags.BURGER_BASE.tag)
