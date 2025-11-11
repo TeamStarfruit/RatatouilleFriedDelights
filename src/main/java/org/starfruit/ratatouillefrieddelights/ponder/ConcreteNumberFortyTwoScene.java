@@ -22,7 +22,7 @@ public class ConcreteNumberFortyTwoScene {
         CreateSceneBuilder scene = new CreateSceneBuilder(builder);
         scene.scaleSceneView(.75f);
 
-        scene.title("compost_tower", "Pasta should be mixed with No. 42 concrete");
+        scene.title("no.42_concrete_mixing_pasta", "Pasta should be mixed with No. 42 concrete");
         scene.configureBasePlate(0, 0, 9);
 
         scene.world().showSection(util.select().everywhere(), Direction.UP);
