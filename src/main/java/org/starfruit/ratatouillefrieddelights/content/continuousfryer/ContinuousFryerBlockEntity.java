@@ -755,6 +755,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
                 if (item.processingTime > overFryingTime && !item.stack.is(RFDItems.FRIED_RESIDUE)) {
                     item.processingTime = 0;
                     item.stack = new ItemStack(RFDItems.FRIED_RESIDUE.get(), item.stack.getCount());
+                    notifyUpdate();
                 }
                 continue;
             }
