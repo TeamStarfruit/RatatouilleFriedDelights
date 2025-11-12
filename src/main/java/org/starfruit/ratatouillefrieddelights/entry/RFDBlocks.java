@@ -345,7 +345,7 @@ public class RFDBlocks {
             .item()
             .properties(p -> p.food(
                     new FoodProperties.Builder()
-                            .nutrition(5).saturationModifier(0.6f)
+                            .nutrition(28).saturationModifier(2.4f)
                             .alwaysEdible()
                             .build()))
             .model(
@@ -371,7 +371,7 @@ public class RFDBlocks {
             .item()
             .properties(p -> p.food(
                     new FoodProperties.Builder()
-                            .nutrition(5).saturationModifier(0.6f)
+                            .nutrition(6).saturationModifier(0.6f)
                             .alwaysEdible()
                             .build()))
             .model(
