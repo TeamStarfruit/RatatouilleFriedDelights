@@ -79,33 +79,33 @@ public class DrumProcessorBlock extends HorizontalKineticBlock implements IBE<Dr
     @Override
     public void updateEntityAfterFallOn(BlockGetter worldIn, Entity entityIn) {
         super.updateEntityAfterFallOn(worldIn, entityIn);
-
-        if (entityIn.level().isClientSide)
-            return;
-        if (!(entityIn instanceof ItemEntity itemEntity))
-            return;
-        if (!entityIn.isAlive())
-            return;
-
-        DrumProcessorBlockEntity drumprocessor = null;
-        for (BlockPos pos : Iterate.hereAndBelow(entityIn.blockPosition()))
-            if (drumprocessor == null)
-                drumprocessor = getBlockEntity(worldIn, pos);
-
-        if (drumprocessor == null)
-            return;
-
-        IItemHandler capability = drumprocessor.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, drumprocessor.getBlockPos(), null);
-        if (capability == null)
-            return;
-
-        ItemStack remainder = capability
-                .insertItem(0, itemEntity.getItem(), false);
-        if (remainder.isEmpty())
-            itemEntity.discard();
-        if (remainder.getCount() < itemEntity.getItem()
-                .getCount())
-            itemEntity.setItem(remainder);
+//
+//        if (entityIn.level().isClientSide)
+//            return;
+//        if (!(entityIn instanceof ItemEntity itemEntity))
+//            return;
+//        if (!entityIn.isAlive())
+//            return;
+//
+//        DrumProcessorBlockEntity drumprocessor = null;
+//        for (BlockPos pos : Iterate.hereAndBelow(entityIn.blockPosition()))
+//            if (drumprocessor == null)
+//                drumprocessor = getBlockEntity(worldIn, pos);
+//
+//        if (drumprocessor == null)
+//            return;
+//
+//        IItemHandler capability = drumprocessor.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, drumprocessor.getBlockPos(), null);
+//        if (capability == null)
+//            return;
+//
+//        ItemStack remainder = capability
+//                .insertItem(0, itemEntity.getItem(), false);
+//        if (remainder.isEmpty())
+//            itemEntity.discard();
+//        if (remainder.getCount() < itemEntity.getItem()
+//                .getCount())
+//            itemEntity.setItem(remainder);
     }
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
