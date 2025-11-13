@@ -1,4 +1,4 @@
-package org.starfruit.ratatouillefrieddelights.entry;
+package org.starfruit.ratatouillefrieddelights.config;
 
 import net.createmod.catnip.config.ConfigBase;
 
@@ -7,7 +7,7 @@ public class RFDServer extends ConfigBase {
 //    public final ConfigBase.ConfigInt tickrateSyncTimer;
 //    public final CRecipes recipes;
     public final RFDKinetics kinetics;
-//    public final CFluids fluids;
+    public final RFDFluids fluids;
 //    public final CLogistics logistics;
 //    public final CSchematics schematics;
 //    public final CEquipment equipment;
@@ -17,8 +17,8 @@ public class RFDServer extends ConfigBase {
 //        this.infrastructure = this.group(0, "infrastructure", new String[]{CServer.Comments.infrastructure});
 //        this.tickrateSyncTimer = this.i(20, 5, "tickrateSyncTimer", new String[]{"[in Ticks]", CServer.Comments.tickrateSyncTimer, CServer.Comments.tickrateSyncTimer2});
 //        this.recipes = (CRecipes)this.nested(0, CRecipes::new, new String[]{CServer.Comments.recipes});
-        this.kinetics = (RFDKinetics)this.nested(0, RFDKinetics::new, new String[]{RFDServer.Comments.kinetics});
-//        this.fluids = (CFluids)this.nested(0, CFluids::new, new String[]{CServer.Comments.fluids});
+        this.kinetics = this.nested(0, RFDKinetics::new, new String[]{RFDServer.Comments.kinetics});
+        this.fluids = this.nested(0, RFDFluids::new, new String[]{RFDServer.Comments.fluids});
 //        this.logistics = (CLogistics)this.nested(0, CLogistics::new, new String[]{CServer.Comments.logistics});
 //        this.schematics = (CSchematics)this.nested(0, CSchematics::new, new String[]{CServer.Comments.schematics});
 //        this.equipment = (CEquipment)this.nested(0, CEquipment::new, new String[]{CServer.Comments.equipment});
@@ -33,7 +33,7 @@ public class RFDServer extends ConfigBase {
 //        static String recipes = "Packmakers' control panel for internal recipe compat";
 //        static String schematics = "Everything related to Schematic tools";
         static String kinetics = "Ratatouille Fried Delights' Kinetic components and their properties";
-//        static String fluids = "Create's liquid manipulation tools";
+        static String fluids = "Ratatouille Fried Delights' liquid manipulation tools";
 //        static String logistics = "Tweaks for logistical components";
 //        static String equipment = "Equipment and gadgets added by Create";
 //        static String trains = "Create's builtin Railway systems";

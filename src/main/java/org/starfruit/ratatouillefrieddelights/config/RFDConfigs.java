@@ -1,4 +1,4 @@
-package org.starfruit.ratatouillefrieddelights.entry;
+package org.starfruit.ratatouillefrieddelights.config;
 
 import com.simibubi.create.api.stress.BlockStressValues;
 import net.createmod.catnip.config.ConfigBase;
@@ -9,6 +9,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
+import org.starfruit.ratatouillefrieddelights.entry.RFDStress;
 
 import java.util.EnumMap;
 import java.util.Map;

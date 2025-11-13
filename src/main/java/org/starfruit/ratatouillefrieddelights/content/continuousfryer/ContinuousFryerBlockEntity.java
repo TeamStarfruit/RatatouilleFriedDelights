@@ -16,6 +16,7 @@ import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.recipe.RecipeApplier;
 import com.simibubi.create.foundation.utility.CreateLang;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.createmod.catnip.animation.LerpedFloat;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.ChatFormatting;
@@ -48,12 +49,11 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.IItemHandler;
+import org.starfruit.ratatouillefrieddelights.config.RFDConfigs;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
 import org.starfruit.ratatouillefrieddelights.util.Lang;
-
-import static com.simibubi.create.content.fluids.tank.FluidTankBlockEntity.getCapacityMultiplier;
 import static com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel.*;
 import static net.minecraft.core.Direction.AxisDirection.NEGATIVE;
 import static net.minecraft.core.Direction.AxisDirection.POSITIVE;
@@ -85,8 +85,12 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         forceFluidLevelUpdate = true;
     }
 
+    public static int getFryerCapacityMultiplier() {
+        return RFDConfigs.server().fluids.fryerTankCapacity.get() * 1000;
+    }
+
     protected SmartFluidTank createTankInventory() {
-        return new SmartFluidTank(getCapacityMultiplier(), this::onFluidStackChanged);
+        return new SmartFluidTank(getFryerCapacityMultiplier(), this::onFluidStackChanged);
     }
 
     @Override
@@ -98,7 +102,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     }
 
     public void applyFluidTankSize(int blocks) {
-        tankInventory.setCapacity(blocks * getCapacityMultiplier());
+        tankInventory.setCapacity(blocks * getFryerCapacityMultiplier());
         int overflow = tankInventory.getFluidAmount() - tankInventory.getCapacity();
         if (overflow > 0)
             tankInventory.drain(overflow, IFluidHandler.FluidAction.EXECUTE);
@@ -819,7 +823,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
         if (isController()){
             getItemInventory().read(compound.getCompound("ItemInventory"), registries, level);
-            tankInventory.setCapacity(fryerLength * getCapacityMultiplier());
+            tankInventory.setCapacity(fryerLength * getFryerCapacityMultiplier());
             tankInventory.readFromNBT(registries, compound.getCompound("TankContent"));
             if (tankInventory.getSpace() < 0)
                 tankInventory.drain(-tankInventory.getSpace(), IFluidHandler.FluidAction.EXECUTE);
@@ -838,7 +842,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             if (hasLevel())
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 16);
             if (isController())
-                tankInventory.setCapacity(getCapacityMultiplier() * fryerLength);
+                tankInventory.setCapacity(getFryerCapacityMultiplier() * fryerLength);
             invalidateRenderBoundingBox();
         }
         if (isController()) {
