@@ -8,14 +8,12 @@ import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
-import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.inventory.VersionedInventoryTrackerBehaviour;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.recipe.RecipeApplier;
-import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.animation.LerpedFloat;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.ChatFormatting;
@@ -33,7 +31,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -48,12 +45,11 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.IItemHandler;
+import org.starfruit.ratatouillefrieddelights.config.RFDConfigs;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
 import org.starfruit.ratatouillefrieddelights.util.Lang;
-
-import static com.simibubi.create.content.fluids.tank.FluidTankBlockEntity.getCapacityMultiplier;
 import static com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel.*;
 import static net.minecraft.core.Direction.AxisDirection.NEGATIVE;
 import static net.minecraft.core.Direction.AxisDirection.POSITIVE;
@@ -85,8 +81,12 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         forceFluidLevelUpdate = true;
     }
 
+    public static int getFryerCapacityMultiplier() {
+        return RFDConfigs.server().fluids.fryerTankCapacity.get() * 1000;
+    }
+
     protected SmartFluidTank createTankInventory() {
-        return new SmartFluidTank(getCapacityMultiplier(), this::onFluidStackChanged);
+        return new SmartFluidTank(getFryerCapacityMultiplier(), this::onFluidStackChanged);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     }
 
     public void applyFluidTankSize(int blocks) {
-        tankInventory.setCapacity(blocks * getCapacityMultiplier());
+        tankInventory.setCapacity(blocks * getFryerCapacityMultiplier());
         int overflow = tankInventory.getFluidAmount() - tankInventory.getCapacity();
         if (overflow > 0)
             tankInventory.drain(overflow, IFluidHandler.FluidAction.EXECUTE);
@@ -652,7 +652,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     }
 
     private void spawnFryerParticles() {
-        if (level == null || !level.isClientSide) return;
+        if (level == null || !level.isClientSide || fluidNotSufficient()) return;
 
         RandomSource random = level.getRandom();
         BlazeBurnerBlock.HeatLevel heatLevel = getHeatLevel();
@@ -715,12 +715,16 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         return BlazeBurnerBlock.HeatLevel.NONE;
     }
 
+    private boolean fluidNotSufficient() {
+        return getFillState() < 0.95f;
+    }
+
     private void tickFryingItems() {
         FryerInventory inventory = getItemInventory();
         if (inventory == null) return;
 
         List<FryingItemStack> items = inventory.getTransportedItems();
-        if (items == null || items.isEmpty()) return;
+        if (items == null || items.isEmpty() || fluidNotSufficient()) return;
 
         for (FryingItemStack item : items) {
             var heatLevel = getHeatLevel();
@@ -819,7 +823,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
         if (isController()){
             getItemInventory().read(compound.getCompound("ItemInventory"), registries, level);
-            tankInventory.setCapacity(fryerLength * getCapacityMultiplier());
+            tankInventory.setCapacity(fryerLength * getFryerCapacityMultiplier());
             tankInventory.readFromNBT(registries, compound.getCompound("TankContent"));
             if (tankInventory.getSpace() < 0)
                 tankInventory.drain(-tankInventory.getSpace(), IFluidHandler.FluidAction.EXECUTE);
@@ -838,7 +842,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             if (hasLevel())
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 16);
             if (isController())
-                tankInventory.setCapacity(getCapacityMultiplier() * fryerLength);
+                tankInventory.setCapacity(getFryerCapacityMultiplier() * fryerLength);
             invalidateRenderBoundingBox();
         }
         if (isController()) {

@@ -1,6 +1,7 @@
-package org.starfruit.ratatouillefrieddelights.entry;
+package org.starfruit.ratatouillefrieddelights.config;
 
 import net.createmod.catnip.config.ConfigBase;
+import org.starfruit.ratatouillefrieddelights.entry.RFDStress;
 
 public class RFDKinetics extends ConfigBase {
     public final RFDStress stressValues;
