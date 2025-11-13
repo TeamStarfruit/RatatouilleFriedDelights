@@ -8,15 +8,12 @@ import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
-import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.inventory.VersionedInventoryTrackerBehaviour;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.recipe.RecipeApplier;
-import com.simibubi.create.foundation.utility.CreateLang;
-import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.createmod.catnip.animation.LerpedFloat;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.ChatFormatting;
@@ -34,7 +31,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -656,7 +652,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     }
 
     private void spawnFryerParticles() {
-        if (level == null || !level.isClientSide) return;
+        if (level == null || !level.isClientSide || fluidNotSufficient()) return;
 
         RandomSource random = level.getRandom();
         BlazeBurnerBlock.HeatLevel heatLevel = getHeatLevel();
@@ -719,12 +715,16 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         return BlazeBurnerBlock.HeatLevel.NONE;
     }
 
+    private boolean fluidNotSufficient() {
+        return getFillState() < 0.95f;
+    }
+
     private void tickFryingItems() {
         FryerInventory inventory = getItemInventory();
         if (inventory == null) return;
 
         List<FryingItemStack> items = inventory.getTransportedItems();
-        if (items == null || items.isEmpty()) return;
+        if (items == null || items.isEmpty() || fluidNotSufficient()) return;
 
         for (FryingItemStack item : items) {
             var heatLevel = getHeatLevel();
