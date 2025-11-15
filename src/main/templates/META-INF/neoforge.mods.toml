@@ -90,19 +90,19 @@ file="META-INF/accesstransformer.cfg"
     modId="create"
     type="required"
     versionRange="[6.0.7,)"
-    ordering="NONE"
+    ordering="AFTER"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
     modId="farmersdelight"
     type="required"
     versionRange="[1.2.8,)"
-    ordering="NONE"
+    ordering="AFTER"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
     modId="ratatouille"
     type="required"
     versionRange="[1.3.6,)"
-    ordering="NONE"
+    ordering="AFTER"
     side="BOTH"
