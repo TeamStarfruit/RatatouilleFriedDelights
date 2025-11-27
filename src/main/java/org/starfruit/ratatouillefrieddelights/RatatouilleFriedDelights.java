@@ -32,7 +32,7 @@ import org.starfruit.ratatouillefrieddelights.data.loot.RFDLootModifiers;
 import org.starfruit.ratatouillefrieddelights.entry.*;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.deco.RFDTreeDecoratorTypes;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
+// The value here should match an entry in the META-INF/mods.toml file
 @Mod(RatatouilleFriedDelights.MOD_ID)
 public class RatatouilleFriedDelights {
     public static final String MOD_ID = "ratatouille_fried_delights";
