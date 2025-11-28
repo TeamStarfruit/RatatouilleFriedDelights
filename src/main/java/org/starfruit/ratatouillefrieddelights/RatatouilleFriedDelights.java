@@ -9,26 +9,23 @@ import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.fml.ModLoadingContext;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import org.starfruit.ratatouillefrieddelights.config.RFDConfigs;
-import org.starfruit.ratatouillefrieddelights.data.RFDDataGen;
-import org.starfruit.ratatouillefrieddelights.data.loot.RFDLootModifiers;
 import org.starfruit.ratatouillefrieddelights.entry.*;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.deco.RFDTreeDecoratorTypes;
 
@@ -44,39 +41,37 @@ public class RatatouilleFriedDelights {
                             .andThen(TooltipModifier.mapNull(KineticStats.create(item)))
             );
 
-    public RatatouilleFriedDelights(IEventBus modEventBus, ModContainer modContainer) {
+    public RatatouilleFriedDelights() {
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext modLoadingContext = ModLoadingContext.get();
+
         REGISTRATE.registerEventListeners(modEventBus);
         modEventBus.addListener(this::commonSetup);
         RFDCreativeModeTabs.register(modEventBus);
-        NeoForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(RatatouilleFriedDelights::clientInit);
 
         RFDItems.register();
         RFDFluids.register();
-        RFDDataComponents.register(modEventBus);
         RFDRecipeTypes.register(modEventBus);
         RFDBlocks.register();
         RFDBlockEntityTypes.register();
-        RFDLootModifiers.register(modEventBus);
 
         RFDSpriteShifts.init();
 
-        RFDConfigs.register(modLoadingContext, modContainer);
+        RFDConfigs.register(modLoadingContext);
 
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
-        modEventBus.addListener(EventPriority.HIGHEST, RFDDataGen::gatherDataHighPriority);
-        modEventBus.addListener(EventPriority.LOWEST, RFDDataGen::gatherData);
+//        modContainer.addConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         RFDTreeDecoratorTypes.register(modEventBus);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        if (Config.LOG_DIRT_BLOCK.getAsBoolean()) {
+        if (Config.LOG_DIRT_BLOCK.get()) {
             LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
         }
 
-        LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.getAsInt());
+        LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.get());
 
         Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
     }
@@ -95,6 +90,6 @@ public class RatatouilleFriedDelights {
     public static LangBuilder lang(){return new LangBuilder(MOD_ID);}
 
     public static ResourceLocation asResource(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+        return new ResourceLocation(MOD_ID, path);
     }
 }

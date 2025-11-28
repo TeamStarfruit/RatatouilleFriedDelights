@@ -9,8 +9,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.FluidState;
-import net.neoforged.neoforge.fluids.BaseFlowingFluid;
-import net.neoforged.neoforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 import org.forsteri.ratatouille.content.NoPlaceBucketItem;
 import org.joml.Vector3f;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
@@ -19,58 +19,58 @@ import java.util.function.Supplier;
 
 public class RFDFluids {
 
-    public static final FluidEntry<BaseFlowingFluid.Flowing> COLA_SYRUP =
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> COLA_SYRUP =
             RatatouilleFriedDelights.REGISTRATE
                     .standardFluid("cola_syrup")
                     .properties(p -> p
                             .density(1450))
                     .lang("Cola Syrup")
-                    .source(BaseFlowingFluid.Source::new).block().build()
+                    .source(ForgeFlowingFluid.Source::new).block().build()
                     .bucket().build().register();
 
-    public static final FluidEntry<BaseFlowingFluid.Flowing> SUNFLOWER_OIL =
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> SUNFLOWER_OIL =
             RatatouilleFriedDelights.REGISTRATE
                     .standardFluid("sunflower_oil")
                     .properties(p -> p
                             .density(1450))
                     .lang("Sunflower Oil")
-                    .source(BaseFlowingFluid.Source::new).block().build()
+                    .source(ForgeFlowingFluid.Source::new).block().build()
                     .bucket().build().register();
 
-    public static final FluidEntry<BaseFlowingFluid.Flowing> MAYONNAISE =
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> MAYONNAISE =
             RatatouilleFriedDelights.REGISTRATE
                     .standardFluid("mayonnaise")
                     .properties(p -> p
                             .density(1050))
                     .lang("Mayonnaise")
-                    .source(BaseFlowingFluid.Source::new).block().build()
+                    .source(ForgeFlowingFluid.Source::new).block().build()
                     .bucket().build().register();
 
-    public static final FluidEntry<BaseFlowingFluid.Flowing> TARTAR_SAUCE =
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> TARTAR_SAUCE =
             RatatouilleFriedDelights.REGISTRATE
                     .standardFluid("tartar_sauce")
                     .properties(p -> p
                             .density(1050))
                     .lang("Tartar Sauce")
-                    .source(BaseFlowingFluid.Source::new).block().build()
+                    .source(ForgeFlowingFluid.Source::new).block().build()
                     .bucket().build().register();
 
-    public static final FluidEntry<BaseFlowingFluid.Flowing> KETCHUP =
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> KETCHUP =
             RatatouilleFriedDelights.REGISTRATE
                     .standardFluid("ketchup")
                     .properties(p -> p
                             .density(1050))
                     .lang("Ketchup")
-                    .source(BaseFlowingFluid.Source::new).block().build()
+                    .source(ForgeFlowingFluid.Source::new).block().build()
                     .bucket().build().register();
 
-    public static final FluidEntry<BaseFlowingFluid.Flowing> ICE_CREAM_BASE =
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> ICE_CREAM_BASE =
             RatatouilleFriedDelights.REGISTRATE
                     .standardFluid("ice_cream_base")
                     .properties(p -> p
                             .density(1050))
                     .lang("Ice Cream Base")
-                    .source(BaseFlowingFluid.Source::new).block().build()
+                    .source(ForgeFlowingFluid.Source::new).block().build()
                     .bucket().build().register();
 
     static {

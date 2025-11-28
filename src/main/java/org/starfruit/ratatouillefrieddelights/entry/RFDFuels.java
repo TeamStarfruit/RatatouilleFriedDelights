@@ -1,12 +1,12 @@
 package org.starfruit.ratatouillefrieddelights.entry;
 
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 
-@EventBusSubscriber(modid = RatatouilleFriedDelights.MOD_ID)
+@Mod.EventBusSubscriber(modid = RatatouilleFriedDelights.MOD_ID)
 public class RFDFuels {
     @SubscribeEvent
     public static void onFuelBurnTime(FurnaceFuelBurnTimeEvent event) {

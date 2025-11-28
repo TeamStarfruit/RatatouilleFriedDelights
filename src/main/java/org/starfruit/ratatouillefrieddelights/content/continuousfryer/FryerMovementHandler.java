@@ -13,7 +13,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -145,9 +144,8 @@ public class FryerMovementHandler {
 
         float step = entityIn.maxUpStep();
         if (!isPlayer && entityIn instanceof LivingEntity livingEntity) {
-            step = (float) livingEntity.getAttributeBaseValue(Attributes.STEP_HEIGHT);
-            //noinspection DataFlowIssue
-            livingEntity.getAttribute(Attributes.STEP_HEIGHT).setBaseValue(1.0f);
+            step = livingEntity.maxUpStep();
+            livingEntity.setMaxUpStep(1.0f);
         }
 
         // Entity Collisions
@@ -184,7 +182,7 @@ public class FryerMovementHandler {
         entityIn.setOnGround(true);
 
         if (!isPlayer && entityIn instanceof LivingEntity livingEntity) {
-            livingEntity.getAttribute(Attributes.STEP_HEIGHT).setBaseValue(step);
+            livingEntity.setMaxUpStep(step);
         }
 
         boolean movedPastEndingSlope = onSlope && (AllBlocks.BELT.has(world.getBlockState(entityIn.blockPosition()))

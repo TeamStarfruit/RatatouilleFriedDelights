@@ -7,7 +7,8 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.ItemAbility;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.Nullable;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
 
@@ -32,17 +33,17 @@ public class RFDFlammableRotatedPillarBlock extends RotatedPillarBlock {
     }
 
     @Override
-    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
-        if(context.getItemInHand().getItem() instanceof AxeItem){
-            if(state.is(RFDBlocks.COLA_LOG)){
+    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
+        if (toolAction == ToolActions.AXE_STRIP && context.getItemInHand().getItem() instanceof AxeItem) {
+            if(state.is(RFDBlocks.COLA_LOG.get())){
                 return RFDBlocks.STRIPPED_COLA_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
             }
-            if(state.is(RFDBlocks.COLA_WOOD)){
+            if(state.is(RFDBlocks.COLA_WOOD.get())){
                 return RFDBlocks.STRIPPED_COLA_WOOD.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
             }
 
         }
 
-        return super.getToolModifiedState(state, context, itemAbility, simulate);
+        return super.getToolModifiedState(state, context, toolAction, simulate);
     }
 }

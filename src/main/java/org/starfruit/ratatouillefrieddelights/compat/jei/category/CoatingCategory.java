@@ -27,7 +27,7 @@ public class CoatingCategory extends CreateRecipeCategory<CoatingRecipe> {
     }
 
     @Override
-    protected void setRecipe(IRecipeLayoutBuilder builder, CoatingRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, CoatingRecipe recipe, IFocusGroup focuses) {
         List<Pair<Ingredient, MutableInt>> condensedIngredients = ItemHelper.condenseIngredients(recipe.getIngredients());
 
         int size = condensedIngredients.size();
@@ -66,7 +66,7 @@ public class CoatingCategory extends CreateRecipeCategory<CoatingRecipe> {
     }
 
     @Override
-    protected void draw(CoatingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gui, double mouseX, double mouseY) {
+    public void draw(CoatingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gui, double mouseX, double mouseY) {
         AllGuiTextures.JEI_ARROW.render(gui, 85, 32);
         AllGuiTextures.JEI_DOWN_ARROW.render(gui, 53, 4);
         drum.draw(gui, 58, 27);

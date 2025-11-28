@@ -22,7 +22,6 @@ import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerProce
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -401,22 +400,22 @@ public class FryerInventory {
         return null;
     }
 
-    public void read(CompoundTag nbt, HolderLookup.Provider registries, Level level) {
+    public void read(CompoundTag nbt, Level level) {
         items.clear();
         nbt.getList("Items", Tag.TAG_COMPOUND)
-                .forEach(inbt -> items.add(FryingItemStack.read((CompoundTag) inbt, registries, level)));
+                .forEach(inbt -> items.add(FryingItemStack.read((CompoundTag) inbt, level)));
         if (nbt.contains("LazyItem"))
-            lazyClientItem = FryingItemStack.read(nbt.getCompound("LazyItem"), registries, level);
+            lazyClientItem = FryingItemStack.read(nbt.getCompound("LazyItem"), level);
         fryerMovementPositive = nbt.getBoolean("PositiveOrder");
     }
 
-    public CompoundTag write(HolderLookup.Provider registries) {
+    public CompoundTag write() {
         CompoundTag nbt = new CompoundTag();
         ListTag itemsNBT = new ListTag();
-        items.forEach(stack -> itemsNBT.add(stack.serializeNBT(registries)));
+        items.forEach(stack -> itemsNBT.add(stack.serializeNBT()));
         nbt.put("Items", itemsNBT);
         if (lazyClientItem != null)
-            nbt.put("LazyItem", lazyClientItem.serializeNBT(registries));
+            nbt.put("LazyItem", lazyClientItem.serializeNBT());
         nbt.putBoolean("PositiveOrder", fryerMovementPositive);
         return nbt;
     }

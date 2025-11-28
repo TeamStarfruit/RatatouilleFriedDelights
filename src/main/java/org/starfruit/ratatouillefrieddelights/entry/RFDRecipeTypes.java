@@ -3,19 +3,24 @@ package org.starfruit.ratatouillefrieddelights.entry;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
-import com.simibubi.create.content.processing.recipe.StandardProcessingRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.createmod.catnip.lang.Lang;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerAssemblyRecipe;
 import org.starfruit.ratatouillefrieddelights.content.burger.BurgerSaucingRecipe;
@@ -34,26 +39,28 @@ public enum RFDRecipeTypes implements IRecipeTypeInfo {
     FRYING(FryingRecipe::new),
 
 
-    BURGER_ASSEMBLY(() -> new ItemApplicationRecipe.Serializer<>(BurgerAssemblyRecipe::new), AllRecipeTypes.DEPLOYING::getType, false),
-    BURGER_SAUCING(() -> new StandardProcessingRecipe.Serializer<>(BurgerSaucingRecipe::new), AllRecipeTypes.FILLING::getType, false),
+//    BURGER_ASSEMBLY(() -> new ItemApplicationRecipeS.Serializer<>(BurgerAssemblyRecipe::new), AllRecipeTypes.DEPLOYING::getType, false),
+//    BURGER_SAUCING(() -> new StandardProcessingRecipe.Serializer<>(BurgerSaucingRecipe::new), AllRecipeTypes.FILLING::getType, false),
+    BURGER_ASSEMBLY(() -> new ProcessingRecipeSerializer<>(BurgerAssemblyRecipe::new), AllRecipeTypes.DEPLOYING::getType, false),
+    BURGER_SAUCING(() -> new ProcessingRecipeSerializer<>(BurgerSaucingRecipe::new), AllRecipeTypes.FILLING::getType, false),
     ;
     private final ResourceLocation id;
-    private final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<?>> serializerObject;
-    private final @Nullable DeferredHolder<RecipeType<?>, RecipeType<?>> typeObject;
+    private final RegistryObject<RecipeSerializer<?>> serializerObject;
+    private final @Nullable RegistryObject<RecipeType<?>> typeObject;
     private final Supplier<RecipeType<?>> type;
     public final Supplier<RecipeSerializer<?>> serializerSupplier;
 
 
-    RFDRecipeTypes(StandardProcessingRecipe.Factory<?> processingFactory) {
-        this(() -> new StandardProcessingRecipe.Serializer<>(processingFactory));
+    RFDRecipeTypes(ProcessingRecipeBuilder.ProcessingRecipeFactory processingFactory) {
+        this(() -> new ProcessingRecipeSerializer<>(processingFactory));
     }
 
     RFDRecipeTypes(Supplier<RecipeSerializer<?>> serializerSupplier) {
         String name = Lang.asId(this.name());
         this.id = RatatouilleFriedDelights.asResource(name);
         this.serializerSupplier = serializerSupplier;
-        this.serializerObject = RFDRecipeTypes.Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);
-        this.typeObject = RFDRecipeTypes.Registers.TYPE_REGISTER.register(name, () -> RecipeType.simple(this.id));
+        this.serializerObject = Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);
+        this.typeObject = Registers.TYPE_REGISTER.register(name, () -> RecipeType.simple(this.id));
         this.type = this.typeObject;
     }
 
@@ -61,9 +68,9 @@ public enum RFDRecipeTypes implements IRecipeTypeInfo {
         String name = Lang.asId(name());
         id = RatatouilleFriedDelights.asResource(name);
         this.serializerSupplier = serializerSupplier;
-        serializerObject = RFDRecipeTypes.Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);
+        serializerObject = Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);
         if (registerType) {
-            typeObject = RFDRecipeTypes.Registers.TYPE_REGISTER.register(name, typeSupplier);
+            typeObject = Registers.TYPE_REGISTER.register(name, typeSupplier);
             type = typeObject;
         } else {
             typeObject = null;
@@ -72,9 +79,9 @@ public enum RFDRecipeTypes implements IRecipeTypeInfo {
     }
 
     public static void register(IEventBus modEventBus) {
-        ShapedRecipePattern.setCraftingSize(9, 9);
-        RFDRecipeTypes.Registers.SERIALIZER_REGISTER.register(modEventBus);
-        RFDRecipeTypes.Registers.TYPE_REGISTER.register(modEventBus);
+        ShapedRecipe.setCraftingSize(3, 3);
+        Registers.SERIALIZER_REGISTER.register(modEventBus);
+        Registers.TYPE_REGISTER.register(modEventBus);
     }
 
     public ResourceLocation getId() {
@@ -87,13 +94,12 @@ public enum RFDRecipeTypes implements IRecipeTypeInfo {
         return (T) serializerObject.get();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public <I extends RecipeInput, R extends Recipe<I>> RecipeType<R> getType() {
-        return (RecipeType<R>) type.get();
+    public <T extends RecipeType<?>> T getType() {
+        return (T) this.type.get();
     }
 
-    public <I extends RecipeInput, R extends Recipe<I>> Optional<RecipeHolder<R>> find(I inv, Level world) {
+    public <C extends Container, R extends Recipe<C>> Optional<R> find(C inv, Level world) {
         return world.getRecipeManager()
                 .getRecipeFor(getType(), inv, world);
     }
@@ -105,16 +111,15 @@ public enum RFDRecipeTypes implements IRecipeTypeInfo {
         return level.getRecipeManager()
                 .getAllRecipesFor(RFDRecipeTypes.FRYING.getType())
                 .stream()
-                .map(RecipeHolder::value)
-                .filter(recipe -> recipe instanceof FryingRecipe frying &&
+                .filter(recipe -> recipe.getType() instanceof FryingRecipe frying &&
                         frying.matches(item, fluid, heatLevel))
-                .map(recipe -> (FryingRecipe) recipe)
+                .map(recipe -> (FryingRecipe) recipe.getType())
                 .findFirst()
                 .orElse(null);
     }
 
     private static class Registers {
-        private static final DeferredRegister<RecipeSerializer<?>> SERIALIZER_REGISTER = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, RatatouilleFriedDelights.MOD_ID);
+        private static final DeferredRegister<RecipeSerializer<?>> SERIALIZER_REGISTER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, RatatouilleFriedDelights.MOD_ID);
         private static final DeferredRegister<RecipeType<?>> TYPE_REGISTER = DeferredRegister.create(Registries.RECIPE_TYPE, RatatouilleFriedDelights.MOD_ID);
     }
 }

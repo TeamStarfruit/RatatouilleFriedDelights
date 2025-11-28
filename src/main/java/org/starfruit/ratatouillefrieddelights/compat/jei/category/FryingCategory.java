@@ -7,12 +7,12 @@ import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
+import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.utility.CreateLang;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
-import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.createmod.catnip.data.Pair;
@@ -21,8 +21,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
+import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.starfruit.ratatouillefrieddelights.compat.jei.category.animations.AnimatedContinuousFryer;
 import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryingRecipe;
@@ -42,7 +41,7 @@ public class FryingCategory extends CreateRecipeCategory<FryingRecipe> {
     }
 
     @Override
-    protected void setRecipe(IRecipeLayoutBuilder builder, FryingRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, FryingRecipe recipe, IFocusGroup focuses) {
         List<Pair<Ingredient, MutableInt>> condensedIngredients = ItemHelper.condenseIngredients(recipe.getIngredients());
         if (!condensedIngredients.isEmpty()) {
             Pair<Ingredient, MutableInt> pair = condensedIngredients.get(0);
@@ -58,7 +57,7 @@ public class FryingCategory extends CreateRecipeCategory<FryingRecipe> {
         }
 
         if (!recipe.getFluidIngredients().isEmpty()) {
-            SizedFluidIngredient fluidIn = recipe.getFluidIngredients().get(0);
+            FluidIngredient fluidIn = recipe.getFluidIngredients().get(0);
             addFluidSlot(builder, 20, 55 + Y_OFFSET + INPUT_Y_ADJUST, fluidIn);
         }
 
@@ -83,7 +82,7 @@ public class FryingCategory extends CreateRecipeCategory<FryingRecipe> {
     }
 
     @Override
-    protected void draw(FryingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gui, double mouseX, double mouseY) {
+    public void draw(FryingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gui, double mouseX, double mouseY) {
         int blockX = 40;
         int blockY = 50 + Y_OFFSET;
 

@@ -4,7 +4,6 @@ import com.simibubi.create.content.kinetics.belt.BeltHelper;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.logistics.box.PackageItem;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -83,9 +82,9 @@ public class FryingItemStack implements Comparable<FryingItemStack>{
         return copy;
     }
 
-    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+    public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        nbt.put("Item", stack.saveOptional(registries));
+        nbt.put("Item", stack.save(new CompoundTag()));
         nbt.putFloat("Pos", fryerPosition);
         nbt.putFloat("PrevPos", prevFryerPosition);
         nbt.putFloat("Offset", sideOffset);
@@ -103,8 +102,8 @@ public class FryingItemStack implements Comparable<FryingItemStack>{
         return nbt;
     }
 
-    public static FryingItemStack read(CompoundTag nbt, HolderLookup.Provider registries, Level level) {
-        FryingItemStack stack = new FryingItemStack(ItemStack.parseOptional(registries, nbt.getCompound("Item")));
+    public static FryingItemStack read(CompoundTag nbt, Level level) {
+        FryingItemStack stack = new FryingItemStack(ItemStack.of(nbt.getCompound("Item")));
         stack.fryerPosition = nbt.getFloat("Pos");
         stack.prevFryerPosition = nbt.getFloat("PrevPos");
         stack.sideOffset = nbt.getFloat("Offset");

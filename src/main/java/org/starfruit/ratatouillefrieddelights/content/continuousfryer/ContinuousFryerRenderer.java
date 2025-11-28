@@ -14,7 +14,7 @@ import net.createmod.catnip.animation.LerpedFloat;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.levelWrappers.WrappedLevel;
 import net.createmod.catnip.math.AngleHelper;
-import net.createmod.catnip.platform.NeoForgeCatnipServices;
+import net.createmod.catnip.platform.ForgeCatnipServices;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SpriteShiftEntry;
 import net.createmod.catnip.render.SuperByteBuffer;
@@ -33,8 +33,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.starfruit.ratatouillefrieddelights.entry.RFDPartialModels;
 import org.starfruit.ratatouillefrieddelights.entry.RFDSpriteShifts;
 
@@ -168,7 +168,7 @@ public class ContinuousFryerRenderer extends KineticBlockEntityRenderer<Continuo
         float yMax = yMin + fluidHeight;
 
         ms.pushPose();
-        NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox(
+        ForgeCatnipServices.FLUID_RENDERER.renderFluidBox(
                 fluidStack,
                 xMin, yMin, zMin,
                 xMax, yMax, zMax,

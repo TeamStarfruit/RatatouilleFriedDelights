@@ -12,32 +12,31 @@ import net.createmod.catnip.math.VecHelper;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
-import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -49,21 +48,15 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         this.inputInv = new ItemStackHandler(2);
         this.outputInv = new ItemStackHandler(2);
         this.capability = new DrumProcessorInventoryHandler();
+        this.itemCapability = LazyOptional.of(() -> capability);
     }
 
     public ItemStackHandler inputInv;
     public ItemStackHandler outputInv;
     public IItemHandler capability;
+    private LazyOptional<IItemHandler> itemCapability;
     public int timer;
     public DrumProcessingRecipe lastRecipe;
-
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
-                RFDBlockEntityTypes.DRUM_PROCESSOR.get(),
-                (be, context) -> be.capability
-        );
-    }
 
     @Override
     @OnlyIn(Dist.CLIENT)
@@ -122,9 +115,12 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
                     BlockEntity be = this.level.getBlockEntity(this.worldPosition.below().relative(direction));
                     InvManipulationBehaviour inserter =
                             be == null ? null : BlockEntityBehaviour.get(level, be.getBlockPos(), InvManipulationBehaviour.TYPE);
-                    IItemHandler targetInv = be == null ? null
-                            : Optional.ofNullable(level.getCapability(Capabilities.ItemHandler.BLOCK, be.getBlockPos(), direction.getOpposite()))
-                            .orElse(inserter == null ? null : inserter.getInventory());
+                    IItemHandler targetInv = null;
+                    if (be != null) {
+                        targetInv = be.getCapability(ForgeCapabilities.ITEM_HANDLER, direction.getOpposite()).orElse(null);
+                    }
+                    if (targetInv == null && inserter != null)
+                        targetInv = inserter.getInventory();
                     if (targetInv != null) {
                         if (ItemHandlerHelper.insertItemStacked(targetInv, stack, true).isEmpty()) {
                             ItemHandlerHelper.insertItemStacked(targetInv, stack.copy(), false);
@@ -177,13 +173,14 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         boolean matched = lastRecipe != null && lastRecipe.matches(inventoryIn, level);
 
         if (!matched) {
-            Optional<RecipeHolder<DrumProcessingRecipe>> recipe = RFDRecipeTypes.COATING.find(inventoryIn, level);
-            if (recipe.isEmpty())  recipe = RFDRecipeTypes.TUMBLING.find(inventoryIn, level);
+            Optional<DrumProcessingRecipe> recipe = RFDRecipeTypes.COATING.find(inventoryIn, level);
+            if (recipe.isEmpty())
+                recipe = RFDRecipeTypes.TUMBLING.find(inventoryIn, level);
 
             if (recipe.isEmpty()) {
                 timer = 100;
             } else {
-                lastRecipe = recipe.get().value();
+                lastRecipe = recipe.get();
                 timer = lastRecipe.getProcessingDuration();
             }
         } else {
@@ -201,14 +198,15 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
 
         if (lastRecipe == null || !lastRecipe.matches(inventoryIn, this.level)) {
-            Optional<RecipeHolder<DrumProcessingRecipe>> recipe = RFDRecipeTypes.COATING.find(inventoryIn, level);
-            if (recipe.isEmpty())  recipe = RFDRecipeTypes.TUMBLING.find(inventoryIn, level);
+            Optional<DrumProcessingRecipe> recipe = RFDRecipeTypes.COATING.find(inventoryIn, level);
+            if (recipe.isEmpty())
+                recipe = RFDRecipeTypes.TUMBLING.find(inventoryIn, level);
 
             if (recipe.isEmpty()) {
                 return;
             }
 
-            this.lastRecipe = recipe.get().value();
+            this.lastRecipe = recipe.get();
         }
 
         ItemStack in0 = inputInv.getStackInSlot(0);
@@ -217,7 +215,7 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         in1.shrink(1);
         inputInv.setStackInSlot(0, in0);
         inputInv.setStackInSlot(1, in1);
-        this.lastRecipe.rollResults(level.random).forEach((stack) -> {
+        this.lastRecipe.rollResults().forEach(stack -> {
             ItemHandlerHelper.insertItemStacked(this.outputInv, stack, false);
         });
 
@@ -230,19 +228,19 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
     }
 
     @Override
-    protected void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+    protected void write(CompoundTag compound, boolean clientPacket) {
         compound.putInt("Timer", this.timer);
-        compound.put("InputInventory", this.inputInv.serializeNBT(registries));
-        compound.put("OutputInventory", this.outputInv.serializeNBT(registries));
-        super.write(compound, registries, clientPacket);
+        compound.put("InputInventory", this.inputInv.serializeNBT());
+        compound.put("OutputInventory", this.outputInv.serializeNBT());
+        super.write(compound, clientPacket);
     }
 
     @Override
-    protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+    protected void read(CompoundTag compound, boolean clientPacket) {
         this.timer = compound.getInt("Timer");
-        this.inputInv.deserializeNBT(registries, compound.getCompound("InputInventory"));
-        this.outputInv.deserializeNBT(registries, compound.getCompound("OutputInventory"));
-        super.read(compound, registries, clientPacket);
+        this.inputInv.deserializeNBT(compound.getCompound("InputInventory"));
+        this.outputInv.deserializeNBT(compound.getCompound("OutputInventory"));
+        super.read(compound, clientPacket);
     }
 
     @Override
@@ -251,10 +249,11 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         super.addBehaviours(behaviours);
     }
 
-    public void invalidate() {
-        super.invalidate();
-//        this.capability = null;
-        invalidateCapabilities();
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        if (itemCapability != null)
+            itemCapability.invalidate();
     }
 
     public void destroy() {
@@ -265,6 +264,13 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
 
     public Direction getEjectDirection() {
         return getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING).getCounterClockWise();
+    }
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER)
+            return itemCapability.cast();
+        return super.getCapability(cap, side);
     }
 
     private boolean canOutput() {

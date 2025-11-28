@@ -2,12 +2,12 @@ package org.starfruit.ratatouillefrieddelights.config;
 
 import com.simibubi.create.api.stress.BlockStressValues;
 import net.createmod.catnip.config.ConfigBase;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.ModLoadingContext;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.config.ModConfigEvent;
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 import org.starfruit.ratatouillefrieddelights.entry.RFDStress;
 
@@ -33,13 +33,13 @@ public class RFDConfigs {
         return (ConfigBase) CONFIGS.get(type);
     }
 
-    public static void register(ModLoadingContext context, ModContainer container) {
+    public static void register(ModLoadingContext context) {
 //        client = (CClient)register(CClient::new, ModConfig.Type.CLIENT);
 //        common = (CCommon)register(CCommon::new, ModConfig.Type.COMMON);
         server = (RFDServer) register(RFDServer::new, ModConfig.Type.SERVER);
 
         for (Map.Entry<ModConfig.Type, ConfigBase> pair : CONFIGS.entrySet()) {
-            container.registerConfig((ModConfig.Type) pair.getKey(), ((ConfigBase) pair.getValue()).specification);
+            context.registerConfig(pair.getKey(), pair.getValue().specification);
         }
 
         RFDStress stress = server().kinetics.stressValues;
@@ -48,7 +48,7 @@ public class RFDConfigs {
     }
 
     private static <T extends ConfigBase> T register(Supplier<T> factory, ModConfig.Type side) {
-        Pair<T, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(builder -> {
+        Pair<T, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(builder -> {
             T config = factory.get();
             config.registerAll(builder);
             return config;

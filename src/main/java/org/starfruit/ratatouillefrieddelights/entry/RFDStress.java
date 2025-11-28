@@ -5,11 +5,11 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import net.createmod.catnip.config.ConfigBase;
-import net.createmod.catnip.registry.RegisteredObjectsHelper;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.ModConfigSpec.Builder;
-import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec.Builder;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
@@ -67,7 +67,7 @@ public class RFDStress extends ConfigBase {
     }
 
     public @Nullable DoubleSupplier getImpact(Block block) {
-        ResourceLocation id = RegisteredObjectsHelper.getKeyOrThrow(block);
+        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
         ConfigValue<Double> value = this.impacts.get(id);
         DoubleSupplier var10000;
         if (value == null) {
@@ -81,7 +81,7 @@ public class RFDStress extends ConfigBase {
     }
 
     public @Nullable DoubleSupplier getCapacity(Block block) {
-        ResourceLocation id = RegisteredObjectsHelper.getKeyOrThrow(block);
+        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
         ConfigValue<Double> value = this.capacities.get(id);
         DoubleSupplier var10000;
         if (value == null) {

@@ -13,8 +13,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.IItemDecorator;
-import org.starfruit.ratatouillefrieddelights.entry.RFDDataComponents;
+import net.minecraftforge.client.IItemDecorator;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import vectorwing.farmersdelight.common.registry.ModItems;
 
@@ -32,10 +31,10 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
         poseStack.translate(xOffset, yOffset, 100);
 
 
-        if (!stack.has(RFDDataComponents.BURGER_CONTENTS))
+        if (!BurgerContents.has(stack))
             return false;
 
-        BurgerContents burgerContents = stack.getOrDefault(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(List.of(
+        BurgerContents burgerContents = BurgerContents.get(stack, new BurgerContents(List.of(
                 new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
                 new ItemStack(ModItems.BEEF_PATTY.get()),
                 new ItemStack(ModItems.BEEF_PATTY.get()),
@@ -84,13 +83,13 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
         if (transformType == ItemDisplayContext.GUI)
             return;
 
-        if (!stack.has(RFDDataComponents.BURGER_CONTENTS))
+        if (!BurgerContents.has(stack))
             return;
 
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;
 
-        BurgerContents burgerContents = stack.getOrDefault(RFDDataComponents.BURGER_CONTENTS, new BurgerContents(List.of(
+        BurgerContents burgerContents = BurgerContents.get(stack, new BurgerContents(List.of(
                 new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
                 new ItemStack(ModItems.BEEF_PATTY.get()),
                 new ItemStack(ModItems.BEEF_PATTY.get()),

@@ -4,15 +4,12 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
-import com.simibubi.create.foundation.item.ItemDescription;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -23,7 +20,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePrope
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.content.colafruit.ColaFruitBlock;
 import org.starfruit.ratatouillefrieddelights.content.colatree.RFDFlammableRotatedPillarBlock;
@@ -33,7 +30,8 @@ import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryerModel
 import org.starfruit.ratatouillefrieddelights.content.dipcup.*;
 import org.starfruit.ratatouillefrieddelights.content.drumprocessor.DrumProcessorBlock;
 import org.starfruit.ratatouillefrieddelights.content.food.*;
-import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
+import org.starfruit.ratatouillefrieddelights.worldgen.tree.ColaTreeGrower;
+import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeFeatures;
 
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -87,9 +85,9 @@ public class RFDBlocks {
                     .tag(BlockTags.LOGS)
                     .tag(BlockTags.LOGS_THAT_BURN)
                     .tag(BlockTags.OVERWORLD_NATURAL_LOGS)
-                    .initialProperties(() -> Blocks.OAK_LOG) // 拷贝属性
-                    .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // 可以额外改
-                    .blockstate((c, p) -> p.axisBlock(c.getEntry())) //原木state注册
+                    .initialProperties(() -> Blocks.OAK_LOG) // ?
+                    .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // ?
+                    .blockstate((c, p) -> p.axisBlock(c.getEntry())) //state
                     .transform(axeOnly())
                     .item()
                     .tag(ItemTags.LOGS)
@@ -103,8 +101,8 @@ public class RFDBlocks {
                     .tag(BlockTags.LOGS)
                     .tag(BlockTags.LOGS_THAT_BURN)
                     .tag(BlockTags.OVERWORLD_NATURAL_LOGS)
-                    .initialProperties(() -> Blocks.OAK_WOOD) // 拷贝属性
-                    .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // 可以额外改
+                    .initialProperties(() -> Blocks.OAK_WOOD) // ?
+                    .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // ?
                     .transform(axeOnly())
                     .item()
                     .tag(ItemTags.LOGS)
@@ -118,9 +116,9 @@ public class RFDBlocks {
                     .tag(BlockTags.LOGS)
                     .tag(BlockTags.LOGS_THAT_BURN)
                     .tag(BlockTags.OVERWORLD_NATURAL_LOGS)
-                    .initialProperties(() -> Blocks.OAK_LOG) // 拷贝属性
-                    .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // 可以额外改
-                    .blockstate((c, p) -> p.axisBlock(c.getEntry())) //原木state注册
+                    .initialProperties(() -> Blocks.OAK_LOG) // ?
+                    .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // ?
+                    .blockstate((c, p) -> p.axisBlock(c.getEntry())) //state
                     .transform(axeOnly())
                     .item()
                     .tag(ItemTags.LOGS)
@@ -134,8 +132,8 @@ public class RFDBlocks {
                     .tag(BlockTags.LOGS)
                     .tag(BlockTags.LOGS_THAT_BURN)
                     .tag(BlockTags.OVERWORLD_NATURAL_LOGS)
-                    .initialProperties(() -> Blocks.OAK_WOOD) // 拷贝属性
-                    .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // 可以额外改
+                    .initialProperties(() -> Blocks.OAK_WOOD) // ?
+                    .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // ?
                     .transform(axeOnly())
                     .item()
                     .tag(ItemTags.LOGS)
@@ -147,8 +145,8 @@ public class RFDBlocks {
             RatatouilleFriedDelights.REGISTRATE
                     .block("cola_planks", RFDFlammableRotatedPillarBlock::new)
                     .tag(BlockTags.PLANKS)
-                    .initialProperties(() -> Blocks.OAK_PLANKS) // 拷贝属性
-                    .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // 可以额外改
+                    .initialProperties(() -> Blocks.OAK_PLANKS) // ?
+                    .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // ?
                     .transform(axeOnly())
                     .item()
                     .tag(ItemTags.PLANKS)
@@ -165,9 +163,9 @@ public class RFDBlocks {
                             .cubeAll(ctx.getName(), prov.blockTexture(ctx.getEntry()))))
                     .loot((lt, block) -> lt.add(RFDBlocks.COLA_LEAVES.get(),
                             lt.createLeavesDrops(
-                                    RFDBlocks.COLA_LEAVES.get(),   // 树叶
-                                    RFDBlocks.COLA_SAPLING.get(),  // 树苗
-                                    0.05F, 0.0625F, 0.0833F, 0.10F // Fortune 掉率
+                                    RFDBlocks.COLA_LEAVES.get(),   // 
+                                    RFDBlocks.COLA_SAPLING.get(),  // 
+                                    0.05F, 0.0625F, 0.0833F, 0.10F // Fortune 
                             )
                     ))
                     .item()
@@ -177,9 +175,9 @@ public class RFDBlocks {
 
     public static final BlockEntry<SaplingBlock> COLA_SAPLING =
             RatatouilleFriedDelights.REGISTRATE
-                    .block("cola_sapling", props -> new SaplingBlock(RFDTreeGrowers.COLA_TREE, props))
+                    .block("cola_sapling", props -> new SaplingBlock(new ColaTreeGrower(), props))
                     .tag(BlockTags.SAPLINGS)
-                    .initialProperties(() -> Blocks.OAK_SAPLING) // 拷贝属性
+                    .initialProperties(() -> Blocks.OAK_SAPLING) // ?
                     .blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.standardModel(c, p)))
                     .properties(p -> p.strength(2.0F).sound(SoundType.CHERRY_SAPLING))
                     .item()
@@ -206,11 +204,11 @@ public class RFDBlocks {
                         LootItemCondition.Builder ripe = LootItemBlockStatePropertyCondition
                                 .hasBlockStateProperties(block)
                                 .setProperties(StatePropertiesPredicate.Builder.properties()
-                                        .hasProperty(ColaFruitBlock.AGE, 2)); // 成熟：AGE=2
+                                        .hasProperty(ColaFruitBlock.AGE, 2)); // GE=2
 
                         lt.add(block,
                                 LootTable.lootTable()
-                                        // 成熟：掉 2~4 个
+                                        //  2~4 ?
                                         .withPool(
                                                 LootPool.lootPool()
                                                         .when(ripe)
@@ -218,7 +216,7 @@ public class RFDBlocks {
                                                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))
                                                         )
                                         )
-                                        // 未成熟：固定掉 1 个
+                                        // ?1 ?
                                         .withPool(
                                                 LootPool.lootPool()
                                                         .when(InvertedLootItemCondition.invert(ripe))
@@ -345,8 +343,8 @@ public class RFDBlocks {
             .item()
             .properties(p -> p.food(
                     new FoodProperties.Builder()
-                            .nutrition(28).saturationModifier(2.4f)
-                            .alwaysEdible()
+                            .nutrition(28).saturationMod(2.4f)
+                            .alwaysEat()
                             .build()))
             .model(
                     (c, p) ->
@@ -371,8 +369,8 @@ public class RFDBlocks {
             .item()
             .properties(p -> p.food(
                     new FoodProperties.Builder()
-                            .nutrition(6).saturationModifier(0.6f)
-                            .alwaysEdible()
+                            .nutrition(6).saturationMod(0.6f)
+                            .alwaysEat()
                             .build()))
             .model(
                     (c, p) ->
@@ -398,8 +396,8 @@ public class RFDBlocks {
             .item()
             .properties(p -> p.food(
                     new FoodProperties.Builder()
-                            .nutrition(6).saturationModifier(0.6f)
-                            .alwaysEdible()
+                            .nutrition(6).saturationMod(0.6f)
+                            .alwaysEat()
                             .build()))
             .model(
                     (c, p) ->
@@ -410,3 +408,4 @@ public class RFDBlocks {
     public static void register() {
     }
 }
+

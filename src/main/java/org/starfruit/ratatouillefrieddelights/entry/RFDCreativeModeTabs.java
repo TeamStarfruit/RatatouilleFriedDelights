@@ -10,9 +10,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 
@@ -50,9 +50,9 @@ public class RFDCreativeModeTabs {
         }
 
         private final boolean addItems;
-        private final DeferredHolder<CreativeModeTab, CreativeModeTab> tabFilter;
+        private final RegistryObject<CreativeModeTab> tabFilter;
 
-        public RegistrateDisplayItemsGenerator(boolean addItems, DeferredHolder<CreativeModeTab, CreativeModeTab> tabFilter) {
+        public RegistrateDisplayItemsGenerator(boolean addItems, RegistryObject<CreativeModeTab> tabFilter) {
             this.addItems = addItems;
             this.tabFilter = tabFilter;
         }
@@ -130,7 +130,7 @@ public class RFDCreativeModeTabs {
 
         private List<Item> collectItems(Predicate<Item> exclusionPredicate) {
             List<Item> items = new ReferenceArrayList<>();
-            for (RegistryEntry<Item, Item> entry : RatatouilleFriedDelights.REGISTRATE.getAll(Registries.ITEM)) {
+            for (RegistryEntry<Item> entry : RatatouilleFriedDelights.REGISTRATE.getAll(Registries.ITEM)) {
                 Item item = entry.get();
                 if (item instanceof BlockItem)
                     continue;
@@ -142,7 +142,7 @@ public class RFDCreativeModeTabs {
 
         private List<Item> collectBlocks(Predicate<Item> exclusionPredicate) {
             List<Item> items = new ReferenceArrayList<>();
-            for (RegistryEntry<Block, Block> entry : RatatouilleFriedDelights.REGISTRATE.getAll(Registries.BLOCK)) {
+            for (RegistryEntry<Block> entry : RatatouilleFriedDelights.REGISTRATE.getAll(Registries.BLOCK)) {
                 Item item = entry.get()
                         .asItem();
                 if (item == Items.AIR)
@@ -197,7 +197,7 @@ public class RFDCreativeModeTabs {
         }
     }
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> BASE_CREATIVE_TAB = REGISTER.register("base", () -> {
+    public static final RegistryObject<CreativeModeTab> BASE_CREATIVE_TAB = REGISTER.register("base", () -> {
         return CreativeModeTab.builder().title(Component.translatable("itemGroup.ratatouille_fried_delights.base")).withTabsBefore(CreativeModeTabs.SPAWN_EGGS).icon(RFDItems.FRENCH_FRIES::asStack).displayItems(new RegistrateDisplayItemsGenerator(true, RFDCreativeModeTabs.BASE_CREATIVE_TAB)).build();
     });
 

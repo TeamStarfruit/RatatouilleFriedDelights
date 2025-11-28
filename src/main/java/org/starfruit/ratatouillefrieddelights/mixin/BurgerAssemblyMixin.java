@@ -9,7 +9,6 @@ import com.simibubi.create.content.kinetics.deployer.DeployerBlockEntity;
 import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -17,8 +16,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mixin(BeltDeployerCallbacks.class)
+@Mixin(value = BeltDeployerCallbacks.class, remap = false)
 public class BurgerAssemblyMixin {
     @Shadow
     private static void awardAdvancements(DeployerBlockEntity blockEntity, ItemStack created) {}
@@ -57,10 +56,9 @@ public class BurgerAssemblyMixin {
             for (ItemStack previouslyRolled : stacks) {
                 if (stack.isEmpty())
                     continue;
-                if (!ItemStack.isSameItemSameComponents(stack, previouslyRolled))
+                if (!ItemStack.isSameItemSameTags(stack, previouslyRolled))
                     continue;
-                int amount = Math.min(previouslyRolled.getOrDefault(DataComponents.MAX_STACK_SIZE, 64) - previouslyRolled.getCount(),
-                        stack.getCount());
+                int amount = Math.min(previouslyRolled.getMaxStackSize() - previouslyRolled.getCount(), stack.getCount());
                 previouslyRolled.grow(amount);
                 stack.shrink(amount);
             }
@@ -98,7 +96,7 @@ public class BurgerAssemblyMixin {
             resultItem = left.stack.copy();
             handler.handleProcessingOnItem(transported, TransportedItemStackHandlerBehaviour.TransportedResult.convertTo(left));
         } else {
-            resultItem = collect.getFirst().stack.copy();
+            resultItem = collect.get(0).stack.copy();
             handler.handleProcessingOnItem(transported, TransportedItemStackHandlerBehaviour.TransportedResult.convertToAndLeaveHeld(collect, left));
         }
 
@@ -107,9 +105,11 @@ public class BurgerAssemblyMixin {
                 ((ItemApplicationRecipe) recipe).shouldKeepHeldItem();
 
         if (!keepHeld) {
-            if (heldItem.isDamageableItem())
-                heldItem.hurtAndBreak(1, blockEntity.getPlayer(),
-                        LivingEntity.getSlotForHand(InteractionHand.MAIN_HAND));
+            if (heldItem.isDamageableItem()) {
+//                heldItem.hurtAndBreak(1, blockEntity.getPlayer(),
+//                        LivingEntity.getSlotForHand(InteractionHand.MAIN_HAND));
+                heldItem.hurtAndBreak(1, blockEntity.getPlayer(), s -> s.broadcastBreakEvent(InteractionHand.MAIN_HAND));
+            }
             else
                 heldItem.shrink(1);
         }

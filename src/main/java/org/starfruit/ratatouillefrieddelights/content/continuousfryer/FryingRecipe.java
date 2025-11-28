@@ -1,27 +1,27 @@
 package org.starfruit.ratatouillefrieddelights.content.continuousfryer;
 
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipeParams;
-import com.simibubi.create.content.processing.recipe.StandardProcessingRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
+import com.simibubi.create.foundation.fluid.FluidIngredient;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
 
-import java.util.Arrays;
-
-public class FryingRecipe extends StandardProcessingRecipe<RecipeInput> {
-    public FryingRecipe(ProcessingRecipeParams params) {
+public class FryingRecipe extends ProcessingRecipe<RecipeWrapper> {
+    public FryingRecipe(ProcessingRecipeBuilder.ProcessingRecipeParams params) {
         super(RFDRecipeTypes.FRYING, params);
     }
 
+    @Override
     protected int getMaxInputCount() {
         return 1;
     }
 
+    @Override
     protected int getMaxOutputCount() {
         return 1;
     }
@@ -36,33 +36,37 @@ public class FryingRecipe extends StandardProcessingRecipe<RecipeInput> {
         return true;
     }
 
+    @Override
     protected boolean canSpecifyDuration() {
         return true;
     }
 
     @Override
-    public boolean matches(RecipeInput inv, @NotNull Level worldIn) {
+    public boolean matches(@NotNull RecipeWrapper inv, @NotNull Level worldIn) {
         if (inv.isEmpty())
             return false;
-        return ingredients.getFirst()
+        return !ingredients.isEmpty() && ingredients.get(0)
                 .test(inv.getItem(0));
     }
 
     public boolean matches(ItemStack item, FluidStack fluid, BlazeBurnerBlock.HeatLevel heatLevel) {
+        if (ingredients.isEmpty())
+            return false;
+
         if (fluidIngredients.isEmpty()) {
-            return ingredients.getFirst().test(item)
+            return ingredients.get(0)
+                    .test(item)
                     && getRequiredHeat().testBlazeBurner(heatLevel);
         } else {
-            SizedFluidIngredient fluidIngredient = fluidIngredients.getFirst();
+            FluidIngredient fluidIngredient = fluidIngredients.get(0);
 
-            boolean sameFluid = Arrays.stream(fluidIngredient.getFluids())
-                    .anyMatch(fs -> fs.getFluid().getFluidType() == fluid.getFluid().getFluidType());
+            boolean sameFluid = fluidIngredient.test(fluid);
 
-            return ingredients.getFirst().test(item)
+            return ingredients.get(0)
+                    .test(item)
                     && sameFluid
-                    && fluid.getAmount() >= fluidIngredients.getFirst().amount()
+                    && fluid.getAmount() >= fluidIngredient.getRequiredAmount()
                     && getRequiredHeat().testBlazeBurner(heatLevel);
         }
     }
-
 }

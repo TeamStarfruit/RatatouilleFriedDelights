@@ -1,7 +1,10 @@
 {
   "required": true,
+  "minVersion": "0.8",
+  "priority": 1200,
   "package": "org.starfruit.ratatouillefrieddelights.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ratatouille_fried_delights.refmap.json",
   "mixins": [
     "BurgerAssemblyMixin",
     "BurgerSaucingMixin"

@@ -8,7 +8,7 @@ import org.starfruit.ratatouillefrieddelights.ponder.ConcreteNumberFortyTwoScene
 
 public class RFDPonderScenes {
     public static void register(PonderSceneRegistrationHelper<ResourceLocation> helper) {
-        PonderSceneRegistrationHelper<ItemProviderEntry<?, ?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
+        PonderSceneRegistrationHelper<ItemProviderEntry<?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
         HELPER.addStoryBoard(RFDItems.NO42_CONCRETE_MIXING_PASTA, "concretenumber42", ConcreteNumberFortyTwoScene::concrete, new ResourceLocation[0]);
     }
 }

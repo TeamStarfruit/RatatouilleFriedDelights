@@ -23,7 +23,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -43,8 +42,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -52,11 +51,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.neoforged.neoforge.capabilities.Capabilities;
-
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 import org.forsteri.ratatouille.content.oven_fan.OvenFanBlock;
 import org.forsteri.ratatouille.entry.CRBlocks;
 import org.jetbrains.annotations.NotNull;
@@ -87,7 +85,8 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
 
     @Override
     @ParametersAreNonnullByDefault
-    protected @NotNull ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public @NotNull InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        ItemStack stack = player.getItemInHand(hand);
         if (!player.isShiftKeyDown()) {
             IPlacementHelper placementHelper = PlacementHelpers.get(placementHelperId);
             if (placementHelper.matchesItem(stack))
@@ -96,20 +95,20 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
         }
 
         if (level.isClientSide)
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
 
         if (stack.isEmpty() && hand == InteractionHand.MAIN_HAND) {
             var fryer = FryerHelper.getSegmentBE(level, pos);
             if (fryer == null)
-                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                return InteractionResult.PASS;
 
             var controller = fryer.getControllerBE();
             if (controller == null)
-                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                return InteractionResult.PASS;
 
             var inventory = controller.getItemInventory();
             if (inventory == null)
-                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                return InteractionResult.PASS;
 
             final boolean[] taken = {false};
             inventory.applyToEachWithin(fryer.index + 0.5f, 0.55f, transported -> {
@@ -120,14 +119,14 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
             });
 
             if (taken[0])
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
         }
 
         if (stack.isEmpty())
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.PASS;
 
         withBlockEntityDo(level, pos, be -> {
-            IFluidHandler fluidHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, state, be, null);
+            IFluidHandler fluidHandler = be.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
             if (fluidHandler == null)
                 return;
 
@@ -191,7 +190,7 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
             }
         });
 
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -201,8 +200,8 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
     }
 
     @Override
-    public PathType getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, Mob entity) {
-        return PathType.RAIL;
+    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, Mob entity) {
+        return BlockPathTypes.RAIL;
     }
 
     @Override
@@ -299,7 +298,7 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
     }
 
     @Override
-    protected boolean isPathfindable(BlockState state, PathComputationType type) {
+    public boolean isPathfindable(BlockState pState, BlockGetter pLevel, BlockPos pPos, PathComputationType pType) {
         return false;
     }
 
@@ -356,7 +355,7 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
             if (BeltTunnelInteractionHandler.getTunnelOnPosition(worldIn, pos) != null)
                 return;
             withBlockEntityDo(worldIn, pos, be -> {
-                IItemHandler handler = worldIn.getCapability(Capabilities.ItemHandler.BLOCK, pos, state, be, null);
+                IItemHandler handler = be.getCapability(ForgeCapabilities.ITEM_HANDLER, null).orElse(null);
                 if (handler == null)
                     return;
                 ItemStack remainder = handler.insertItem(0, asItem, false);
@@ -401,7 +400,7 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
                     dir -> dir.getAxis() == axis && world.getBlockState(pos.relative(dir)).canBeReplaced());
 
             return directions.isEmpty() ? PlacementOffset.fail()
-                    : PlacementOffset.success(pos.relative(directions.getFirst()), s ->
+                    : PlacementOffset.success(pos.relative(directions.get(0)), s ->
                     s.setValue(HORIZONTAL_FACING, state.getValue(OvenFanBlock.HORIZONTAL_FACING)));
         }
     }

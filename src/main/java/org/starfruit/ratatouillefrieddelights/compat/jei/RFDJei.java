@@ -18,19 +18,18 @@ import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
-import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryingRecipe;
-import org.starfruit.ratatouillefrieddelights.content.drumprocessor.TumblingRecipe;
-import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
-import org.starfruit.ratatouillefrieddelights.util.Lang;
 import org.jetbrains.annotations.NotNull;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.compat.jei.category.*;
+import org.starfruit.ratatouillefrieddelights.content.continuousfryer.FryingRecipe;
 import org.starfruit.ratatouillefrieddelights.content.drumprocessor.CoatingRecipe;
+import org.starfruit.ratatouillefrieddelights.content.drumprocessor.TumblingRecipe;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
+import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
+import org.starfruit.ratatouillefrieddelights.util.Lang;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
@@ -97,9 +96,9 @@ public class RFDJei implements IModPlugin {
         return new RFDJei.CategoryBuilder<>(recipeClass);
     }
 
-    private class CategoryBuilder<T extends Recipe<? extends RecipeInput>> {
+    private class CategoryBuilder<T extends Recipe<?>> {
         private final Class<? extends T> recipeClass;
-        private final List<Consumer<List<RecipeHolder<T>>>> recipeListConsumers = new ArrayList<>();
+        private final List<Consumer<List<T>>> recipeListConsumers = new ArrayList<>();
         private final List<Supplier<? extends ItemStack>> catalysts = new ArrayList<>();
         private Predicate<CRecipes> predicate = cRecipes -> true;
         private IDrawable background;
@@ -110,14 +109,14 @@ public class RFDJei implements IModPlugin {
         }
 
         @SuppressWarnings("unchecked")
-        public <I extends RecipeInput, R extends Recipe<I>> RFDJei.CategoryBuilder<T> addTypedRecipes(Supplier<net.minecraft.world.item.crafting.RecipeType<R>> recipeType) {
+        public RFDJei.CategoryBuilder<T> addTypedRecipes(Supplier<RecipeType<? extends T>> recipeType) {
             return addRecipeListConsumer(recipes -> CreateJEI.<T>consumeTypedRecipes(recipe -> {
-                if (recipeClass.isInstance(recipe.value()))
-                    recipes.add((RecipeHolder<T>) recipe);
+                if (recipeClass.isInstance(recipe))
+                    recipes.add((T) recipe);
             }, recipeType.get()));
         }
 
-        public RFDJei.CategoryBuilder<T> addRecipeListConsumer(Consumer<List<RecipeHolder<T>>> consumer) {
+        public RFDJei.CategoryBuilder<T> addRecipeListConsumer(Consumer<List<T>> consumer) {
             recipeListConsumers.add(consumer);
             return this;
         }
@@ -157,13 +156,12 @@ public class RFDJei implements IModPlugin {
             return this;
         }
 
-        @SuppressWarnings("Unchecked")
         public CreateRecipeCategory<T> build(String name, CreateRecipeCategory.Factory<T> factory) {
-            Supplier<List<RecipeHolder<T>>> recipesSupplier;
+            Supplier<List<T>> recipesSupplier;
             if (predicate.test(AllConfigs.server().recipes)) {
                 recipesSupplier = () -> {
-                    List<RecipeHolder<T>> recipes = new ArrayList<>();
-                    for (Consumer<List<RecipeHolder<T>>> consumer : recipeListConsumers)
+                    List<T> recipes = new ArrayList<>();
+                    for (Consumer<List<T>> consumer : recipeListConsumers)
                         consumer.accept(recipes);
                     return recipes;
                 };

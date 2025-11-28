@@ -1,6 +1,5 @@
 package org.starfruit.ratatouillefrieddelights.content.dipcup;
 
-import com.mojang.serialization.MapCodec;
 import com.simibubi.create.AllItems;
 import net.createmod.catnip.render.SpriteShiftEntry;
 import net.minecraft.core.BlockPos;
@@ -8,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -33,7 +33,6 @@ import org.starfruit.ratatouillefrieddelights.entry.RFDSpriteShifts;
 public class DipCupBlock extends HorizontalDirectionalBlock {
     public static final Property<Integer> REMAINING_DIP = IntegerProperty.create("remaining_dip", 0, 3);
     public static final Property<Boolean> OPENED = BooleanProperty.create("opened");
-    public static final MapCodec<HorizontalDirectionalBlock> CODEC = simpleCodec(DipCupBlock::new);
     private static final VoxelShape[] SHAPES = new VoxelShape[]{
             // SOUTH
             Block.box(6, 0, 5, 10, 3, 11),
@@ -87,22 +86,17 @@ public class DipCupBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
-        return CODEC;
-    }
-
-    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
     }
 
     @Override
-    protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
+    public boolean isPathfindable(BlockState pState, BlockGetter pLevel, BlockPos pPos, PathComputationType pType) {
         return false;
     }
 
     @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         return level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP);
     }
 
@@ -111,7 +105,7 @@ public class DipCupBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
         return state.getValue(REMAINING_DIP);
     }
 
@@ -124,7 +118,13 @@ public class DipCupBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!player.getItemInHand(hand).isEmpty())
+            return InteractionResult.PASS;
+        return useWithoutItem(state, level, pos, player, hitResult);
+    }
+
+    private InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide) {
             return InteractionResult.PASS;
         }

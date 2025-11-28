@@ -15,11 +15,9 @@ import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.recipe.RecipeApplier;
 import net.createmod.catnip.animation.LerpedFloat;
-import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -39,12 +37,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.items.IItemHandler;
 import org.starfruit.ratatouillefrieddelights.config.RFDConfigs;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
@@ -68,6 +67,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
     protected FryerInventory itemInventory;
     protected IItemHandler itemHandler;
+    private LazyOptional<IFluidHandler> fluidCap = LazyOptional.empty();
+    private LazyOptional<IItemHandler> itemCap = LazyOptional.empty();
 
     public VersionedInventoryTrackerBehaviour invVersionTracker;
     private LerpedFloat fluidLevel;
@@ -111,7 +112,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         if (controllerBE == null || level == null)
             return false;
 
-        containedFluidTooltip(tooltip, isPlayerSneaking, controllerBE.tankInventory);
+        containedFluidTooltip(tooltip, isPlayerSneaking,
+                controllerBE.getCapability(ForgeCapabilities.FLUID_HANDLER, null));
 
         BlazeBurnerBlock.HeatLevel heatLevel = controllerBE.getHeatLevel();
         Lang.translate("fryer.heat_level").forGoggles(tooltip);
@@ -199,29 +201,13 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         updateNeighbours();
     }
 
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(
-                Capabilities.FluidHandler.BLOCK,
-                RFDBlockEntityTypes.CONTINUOUS_FRYER.get(),
-                (be, context) -> {
-                    be.initCapability();
-                    return be.fluidHandler;
-                }
-        );
-        event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
-                RFDBlockEntityTypes.CONTINUOUS_FRYER.get(),
-                (be, context) -> {
-                    be.initCapability();
-                    return be.itemHandler;
-                }
-        );
-    }
-
     void refreshCapability() {
         fluidHandler = null;
         itemHandler = null;
-        invalidateCapabilities();
+        fluidCap.invalidate();
+        itemCap.invalidate();
+        fluidCap = LazyOptional.empty();
+        itemCap = LazyOptional.empty();
     }
 
     void initCapability() {
@@ -239,6 +225,11 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
         fluidHandler = tankInventory;
         itemHandler = new ItemHandlerFryerSegment(getItemInventory(), index);
+
+        if (fluidHandler != null && !fluidCap.isPresent())
+            fluidCap = LazyOptional.of(() -> fluidHandler);
+        if (itemHandler != null && !itemCap.isPresent())
+            itemCap = LazyOptional.of(() -> itemHandler);
     }
 
     public FryerInventory getItemInventory() {
@@ -355,7 +346,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             if (otherAxis != axis)
                 break;
 
-            chain.addFirst(cursor);
+            chain.add(0, cursor);
         }
 
         List<FryingItemStack> mergedItems = new ArrayList<>();
@@ -368,7 +359,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
             fryer.fryerLength = length;
             fryer.index = i;
-            fryer.setController(chain.getFirst());
+            fryer.setController(chain.get(0));
 
             FryerPart part;
             if (length == 1) {
@@ -425,7 +416,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         }
 
         ContinuousFryerBlockEntity controllerBE =
-                (ContinuousFryerBlockEntity) level.getBlockEntity(chain.getFirst());
+                (ContinuousFryerBlockEntity) level.getBlockEntity(chain.get(0));
         if (controllerBE != null) {
             FryerInventory controllerInv = controllerBE.getItemInventory();
             controllerInv.getTransportedItems().clear();
@@ -666,7 +657,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
                             0.5,
                             (random.nextDouble() - 0.5) * 0.5
                     );
-                    level.addParticle(ParticleTypes.WHITE_SMOKE,
+                    level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE,
                             pos.x, pos.y, pos.z, 0, 0.05, 0);
                 }
             }
@@ -756,7 +747,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             }
 
             if (item.lastRecipe == null) {
-                if (item.processingTime > overFryingTime && !item.stack.is(RFDItems.FRIED_RESIDUE)) {
+                if (item.processingTime > overFryingTime && !item.stack.is(RFDItems.FRIED_RESIDUE.get())) {
                     item.processingTime = 0;
                     item.stack = new ItemStack(RFDItems.FRIED_RESIDUE.get(), item.stack.getCount());
                     notifyUpdate();
@@ -765,12 +756,14 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             }
 
             if (item.processingTime >= item.lastRecipe.getProcessingDuration()) {
-                item.stack = RecipeApplier.applyRecipeOn(level, item.stack, item.lastRecipe, true).getFirst();
+                List<ItemStack> results = RecipeApplier.applyRecipeOn(level, item.stack, item.lastRecipe, true);
+                item.stack = results.isEmpty() ? ItemStack.EMPTY : results.get(0);
 
-                var ingredient = item.lastRecipe.getFluidIngredients().getFirst();
-                int totalDrain = ingredient.amount() * item.stack.getCount();
-                tankInventory.drain(totalDrain, IFluidHandler.FluidAction.EXECUTE);
-
+                if (!item.lastRecipe.getFluidIngredients().isEmpty()) {
+                    var ingredient = item.lastRecipe.getFluidIngredients().get(0);
+                    int totalDrain = ingredient.getRequiredAmount() * item.stack.getCount();
+                    tankInventory.drain(totalDrain, IFluidHandler.FluidAction.EXECUTE);
+                }
 
                 item.clearFryerProcessingData();
             }
@@ -778,15 +771,28 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     }
 
     @Override
-    public void invalidate() {
-        super.invalidate();
-        invalidateCapabilities();
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        refreshCapability();
+    }
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        if (cap == ForgeCapabilities.FLUID_HANDLER) {
+            initCapability();
+            return fluidCap.cast();
+        }
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
+            initCapability();
+            return itemCap.cast();
+        }
+        return super.getCapability(cap, side);
     }
 
 
     @Override
-    public void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
-        super.write(compound, registries, clientPacket);
+    public void write(CompoundTag compound, boolean clientPacket) {
+        super.write(compound, clientPacket);
 //        compound.putBoolean("Uninitialized", updateConnectivity);
         if (controller != null)
             compound.put("Controller", NbtUtils.writeBlockPos(controller));
@@ -794,8 +800,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
         compound.putInt("Length", fryerLength);
         compound.putInt("Index", index);
         if (isController()) {
-            compound.put("ItemInventory", getItemInventory().write(registries));
-            compound.put("TankContent", tankInventory.writeToNBT(registries, new CompoundTag()));
+            compound.put("ItemInventory", getItemInventory().write());
+            compound.put("TankContent", tankInventory.writeToNBT(new CompoundTag()));
         }
         if (!clientPacket)
             return;
@@ -805,8 +811,8 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     }
 
     @Override
-    protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
-        super.read(compound, registries, clientPacket);
+    protected void read(CompoundTag compound, boolean clientPacket) {
+        super.read(compound, clientPacket);
 
 //        updateConnectivity = compound.getBoolean("Uninitialized");
 
@@ -815,16 +821,18 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
         if (compound.getBoolean("IsController")) {
             controller = worldPosition;
+        } else if (compound.contains("Controller")) {
+            controller = NbtUtils.readBlockPos(compound.getCompound("Controller"));
         } else {
-            controller = NBTHelper.readBlockPos(compound, "Controller");
+            controller = null;
         }
         fryerLength = compound.getInt("Length");
         index = compound.getInt("Index");
 
         if (isController()){
-            getItemInventory().read(compound.getCompound("ItemInventory"), registries, level);
+            getItemInventory().read(compound.getCompound("ItemInventory"), level);
             tankInventory.setCapacity(fryerLength * getFryerCapacityMultiplier());
-            tankInventory.readFromNBT(registries, compound.getCompound("TankContent"));
+            tankInventory.readFromNBT(compound.getCompound("TankContent"));
             if (tankInventory.getSpace() < 0)
                 tankInventory.drain(-tankInventory.getSpace(), IFluidHandler.FluidAction.EXECUTE);
         }
