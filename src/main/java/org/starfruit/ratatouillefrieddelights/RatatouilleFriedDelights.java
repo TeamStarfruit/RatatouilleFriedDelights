@@ -67,13 +67,13 @@ public class RatatouilleFriedDelights {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        if (Config.LOG_DIRT_BLOCK.get()) {
-            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-        }
+//        if (Config.LOG_DIRT_BLOCK.get()) {
+//            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
+//        }
 
-        LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.get());
+//        LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.get());
 
-        Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
+//        Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
     }
 
     public static void clientInit(final FMLClientSetupEvent event) {
