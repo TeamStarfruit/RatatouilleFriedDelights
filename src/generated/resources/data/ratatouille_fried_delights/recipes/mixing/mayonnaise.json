@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "amount": 500,
+      "fluid": "ratatouille_fried_delights:sunflower_oil",
+      "nbt": {}
+    },
+    {
+      "amount": 500,
+      "fluid": "ratatouille:egg_yolk",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "amount": 1000,
+      "fluid": "ratatouille_fried_delights:mayonnaise"
+    }
+  ]
+}

@@ -43,34 +43,35 @@ public class RFDTags {
         }
     }
 
-    public enum AllItemTags {
+    public enum RFDItemTags {
         BURGER_BASE,
         BURGER_TOPPINGS,
         RATATOUILLE_BURGER_INGREDIENTS,
         RATATOUILLE_TAB_INVISIBLE,
         RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER,
-        RATATOUILLE_ICE_CREAM;
+        RATATOUILLE_ICE_CREAM,
+        CONCRETES;
 
         public final TagKey<Item> tag;
         public final boolean alwaysDatagen;
 
-        AllItemTags() {
+        RFDItemTags() {
             this(NameSpace.MOD);
         }
 
-        AllItemTags(RFDTags.NameSpace namespace) {
+        RFDItemTags(RFDTags.NameSpace namespace) {
             this(namespace, namespace.optionalDefault, namespace.alwaysDatagenDefault);
         }
 
-        AllItemTags(RFDTags.NameSpace namespace, String path) {
+        RFDItemTags(RFDTags.NameSpace namespace, String path) {
             this(namespace, path, namespace.optionalDefault, namespace.alwaysDatagenDefault);
         }
 
-        AllItemTags(RFDTags.NameSpace namespace, boolean optional, boolean alwaysDatagen) {
+        RFDItemTags(RFDTags.NameSpace namespace, boolean optional, boolean alwaysDatagen) {
             this(namespace, null, optional, alwaysDatagen);
         }
 
-        AllItemTags(RFDTags.NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
+        RFDItemTags(RFDTags.NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
             ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
             if (optional) {
                 tag = optionalTag(BuiltInRegistries.ITEM, id);
@@ -94,32 +95,32 @@ public class RFDTags {
         }
     }
 
-    public enum AllBlockTags {
+    public enum RFDBlockTags {
 
-        LOGS,
+        ,
 
         ;
 
         public final TagKey<Block> tag;
         public final boolean alwaysDatagen;
 
-        AllBlockTags() {
+        RFDBlockTags() {
             this(NameSpace.MOD);
         }
 
-        AllBlockTags(NameSpace namespace) {
+        RFDBlockTags(NameSpace namespace) {
             this(namespace, namespace.optionalDefault, namespace.alwaysDatagenDefault);
         }
 
-        AllBlockTags(NameSpace namespace, String path) {
+        RFDBlockTags(NameSpace namespace, String path) {
             this(namespace, path, namespace.optionalDefault, namespace.alwaysDatagenDefault);
         }
 
-        AllBlockTags(NameSpace namespace, boolean optional, boolean alwaysDatagen) {
+        RFDBlockTags(NameSpace namespace, boolean optional, boolean alwaysDatagen) {
             this(namespace, null, optional, alwaysDatagen);
         }
 
-        AllBlockTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
+        RFDBlockTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
             ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
             if (optional) {
                 tag = optionalTag(BuiltInRegistries.BLOCK, id);

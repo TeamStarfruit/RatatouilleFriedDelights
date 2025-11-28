@@ -1,0 +1,13 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:burger_bun_mold"
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:pancake_mold"
+    }
+  ]
+}

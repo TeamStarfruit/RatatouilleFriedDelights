@@ -1,0 +1,19 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "minecraft:chicken"
+    },
+    {
+      "item": "ratatouille_fried_delights:secret_seasoning_powder"
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:battered_original_drumstick"
+    },
+    {
+      "item": "ratatouille_fried_delights:battered_original_keel"
+    }
+  ]
+}

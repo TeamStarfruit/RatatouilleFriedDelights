@@ -1,0 +1,17 @@
+{
+  "type": "ratatouille_fried_delights:tumbling",
+  "ingredients": [
+    {
+      "item": "create:exposed_copper_tiles"
+    },
+    {
+      "tag": "minecraft:sand"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "item": "create:copper_tiles"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "ratatouille_fried_delights:tumbling",
+  "ingredients": [
+    {
+      "item": "minecraft:weathered_cut_copper"
+    },
+    {
+      "tag": "minecraft:sand"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "item": "minecraft:exposed_cut_copper"
+    }
+  ]
+}

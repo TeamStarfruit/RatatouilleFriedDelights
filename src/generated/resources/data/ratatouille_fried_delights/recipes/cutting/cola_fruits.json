@@ -1,0 +1,14 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:cola_fruit_block"
+    }
+  ],
+  "results": [
+    {
+      "count": 2,
+      "item": "ratatouille_fried_delights:cola_fruits"
+    }
+  ]
+}

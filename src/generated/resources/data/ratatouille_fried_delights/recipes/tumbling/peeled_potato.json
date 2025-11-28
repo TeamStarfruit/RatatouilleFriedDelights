@@ -1,0 +1,17 @@
+{
+  "type": "ratatouille_fried_delights:tumbling",
+  "ingredients": [
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:sand"
+    }
+  ],
+  "processingTime": 100,
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:peeled_potato"
+    }
+  ]
+}

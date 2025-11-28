@@ -22,7 +22,7 @@ public class IceCreamEffectHandler {
 
         // 检查是不是带有 ice_cream 标签的物品
         if (!entity.level().isClientSide() && entity instanceof Player player) {
-            if (stack.is(RFDTags.AllItemTags.RATATOUILLE_ICE_CREAM.tag)) {
+            if (stack.is(RFDTags.RFDItemTags.RATATOUILLE_ICE_CREAM.tag)) {
                 applySoftFreezeEffect(player, level);
             }
         }

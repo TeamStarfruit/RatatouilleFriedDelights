@@ -1,0 +1,16 @@
+{
+  "type": "create:deploying",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:french_fries"
+    },
+    {
+      "item": "create:cardboard"
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:boxed_fries"
+    }
+  ]
+}

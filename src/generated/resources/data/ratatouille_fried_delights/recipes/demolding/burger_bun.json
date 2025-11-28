@@ -1,0 +1,16 @@
+{
+  "type": "ratatouille:demolding",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:burger_bun"
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:bottom_burger_bun"
+    },
+    {
+      "item": "ratatouille_fried_delights:top_burger_bun"
+    }
+  ]
+}

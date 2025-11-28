@@ -1,0 +1,15 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "heated",
+  "ingredients": [
+    {
+      "amount": 500,
+      "fluidTag": "forge:milk"
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:butter"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "type": "ratatouille:threshing",
+  "ingredients": [
+    {
+      "item": "minecraft:sunflower"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "count": 2,
+      "item": "ratatouille_fried_delights:sunflower_seeds"
+    },
+    {
+      "chance": 0.5,
+      "count": 2,
+      "item": "ratatouille_fried_delights:sunflower_seeds"
+    }
+  ]
+}

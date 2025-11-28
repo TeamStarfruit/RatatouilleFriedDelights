@@ -106,11 +106,11 @@ public class RFDItems {
     public static final ItemEntry<Item> RAW_CHICKEN_NUGGETS = RatatouilleFriedDelights.REGISTRATE.item("raw_chicken_nuggets", Item::new).register();
 
     public static final ItemEntry<Item> CHEESE_SLICE = RatatouilleFriedDelights.REGISTRATE.item("cheese_slice", Item::new)
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag).properties(p -> p.food(new FoodProperties.Builder()
+            .tag(RFDTags.RFDItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(3).saturationMod(0.4f)
                     .alwaysEat()
                     .build()))
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag)
+            .tag(RFDTags.RFDItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag)
             .register();
     public static final ItemEntry<Item> CHEESE = RatatouilleFriedDelights.REGISTRATE.item("cheese", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(5).saturationMod(0.6f)
@@ -124,7 +124,7 @@ public class RFDItems {
                     .nutrition(7).saturationMod(0.7f)
                     .alwaysEat()
                     .build()))
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag)
+            .tag(RFDTags.RFDItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag)
             .register();
     public static final ItemEntry<Item> BREADED_FISH_FILLET = RatatouilleFriedDelights.REGISTRATE.item("breaded_fish_fillet", Item::new).register();
     public static final ItemEntry<Item> RAW_FISH_FILLET = RatatouilleFriedDelights.REGISTRATE.item("raw_fish_fillet", Item::new).register();
@@ -134,14 +134,14 @@ public class RFDItems {
                     .nutrition(3).saturationMod(0.4f)
                     .alwaysEat()
                     .build()))
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag)
+            .tag(RFDTags.RFDItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag)
             .register();
     public static final ItemEntry<Item> BOTTOM_BURGER_BUN = RatatouilleFriedDelights.REGISTRATE.item("bottom_burger_bun", Item::new)
             .properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(3).saturationMod(0.4f)
                     .alwaysEat()
                     .build()))
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag)
+            .tag(RFDTags.RFDItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag)
             .register();
     public static final ItemEntry<Item> BURGER_BUN = RatatouilleFriedDelights.REGISTRATE.item("burger_bun", Item::new).properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(5).saturationMod(0.6f)
@@ -153,20 +153,20 @@ public class RFDItems {
     public static final ItemEntry<Item> BURGER_BUN_MOLD = RatatouilleFriedDelights.REGISTRATE.item("burger_bun_mold", Item::new).register();
 
     public static final ItemEntry<Item> HAMBURGER_PATTY = RatatouilleFriedDelights.REGISTRATE.item("hamburger_patty", Item::new)
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag) //tag
+            .tag(RFDTags.RFDItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag) //tag
             .register();
     public static final ItemEntry<Item> SHREDDED_LETTUCE = RatatouilleFriedDelights.REGISTRATE.item("shredded_lettuce", Item::new)
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag)
+            .tag(RFDTags.RFDItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag)
             .register();
     public static final ItemEntry<Item> TOMATO_SLICES = RatatouilleFriedDelights.REGISTRATE.item("tomato_slices", Item::new)
             .properties(p -> p.food(new FoodProperties.Builder()
                     .nutrition(2).saturationMod(0.3f)
                     .alwaysEat().fast()
                     .build()))
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag)
+            .tag(RFDTags.RFDItemTags.RATATOUILLE_BURGER_INGREDIENTS.tag)
             .register();
     public static final ItemEntry<Item> TOMATO_INGREDIENT = RatatouilleFriedDelights.REGISTRATE.item("tomato_ingredient", Item::new)
-            .tag(RFDTags.AllItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag).register();
+            .tag(RFDTags.RFDItemTags.RATATOUILLE_BURGER_INGREDIENT_RENDERING_HELPER.tag).register();
 
 
     public static final ItemEntry<Item> FRIED_APPLE_PIE = RatatouilleFriedDelights.REGISTRATE.item("fried_apple_pie", Item::new).properties(p -> p.food(new FoodProperties.Builder()
@@ -315,7 +315,7 @@ public class RFDItems {
             .properties(
                     properties -> properties.food(BurgerItem.foodPropertiesFromComponents(defaultBurger.get(), null))
             )
-            .tag(RFDTags.AllItemTags.BURGER_BASE.tag, RFDTags.AllItemTags.BURGER_TOPPINGS.tag) // Yes, this is how I implemented it, don't question
+            .tag(RFDTags.RFDItemTags.BURGER_BASE.tag, RFDTags.RFDItemTags.BURGER_TOPPINGS.tag) // Yes, this is how I implemented it, don't question
             .model((ctx, prov) -> prov.getBuilder("item/" + ctx.getName()).texture("particle", RatatouilleFriedDelights.asResource("item/empty")))
             .register();
     public static void register() {}

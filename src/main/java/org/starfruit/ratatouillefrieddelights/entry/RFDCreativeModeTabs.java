@@ -95,7 +95,7 @@ public class RFDCreativeModeTabs {
             exclusions.add(RFDItems.TEA_BOTTOM_TOPPING.get());
             exclusions.add(RFDItems.TEA_TOP_TOPPING.get());
 
-            return ((Predicate<Item>) exclusions::contains).or(RFDTags.AllItemTags.RATATOUILLE_TAB_INVISIBLE::matches);
+            return ((Predicate<Item>) exclusions::contains).or(RFDTags.RFDItemTags.RATATOUILLE_TAB_INVISIBLE::matches);
         }
 
         private static List<ItemOrdering> makeOrderings() {

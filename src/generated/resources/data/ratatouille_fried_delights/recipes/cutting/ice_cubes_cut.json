@@ -1,0 +1,14 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "minecraft:ice"
+    }
+  ],
+  "results": [
+    {
+      "count": 2,
+      "item": "ratatouille_fried_delights:ice_cubes"
+    }
+  ]
+}

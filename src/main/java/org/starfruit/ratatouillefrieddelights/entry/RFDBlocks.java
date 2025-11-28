@@ -31,7 +31,6 @@ import org.starfruit.ratatouillefrieddelights.content.dipcup.*;
 import org.starfruit.ratatouillefrieddelights.content.drumprocessor.DrumProcessorBlock;
 import org.starfruit.ratatouillefrieddelights.content.food.*;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.ColaTreeGrower;
-import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeFeatures;
 
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;

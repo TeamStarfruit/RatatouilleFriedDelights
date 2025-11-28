@@ -1,0 +1,19 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "minecraft:sea_pickle"
+    },
+    {
+      "amount": 1000,
+      "fluid": "ratatouille_fried_delights:mayonnaise",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "amount": 1000,
+      "fluid": "ratatouille_fried_delights:tartar_sauce"
+    }
+  ]
+}

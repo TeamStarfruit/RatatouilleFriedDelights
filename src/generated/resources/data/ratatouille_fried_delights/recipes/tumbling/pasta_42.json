@@ -1,0 +1,17 @@
+{
+  "type": "ratatouille_fried_delights:tumbling",
+  "ingredients": [
+    {
+      "item": "farmersdelight:raw_pasta"
+    },
+    {
+      "tag": "ratatouille_fried_delights:concretes"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:no.42_concrete_mixing_pasta"
+    }
+  ]
+}

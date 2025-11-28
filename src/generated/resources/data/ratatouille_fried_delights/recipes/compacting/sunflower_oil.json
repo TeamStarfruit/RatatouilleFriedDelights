@@ -1,0 +1,14 @@
+{
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:sunflower_seeds"
+    }
+  ],
+  "results": [
+    {
+      "amount": 100,
+      "fluid": "ratatouille_fried_delights:sunflower_oil"
+    }
+  ]
+}

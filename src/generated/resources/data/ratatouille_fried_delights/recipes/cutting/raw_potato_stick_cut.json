@@ -1,0 +1,14 @@
+{
+  "type": "create:cutting",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:peeled_potato"
+    }
+  ],
+  "results": [
+    {
+      "count": 2,
+      "item": "ratatouille_fried_delights:raw_potato_sticks"
+    }
+  ]
+}

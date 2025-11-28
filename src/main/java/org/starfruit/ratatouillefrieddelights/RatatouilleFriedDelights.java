@@ -9,6 +9,7 @@ import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -26,6 +27,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import org.starfruit.ratatouillefrieddelights.config.RFDConfigs;
+import org.starfruit.ratatouillefrieddelights.data.RFDDataGen;
+import org.starfruit.ratatouillefrieddelights.data.loot.RFDLootModifiers;
 import org.starfruit.ratatouillefrieddelights.entry.*;
 import org.starfruit.ratatouillefrieddelights.worldgen.tree.deco.RFDTreeDecoratorTypes;
 
@@ -59,11 +62,17 @@ public class RatatouilleFriedDelights {
 
         RFDSpriteShifts.init();
 
+//        RFDDataComponents.register(modEventBus);
+        RFDLootModifiers.register(modEventBus);
+
         RFDConfigs.register(modLoadingContext);
 
 //        modContainer.addConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         RFDTreeDecoratorTypes.register(modEventBus);
+
+        modEventBus.addListener(EventPriority.LOWEST, RFDDataGen::gatherData);
+        modEventBus.addListener(EventPriority.HIGH, RFDDataGen::gatherDataHighPriority);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

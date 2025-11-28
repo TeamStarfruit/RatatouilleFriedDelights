@@ -1,0 +1,16 @@
+{
+  "type": "create:deploying",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:chicken_nuggets"
+    },
+    {
+      "item": "create:cardboard"
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:boxed_chicken_nuggets"
+    }
+  ]
+}

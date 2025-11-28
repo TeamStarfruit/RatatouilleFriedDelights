@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "Y": {
+      "item": "create:cardboard"
+    }
+  },
+  "pattern": [
+    "Y Y",
+    "Y Y",
+    "Y Y"
+  ],
+  "result": {
+    "count": 12,
+    "item": "ratatouille_fried_delights:cardboard_straw"
+  },
+  "show_notification": true
+}

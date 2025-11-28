@@ -1,0 +1,16 @@
+{
+  "type": "ratatouille:demolding",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:pancake_mold_baked"
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:pancake"
+    },
+    {
+      "item": "ratatouille_fried_delights:pancake_mold"
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 package org.starfruit.ratatouillefrieddelights.content.dipcup;
 
+import com.simibubi.create.foundation.item.render.SimpleCustomRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -10,7 +12,9 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
-import org.starfruit.ratatouillefrieddelights.entry.RFDDataComponents;
+
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class DipableItem extends Item {
     public DipableItem(Properties properties) {
@@ -28,18 +32,20 @@ public class DipableItem extends Item {
             int remaining = state.getValue(DipCupBlock.REMAINING_DIP);
             if (remaining == 0) return InteractionResult.FAIL;
 
+            // 取一个物品
             ItemStack dipped = stack.copy();
+            CompoundTag dippedData = dipped.getOrCreateTag();
             dipped.setCount(1);
 
             int newColor = dipCup.dipColor;
             int finalColor = newColor;
 
-            if (RFDDataComponents.hasDipColor(dipped)) {
-                int oldColor = RFDDataComponents.getDipColor(dipped, 0xFFFFFFFF);
+            if (dippedData.contains("dip_color")) {
+                int oldColor = dippedData.getInt("dip_color");
                 finalColor = mixColorRGBA(oldColor, newColor);
             }
 
-            RFDDataComponents.setDipColor(dipped, finalColor);
+            dippedData.putInt("dip_color", finalColor);
 
             stack.shrink(1);
             if (context.getPlayer() != null && !context.getPlayer().addItem(dipped)) {
@@ -76,4 +82,5 @@ public class DipableItem extends Item {
 
         return (a << 24) | (r << 16) | (g << 8) | b;
     }
+
 }

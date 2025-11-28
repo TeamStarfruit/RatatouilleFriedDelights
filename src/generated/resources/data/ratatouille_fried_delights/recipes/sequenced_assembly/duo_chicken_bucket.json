@@ -1,0 +1,49 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "create:cardboard"
+  },
+  "loops": 2,
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:duo_chicken_bucket"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_duo_chicken_bucket"
+        },
+        {
+          "item": "ratatouille_fried_delights:original_chicken_drumstick"
+        }
+      ],
+      "results": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_duo_chicken_bucket"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_duo_chicken_bucket"
+        },
+        {
+          "item": "ratatouille_fried_delights:original_chicken_keel"
+        }
+      ],
+      "results": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_duo_chicken_bucket"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "ratatouille_fried_delights:unprocessed_duo_chicken_bucket"
+  }
+}

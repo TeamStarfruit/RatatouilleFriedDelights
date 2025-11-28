@@ -1,0 +1,17 @@
+{
+  "type": "ratatouille_fried_delights:tumbling",
+  "ingredients": [
+    {
+      "item": "minecraft:exposed_cut_copper_stairs"
+    },
+    {
+      "tag": "minecraft:sand"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "item": "minecraft:cut_copper_stairs"
+    }
+  ]
+}

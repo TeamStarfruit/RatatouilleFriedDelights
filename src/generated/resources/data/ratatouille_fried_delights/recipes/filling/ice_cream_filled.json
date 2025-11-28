@@ -1,0 +1,18 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:short_cup"
+    },
+    {
+      "amount": 100,
+      "fluid": "ratatouille_fried_delights:ice_cream_base",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:ice_cream"
+    }
+  ]
+}

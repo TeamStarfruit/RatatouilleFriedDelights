@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "cookingtime": 100,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "ratatouille_fried_delights:cone_mold_filled"
+  },
+  "result": "ratatouille_fried_delights:cone_mold_baked"
+}

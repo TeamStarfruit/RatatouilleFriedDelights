@@ -1,0 +1,18 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:cone_mold"
+    },
+    {
+      "amount": 50,
+      "fluid": "ratatouille:cake_batter",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:cone_mold_filled"
+    }
+  ]
+}

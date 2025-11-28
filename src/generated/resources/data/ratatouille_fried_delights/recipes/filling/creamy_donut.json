@@ -1,0 +1,17 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:fried_donut"
+    },
+    {
+      "amount": 250,
+      "fluidTag": "forge:milk"
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:creamy_donut"
+    }
+  ]
+}

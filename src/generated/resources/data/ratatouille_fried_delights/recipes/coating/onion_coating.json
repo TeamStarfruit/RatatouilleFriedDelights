@@ -1,0 +1,17 @@
+{
+  "type": "ratatouille_fried_delights:coating",
+  "ingredients": [
+    {
+      "item": "farmersdelight:onion"
+    },
+    {
+      "item": "ratatouille_fried_delights:breadcrumb"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:breaded_onion_rings"
+    }
+  ]
+}

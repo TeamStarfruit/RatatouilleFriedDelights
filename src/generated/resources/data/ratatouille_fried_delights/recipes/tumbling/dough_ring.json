@@ -1,0 +1,16 @@
+{
+  "type": "ratatouille_fried_delights:tumbling",
+  "ingredients": [
+    {
+      "item": "ratatouille:salty_dough"
+    },
+    {
+      "item": "ratatouille_fried_delights:butter"
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:dough_ring"
+    }
+  ]
+}

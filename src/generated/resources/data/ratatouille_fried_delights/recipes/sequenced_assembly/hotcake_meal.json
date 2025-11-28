@@ -1,0 +1,83 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "ratatouille_fried_delights:pancake"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:hotcake_meal"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_hotcake_meal"
+        },
+        {
+          "item": "ratatouille_fried_delights:pancake"
+        }
+      ],
+      "results": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_hotcake_meal"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_hotcake_meal"
+        },
+        {
+          "item": "ratatouille_fried_delights:pancake"
+        }
+      ],
+      "results": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_hotcake_meal"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_hotcake_meal"
+        },
+        {
+          "item": "ratatouille_fried_delights:butter"
+        }
+      ],
+      "results": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_hotcake_meal"
+        }
+      ]
+    },
+    {
+      "type": "create:filling",
+      "ingredients": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_hotcake_meal"
+        },
+        {
+          "amount": 100,
+          "fluid": "create:honey",
+          "nbt": {}
+        }
+      ],
+      "results": [
+        {
+          "item": "ratatouille_fried_delights:unprocessed_hotcake_meal"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "ratatouille_fried_delights:unprocessed_hotcake_meal"
+  }
+}

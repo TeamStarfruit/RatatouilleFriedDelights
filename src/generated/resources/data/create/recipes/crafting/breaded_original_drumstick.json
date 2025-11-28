@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:battered_original_drumstick"
+    },
+    {
+      "item": "ratatouille_fried_delights:breadcrumb"
+    }
+  ],
+  "result": {
+    "item": "ratatouille_fried_delights:breaded_original_drumstick"
+  }
+}

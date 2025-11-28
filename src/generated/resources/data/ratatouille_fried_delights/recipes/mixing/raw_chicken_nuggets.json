@@ -1,0 +1,24 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "create:wheat_flour"
+    },
+    {
+      "item": "ratatouille:salt"
+    },
+    {
+      "item": "farmersdelight:chicken_cuts"
+    },
+    {
+      "amount": 250,
+      "fluid": "ratatouille:egg_yolk",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:raw_chicken_nuggets"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "ratatouille:salt"
+    },
+    {
+      "tag": "forge:raw_fishes"
+    },
+    {
+      "amount": 250,
+      "fluid": "ratatouille:egg_yolk",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:raw_fish_fillet"
+    }
+  ]
+}

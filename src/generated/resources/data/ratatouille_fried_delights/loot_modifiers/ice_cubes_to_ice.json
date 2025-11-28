@@ -1,0 +1,14 @@
+{
+  "type": "ratatouille_fried_delights:add_two_item",
+  "conditions": [
+    {
+      "block": "minecraft:ice",
+      "condition": "minecraft:block_state_property"
+    },
+    {
+      "chance": 1.0,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "ratatouille_fried_delights:ice_cubes"
+}

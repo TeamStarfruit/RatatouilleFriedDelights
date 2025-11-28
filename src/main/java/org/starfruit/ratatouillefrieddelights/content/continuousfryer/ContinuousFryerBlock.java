@@ -126,12 +126,12 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
             return InteractionResult.PASS;
 
         withBlockEntityDo(level, pos, be -> {
-            IFluidHandler fluidHandler = be.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
-            if (fluidHandler == null)
+            ContinuousFryerBlockEntity controller = be.getControllerBE();
+            if (controller == null)
                 return;
 
-            var controller = be.getControllerBE();
-            if (controller == null)
+            IFluidHandler fluidHandler = controller.getCapability(ForgeCapabilities.FLUID_HANDLER, null).orElse(null);
+            if (fluidHandler == null)
                 return;
 
             if (stack.is(RFDItems.SUNFLOWER_SEED_OIL_BOTTLE.get())) {

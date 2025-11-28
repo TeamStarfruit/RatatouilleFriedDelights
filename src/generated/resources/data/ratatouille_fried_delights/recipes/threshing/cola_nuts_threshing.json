@@ -1,0 +1,22 @@
+{
+  "type": "ratatouille:threshing",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:cola_fruits"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:cola_nuts"
+    },
+    {
+      "item": "ratatouille_fried_delights:cola_nuts"
+    },
+    {
+      "chance": 0.5,
+      "count": 2,
+      "item": "ratatouille_fried_delights:cola_nuts"
+    }
+  ]
+}

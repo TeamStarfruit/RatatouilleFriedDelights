@@ -1,0 +1,41 @@
+package org.starfruit.ratatouillefrieddelights.data.recipe.create;
+
+import com.simibubi.create.AllItems;
+import com.simibubi.create.api.data.recipe.DeployingRecipeGen;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.Items;
+import org.forsteri.ratatouille.entry.CRItems;
+import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
+import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
+import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
+
+import java.util.concurrent.CompletableFuture;
+
+public class RFDDeployingRecipeGen extends DeployingRecipeGen {
+    GeneratedRecipe
+            BOBA_CUP = create("boba_cup", b -> b
+            .require(RFDItems.TALL_CUP.get())
+            .require(RFDItems.CARDBOARD_STRAW.get())
+            .output(RFDItems.BOBA_CUP.get(), 1)
+    ),
+            BOXED_FRIES = create("boxed_fries", b -> b
+                    .require(RFDItems.FRENCH_FRIES.get())
+                    .require(AllItems.CARDBOARD.get())
+                    .output(RFDBlocks.BOXED_FRIES.get(), 1)
+    ),
+            BOXED_CHICKEN_NUGGETS = create("boxed_chicken_nuggets", b -> b
+                    .require(RFDItems.CHICKEN_NUGGETS.get())
+                    .require(AllItems.CARDBOARD.get())
+                    .output(RFDBlocks.BOXED_CHICKEN_NUGGETS.get(), 1)
+    ),
+            HOT_DOG = create("hot_dog", b -> b
+                    .require(Items.BREAD)
+                    .require(CRItems.SAUSAGE.get())
+                    .output(RFDItems.HOT_DOG.get(), 1)
+            );
+
+    public RFDDeployingRecipeGen(PackOutput output) {
+        super(output, RatatouilleFriedDelights.MOD_ID);
+    }
+}

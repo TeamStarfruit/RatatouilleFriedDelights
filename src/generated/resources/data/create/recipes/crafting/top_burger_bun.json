@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:bottom_burger_bun"
+    }
+  ],
+  "result": {
+    "item": "ratatouille_fried_delights:top_burger_bun"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "ratatouille_fried_delights:frying",
+  "heatRequirement": "heated",
+  "ingredients": [
+    {
+      "item": "ratatouille_fried_delights:breaded_onion_rings"
+    },
+    {
+      "amount": 100,
+      "fluid": "ratatouille_fried_delights:sunflower_oil",
+      "nbt": {}
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:onion_rings"
+    }
+  ]
+}

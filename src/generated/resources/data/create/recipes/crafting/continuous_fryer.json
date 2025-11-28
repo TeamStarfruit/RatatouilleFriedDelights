@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "create:andesite_ladder"
+    },
+    "Y": {
+      "item": "create:shaft"
+    },
+    "Z": {
+      "item": "create:copper_casing"
+    }
+  },
+  "pattern": [
+    " X ",
+    " Y ",
+    " Z "
+  ],
+  "result": {
+    "item": "ratatouille_fried_delights:continuous_fryer"
+  },
+  "show_notification": true
+}

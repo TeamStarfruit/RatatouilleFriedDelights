@@ -1,0 +1,20 @@
+{
+  "type": "create:milling",
+  "ingredients": [
+    {
+      "item": "minecraft:bread"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "count": 2,
+      "item": "ratatouille_fried_delights:breadcrumb"
+    },
+    {
+      "chance": 0.5,
+      "count": 2,
+      "item": "ratatouille_fried_delights:breadcrumb"
+    }
+  ]
+}

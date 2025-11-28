@@ -1,0 +1,18 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "heated",
+  "ingredients": [
+    {
+      "item": "ratatouille:salt"
+    },
+    {
+      "amount": 1000,
+      "fluidTag": "forge:milk"
+    }
+  ],
+  "results": [
+    {
+      "item": "ratatouille_fried_delights:raw_cheese"
+    }
+  ]
+}
