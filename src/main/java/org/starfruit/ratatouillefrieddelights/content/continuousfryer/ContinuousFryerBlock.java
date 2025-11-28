@@ -355,7 +355,7 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
             if (BeltTunnelInteractionHandler.getTunnelOnPosition(worldIn, pos) != null)
                 return;
             withBlockEntityDo(worldIn, pos, be -> {
-                IItemHandler handler = be.getCapability(ForgeCapabilities.ITEM_HANDLER, null).orElse(null);
+                IItemHandler handler = be.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
                 if (handler == null)
                     return;
                 ItemStack remainder = handler.insertItem(0, asItem, false);

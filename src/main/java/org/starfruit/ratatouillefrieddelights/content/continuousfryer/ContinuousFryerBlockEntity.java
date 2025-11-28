@@ -211,7 +211,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
     }
 
     void initCapability() {
-        if (itemHandler != null && fluidHandler != null || level == null) return;
+        if (itemHandler != null && fluidHandler != null && itemCap.isPresent() && fluidCap.isPresent() || level == null) return;
 
         if (!isController()) {
             ContinuousFryerBlockEntity controllerBE = getControllerBE();
@@ -220,11 +220,10 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
             controllerBE.initCapability();
             this.itemHandler = new ItemHandlerFryerSegment(controllerBE.getItemInventory(), index);
             this.fluidHandler = controllerBE.fluidHandler;
-            return;
+        } else {
+            this.fluidHandler = tankInventory;
+            this.itemHandler = new ItemHandlerFryerSegment(getItemInventory(), index);
         }
-
-        fluidHandler = tankInventory;
-        itemHandler = new ItemHandlerFryerSegment(getItemInventory(), index);
 
         if (fluidHandler != null && !fluidCap.isPresent())
             fluidCap = LazyOptional.of(() -> fluidHandler);
