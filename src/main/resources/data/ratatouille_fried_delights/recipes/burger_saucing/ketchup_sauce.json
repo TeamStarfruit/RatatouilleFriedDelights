@@ -7,12 +7,12 @@
     {
       "type": "fluid_stack",
       "amount": 100,
-      "fluid": "ratatouille_fried_delights:mayonnaise"
+      "fluid": "ratatouille_fried_delights:ketchup"
     }
   ],
   "results": [
     {
-      "id": "ratatouille_fried_delights:mayonnaise_topping"
+      "item": "ratatouille_fried_delights:ketchup_topping"
     }
   ]
 }

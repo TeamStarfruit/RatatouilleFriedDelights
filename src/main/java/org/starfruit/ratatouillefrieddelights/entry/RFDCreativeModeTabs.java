@@ -16,10 +16,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -112,7 +109,7 @@ public class RFDCreativeModeTabs {
                 if (factory != null) {
                     return factory.apply(item);
                 }
-                return new ItemStack(item);
+                return item.getDefaultInstance();
             };
         }
 
@@ -121,10 +118,7 @@ public class RFDCreativeModeTabs {
 
             return item -> {
                 CreativeModeTab.TabVisibility visibility = visibilities.get(item);
-                if (visibility != null) {
-                    return visibility;
-                }
-                return CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS;
+                return Objects.requireNonNullElse(visibility, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             };
         }
 
@@ -192,14 +186,13 @@ public class RFDCreativeModeTabs {
 
             public enum Type {
                 BEFORE,
-                AFTER;
+                AFTER
             }
         }
     }
 
-    public static final RegistryObject<CreativeModeTab> BASE_CREATIVE_TAB = REGISTER.register("base", () -> {
-        return CreativeModeTab.builder().title(Component.translatable("itemGroup.ratatouille_fried_delights.base")).withTabsBefore(CreativeModeTabs.SPAWN_EGGS).icon(RFDItems.FRENCH_FRIES::asStack).displayItems(new RegistrateDisplayItemsGenerator(true, RFDCreativeModeTabs.BASE_CREATIVE_TAB)).build();
-    });
+    public static final RegistryObject<CreativeModeTab> BASE_CREATIVE_TAB = REGISTER.register("base", () ->
+            CreativeModeTab.builder().title(Component.translatable("itemGroup.ratatouille_fried_delights.base")).withTabsBefore(CreativeModeTabs.SPAWN_EGGS).icon(RFDItems.FRENCH_FRIES::asStack).displayItems(new RegistrateDisplayItemsGenerator(true, RFDCreativeModeTabs.BASE_CREATIVE_TAB)).build());
 
 }
 
