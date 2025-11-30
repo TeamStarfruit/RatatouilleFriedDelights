@@ -111,9 +111,8 @@ public enum RFDRecipeTypes implements IRecipeTypeInfo {
         return level.getRecipeManager()
                 .getAllRecipesFor(RFDRecipeTypes.FRYING.getType())
                 .stream()
-                .filter(recipe -> recipe.getType() instanceof FryingRecipe frying &&
-                        frying.matches(item, fluid, heatLevel))
-                .map(recipe -> (FryingRecipe) recipe.getType())
+                .map(recipe -> (FryingRecipe) ((Object) recipe))
+                .filter(recipe -> recipe.matches(item, fluid, heatLevel))
                 .findFirst()
                 .orElse(null);
     }
