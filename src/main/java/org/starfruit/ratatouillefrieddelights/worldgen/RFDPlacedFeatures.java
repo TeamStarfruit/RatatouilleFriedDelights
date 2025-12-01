@@ -41,10 +41,7 @@ public class RFDPlacedFeatures {
                                     RFDBlocks.COLA_SAPLING.get()));
 
                             // 再额外加你需要的检查
-                            list.add(BlockPredicateFilter.forPredicate(
-                                    BlockPredicate.wouldSurvive(
-                                            RFDBlocks.COLA_SAPLING.get().defaultBlockState(),
-                                            BlockPos.ZERO)));
+                            list.add(PlacementUtils.filteredByBlockSurvival(RFDBlocks.COLA_SAPLING.get()));
                             list.add(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES));
                         })
                 )
