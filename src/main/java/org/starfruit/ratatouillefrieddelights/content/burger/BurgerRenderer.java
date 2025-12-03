@@ -34,15 +34,7 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
         if (!BurgerContents.has(stack))
             return false;
 
-        BurgerContents burgerContents = BurgerContents.get(stack, new BurgerContents(List.of(
-                new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
-                new ItemStack(ModItems.BEEF_PATTY.get()),
-                new ItemStack(ModItems.BEEF_PATTY.get()),
-                new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                new ItemStack(RFDItems.SHREDDED_LETTUCE.get()),
-                new ItemStack(RFDItems.TOMATO_INGREDIENT.get()),
-                new ItemStack(RFDItems.TOP_BURGER_BUN.get())
-        )));
+        BurgerContents burgerContents = BurgerContents.get(stack, new BurgerContents(RFDItems.defaultBurger.get()));
 
         int totalHeight = burgerContents.items
                 .stream()
@@ -89,15 +81,7 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;
 
-        BurgerContents burgerContents = BurgerContents.get(stack, new BurgerContents(List.of(
-                new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
-                new ItemStack(ModItems.BEEF_PATTY.get()),
-                new ItemStack(ModItems.BEEF_PATTY.get()),
-                new ItemStack(RFDItems.CHEESE_SLICE.get()),
-                new ItemStack(RFDItems.SHREDDED_LETTUCE.get()),
-                new ItemStack(RFDItems.TOMATO_INGREDIENT.get()),
-                new ItemStack(RFDItems.TOP_BURGER_BUN.get())
-        )));
+        BurgerContents burgerContents = BurgerContents.get(stack, new BurgerContents(RFDItems.defaultBurger.get()));
 
         ms.pushPose();
         ms.translate(0, 1/16f, 0);
@@ -111,8 +95,7 @@ public class BurgerRenderer extends CustomRenderedItemModelRenderer {
         }
 
         for (ItemStack burgerContent : burgerContents.items()) {
-            BurgerRenderingProperties renderingProperties = BurgerRenderingProperties.BURGER_RENDERING_PROPERTIES_MAP
-                    .getOrDefault(burgerContent.getItem(), SimpleBurgerRenderingProperties.of(4, 3, () -> burgerContent)); // Height of 3 to provide maximum error
+            BurgerRenderingProperties renderingProperties = BurgerRenderingProperties.getBurgerRenderingProperties(burgerContent.getItem().getDefaultInstance()); // Height of 3 to provide maximum error
 
             ms.pushPose();
             ms.translate(0, (double)-1/16 * renderingProperties.renderingPivot(), 0);

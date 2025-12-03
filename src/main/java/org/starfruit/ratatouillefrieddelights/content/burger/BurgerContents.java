@@ -9,6 +9,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.math.Fraction;
+import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -45,6 +46,9 @@ public final class BurgerContents implements TooltipComponent {
     }
 
     public static boolean has(ItemStack stack) {
+        if (stack.is(RFDItems.BURGER.get()))
+            return true;
+
         return stack.hasTag() && stack.getTag() != null && stack.getTag().contains(TAG_KEY, Tag.TAG_LIST);
     }
 
