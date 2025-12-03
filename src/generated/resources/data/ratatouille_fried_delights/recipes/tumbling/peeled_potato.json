@@ -5,12 +5,34 @@
       "item": "minecraft:potato"
     },
     {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:potato"
+    },
+    {
       "item": "minecraft:sand"
     }
   ],
-  "processingTime": 100,
+  "processingTime": 500,
   "results": [
     {
+      "count": 8,
       "item": "ratatouille_fried_delights:peeled_potato"
     }
   ]

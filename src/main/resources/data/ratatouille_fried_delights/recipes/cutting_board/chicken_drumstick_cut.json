@@ -7,16 +7,14 @@
   ],
   "result": [
     {
-      "item": {
         "count": 1,
-        "id": "ratatouille_fried_delights:battered_original_drumstick"
-      }
+        "item": "ratatouille_fried_delights:battered_original_drumstick"
+
     },
     {
-      "item": {
         "count": 1,
-        "id": "ratatouille_fried_delights:battered_original_keel"
-      }
+        "item": "ratatouille_fried_delights:battered_original_keel"
+
     }
   ],
   "tool": {
