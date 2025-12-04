@@ -16,7 +16,7 @@ import org.starfruit.ratatouillefrieddelights.content.dipcup.DipableItem;
 import java.util.Iterator;
 import java.util.List;
 
-@Mixin(value = net.minecraft.client.renderer.entity.ItemRenderer.class, remap = false)
+@Mixin(value = net.minecraft.client.renderer.entity.ItemRenderer.class)
 public class ItemRendererMixin {
 
     @Redirect(
