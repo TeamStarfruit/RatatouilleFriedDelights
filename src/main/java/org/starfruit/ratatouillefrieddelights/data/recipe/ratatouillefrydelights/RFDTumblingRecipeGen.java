@@ -47,9 +47,16 @@ public class RFDTumblingRecipeGen extends TumblingRecipeGen {
                     "peeled_potato",
                     b -> b
                             .require(Items.POTATO)
+                            .require(Items.POTATO)
+                            .require(Items.POTATO)
+                            .require(Items.POTATO)
+                            .require(Items.POTATO)
+                            .require(Items.POTATO)
+                            .require(Items.POTATO)
+                            .require(Items.POTATO)
                             .require(Items.SAND)
-                            .output(RFDItems.PEELED_POTATO)
-                            .duration(100)
+                            .output(RFDItems.PEELED_POTATO, 8)
+                            .duration(500)
 
             ),
             DOUGH_RING = create("dough_ring", b -> b

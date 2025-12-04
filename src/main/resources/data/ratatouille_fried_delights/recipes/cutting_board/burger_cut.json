@@ -7,19 +7,17 @@
   ],
   "result": [
     {
-      "item": {
         "count": 1,
-        "id": "ratatouille_fried_delights:bottom_burger_bun"
-      }
+        "item": "ratatouille_fried_delights:bottom_burger_bun"
+
     },
     {
-      "item": {
         "count": 1,
-        "id": "ratatouille_fried_delights:top_burger_bun"
-      }
+        "item": "ratatouille_fried_delights:top_burger_bun"
+
     }
   ],
   "tool": {
-    "tag": "c:tools/knife"
+    "tag": "forge:tools/knives"
   }
 }

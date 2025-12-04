@@ -7,10 +7,9 @@
   ],
   "results": [
     {
-      "item": {
         "count": 1,
-        "id": "ratatouille_fried_delights:peeled_potato"
-      }
+        "item": "ratatouille_fried_delights:peeled_potato"
+
     }
   ]
 }

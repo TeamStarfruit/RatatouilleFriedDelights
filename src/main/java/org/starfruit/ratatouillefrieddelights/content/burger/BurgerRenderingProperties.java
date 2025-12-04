@@ -12,7 +12,8 @@ public interface BurgerRenderingProperties {
     Supplier<ItemStack> renderingItem();
 
     static BurgerRenderingProperties getBurgerRenderingProperties(ItemStack renderingItem) {
-        return BURGER_RENDERING_PROPERTIES_MAP.get(renderingItem.getItem());
+        return BURGER_RENDERING_PROPERTIES_MAP.getOrDefault(renderingItem.getItem(), SimpleBurgerRenderingProperties.of(4, 3, () ->
+                renderingItem));
     }
 
     HashMap<Item, BurgerRenderingProperties> BURGER_RENDERING_PROPERTIES_MAP = new HashMap<>(); // Pixels, rendering starting from, height

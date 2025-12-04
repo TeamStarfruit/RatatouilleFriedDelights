@@ -302,7 +302,7 @@ public class RFDItems {
     public static final ItemEntry<Item> TEA_BOTTOM_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tea_bottom_topping", Item::new).register();
     public static final ItemEntry<Item> TEA_TOP_TOPPING = RatatouilleFriedDelights.REGISTRATE.item("tea_top_topping", Item::new).register();
 
-    private static final Supplier<List<ItemStack>> defaultBurger = () -> List.of(
+    public static final Supplier<List<ItemStack>> defaultBurger = () -> List.of(
             new ItemStack(RFDItems.BOTTOM_BURGER_BUN.get()),
             new ItemStack(ModItems.BEEF_PATTY.get()),
             new ItemStack(RFDItems.CHEESE_SLICE.get()),
