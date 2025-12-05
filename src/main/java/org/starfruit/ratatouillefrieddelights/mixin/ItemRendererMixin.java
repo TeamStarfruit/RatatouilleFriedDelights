@@ -24,7 +24,8 @@ public class ItemRendererMixin {
         at = @At(
                 value = "INVOKE",
                 target = "Lcom/mojang/blaze3d/vertex/VertexConsumer;putBulkData(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lnet/minecraft/client/renderer/block/model/BakedQuad;FFFFIIZ)V"
-        ))
+        )
+    )
     private void redirectPutBulkData(
             VertexConsumer vertexConsumer,
             PoseStack.Pose pose,

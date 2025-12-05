@@ -36,6 +36,9 @@ minecraft  {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.debug.export', 'true'
+            property 'mixin.debug.verbose', 'true'
+            args "-mixin.config=${mod_id}.mixins.json"
             mods {
                 "${mod_id}" {
                     source sourceSets.main
