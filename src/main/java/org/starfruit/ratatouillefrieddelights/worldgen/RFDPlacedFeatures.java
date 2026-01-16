@@ -19,7 +19,6 @@ import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
-import vectorwing.farmersdelight.common.registry.ModBlocks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class RFDPlacedFeatures {
 
         ctx.register(COLA_TREE_KEY,
                 new PlacedFeature(
-                        configured.getOrThrow(RFDConfiguredFeatures.COLA_TREE_KEY),
+                        configured.getOrThrow(RFDConfiguredFeatures.COLA),
                         Util.make(new ArrayList<PlacementModifier>(), list -> {
                             // 展开 VegetationPlacements 提供的修饰器
                             list.addAll(VegetationPlacements.treePlacement(

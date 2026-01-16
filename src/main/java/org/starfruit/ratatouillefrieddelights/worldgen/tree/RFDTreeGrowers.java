@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public class RFDTreeGrowers {
     public static final TreeGrower COLA_TREE = new TreeGrower(RatatouilleFriedDelights.MOD_ID + ":cola_tree",
-            Optional.empty(), Optional.of(RFDConfiguredFeatures.COLA_TREE_KEY), Optional.empty());
+            Optional.empty(), Optional.of(RFDConfiguredFeatures.COLA), Optional.empty());
 }
