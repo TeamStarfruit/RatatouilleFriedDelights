@@ -6,6 +6,7 @@ import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import net.createmod.catnip.lang.FontHelper;
 import net.createmod.catnip.lang.LangBuilder;
+import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -50,7 +51,6 @@ public class RatatouilleFriedDelights {
         modEventBus.addListener(this::commonSetup);
         RFDCreativeModeTabs.register(modEventBus);
         NeoForge.EVENT_BUS.register(this);
-        modEventBus.addListener(RatatouilleFriedDelights::clientInit);
 
         RFDItems.register();
         RFDFluids.register();
@@ -69,6 +69,7 @@ public class RatatouilleFriedDelights {
         modEventBus.addListener(EventPriority.LOWEST, RFDDataGen::gatherData);
 
         RFDTreeDecoratorTypes.register(modEventBus);
+        CatnipServices.PLATFORM.executeOnClientOnly(() -> () -> onClient(modEventBus, modContainer));
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
@@ -81,7 +82,7 @@ public class RatatouilleFriedDelights {
         Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
     }
 
-    public static void clientInit(final FMLClientSetupEvent event) {
+    public static void onClient(IEventBus modEventBus, ModContainer container) {
         RFDPartialModels.init();
     }
 
