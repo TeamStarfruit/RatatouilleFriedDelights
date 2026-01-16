@@ -5,7 +5,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.world.BiomeModifier;
@@ -22,7 +21,7 @@ public class RFDBiomeModifiers {
 
         context.register(ADD_COLA_TREE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(biomes.getOrThrow(Biomes.JUNGLE) , biomes.getOrThrow(Biomes.SPARSE_JUNGLE)),
-                HolderSet.direct(placedFeatures.getOrThrow(RFDPlacedFeatures.COLA_TREE_KEY)),
+                HolderSet.direct(placedFeatures.getOrThrow(RFDPlacedFeatures.COLA)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
 
     }
