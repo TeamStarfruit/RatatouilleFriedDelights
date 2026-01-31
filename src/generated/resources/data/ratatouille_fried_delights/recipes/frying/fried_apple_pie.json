@@ -7,8 +7,7 @@
     },
     {
       "amount": 100,
-      "fluid": "ratatouille_fried_delights:sunflower_oil",
-      "nbt": {}
+      "fluidTag": "ratatouille_fried_delights:oil"
     }
   ],
   "processingTime": 200,

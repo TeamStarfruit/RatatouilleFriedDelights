@@ -1,20 +1,24 @@
 package org.starfruit.ratatouillefrieddelights.data;
 
+import com.pyzpre.createbitterballen.index.FluidRegistry;
+import com.pyzpre.createbitterballen.item.FryingOilBottleItem;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.forsteri.ratatouille.entry.CRTags;
-import org.starfruit.ratatouillefrieddelights.entry.RFDBlocks;
-import org.starfruit.ratatouillefrieddelights.entry.RFDItems;
+import org.starfruit.ratatouillefrieddelights.entry.*;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
-import org.starfruit.ratatouillefrieddelights.entry.RFDTags;
 import vectorwing.farmersdelight.common.registry.ModItems;
+
+import java.util.Objects;
 
 public class RFDRegistrateTags {
     public static void addGenerators() {
@@ -101,6 +105,15 @@ public class RFDRegistrateTags {
         }
     }
 
-    private static void genFluidTags(RegistrateTagsProvider<Fluid> provIn) {}
+    @SuppressWarnings("deprecated")
+    private static void genFluidTags(RegistrateTagsProvider<Fluid> provIn) {
+        TagGen.CreateTagsProvider<Fluid> prov = new TagGen.CreateTagsProvider<>(provIn, Fluid::builtInRegistryHolder);
+
+        prov.tag(RFDTags.RFDFluidTags.OIL.tag)
+                .add(RFDFluids.SUNFLOWER_OIL.get().getFlowing(), RFDFluids.SUNFLOWER_OIL.get().getSource())
+                .addOptional(FluidRegistry.FRYING_OIL.getId())
+                .addOptional(Objects.requireNonNull(ForgeRegistries.FLUID_TYPES.get().getKey(FluidRegistry.FRYING_OIL.get().getFlowing().getFluidType())))
+                .addOptional(Objects.requireNonNull(ForgeRegistries.FLUID_TYPES.get().getKey(FluidRegistry.FRYING_OIL.get().getSource().getFluidType())));
+    }
     private static void genEntityTags(RegistrateTagsProvider<EntityType<?>> provIn) {}
 }
