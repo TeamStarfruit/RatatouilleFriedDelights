@@ -7,6 +7,7 @@ import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
+import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.inventory.VersionedInventoryTrackerBehaviour;
@@ -709,10 +710,7 @@ public class ContinuousFryerBlockEntity extends KineticBlockEntity implements IH
 
         BlockState state = level.getBlockState(pos);
 
-        if (state.getBlock() instanceof BlazeBurnerBlock) {
-            return state.getValue(BlazeBurnerBlock.HEAT_LEVEL);
-        }
-        return BlazeBurnerBlock.HeatLevel.NONE;
+        return BasinBlockEntity.getHeatLevelOf(state);
     }
 
     private boolean fluidNotSufficient() {
