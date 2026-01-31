@@ -126,8 +126,8 @@ dependencies {
     compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"))
     runtimeOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}"))
 
-    compileOnly fg.deobf("curse.maven:create-bitterballen-918751:7270573")
-    compileOnly fg.deobf("curse.maven:create-deepfried-990016:7270586")
+    implementation fg.deobf("curse.maven:create-bitterballen-918751:7270573")
+    implementation fg.deobf("curse.maven:create-deepfried-990016:7270586")
 }
 
 tasks.named('processResources', ProcessResources).configure {

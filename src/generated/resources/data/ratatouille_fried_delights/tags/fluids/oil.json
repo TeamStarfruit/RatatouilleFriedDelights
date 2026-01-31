@@ -9,6 +9,10 @@
     {
       "id": "create_bic_bit:frying_oil",
       "required": false
+    },
+    {
+      "id": "create_bic_bit:frying_oil",
+      "required": false
     }
   ]
 }
