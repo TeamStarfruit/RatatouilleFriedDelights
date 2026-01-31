@@ -77,47 +77,7 @@ public class RFDFryingRecipeGen extends FryingRecipeGen {
                     .require(RFDTags.RFDFluidTags.OIL.tag, 100)
                     .requiresHeat(HeatCondition.HEATED)
                     .output(RFDItems.ONION_RINGS.get())
-                    .duration(200)),
-
-    CBB_FRIES = create("cbb_fries",
-            b -> b.require(ItemRegistry.RAW_FRIES.get())
-                    .require(RFDTags.RFDFluidTags.OIL.tag, 100)
-                    .requiresHeat(HeatCondition.HEATED)
-                    .output(ItemRegistry.FRIES.get())
-                    .duration(100)
-                    .whenModLoaded("create_bic_bit")),
-
-    CBB_KROKET = create("cbb_kroket",
-            b -> b.require(ItemRegistry.RAW_KROKET.get())
-                    .require(RFDTags.RFDFluidTags.OIL.tag, 100)
-                    .requiresHeat(HeatCondition.HEATED)
-                    .output(ItemRegistry.KROKET.get())
-                    .duration(100)
-                    .whenModLoaded("create_bic_bit")),
-
-    CBB_FRIKANDEL = create("cbb_frikandel",
-            b -> b.require(ItemRegistry.RAW_FRIKANDEL.get())
-                    .require(RFDTags.RFDFluidTags.OIL.tag, 100)
-                    .requiresHeat(HeatCondition.HEATED)
-                    .output(ItemRegistry.FRIKANDEL.get())
-                    .duration(100)
-                    .whenModLoaded("create_bic_bit")),
-
-    CBB_BITTERBALLEN = create("cbb_bitterballen",
-            b -> b.require(ItemRegistry.RAW_BITTERBALLEN.get())
-                    .require(RFDTags.RFDFluidTags.OIL.tag, 100)
-                    .requiresHeat(HeatCondition.HEATED)
-                    .output(ItemRegistry.BITTERBALLEN.get())
-                    .duration(100)
-                    .whenModLoaded("create_bic_bit")),
-
-    CBB_OLIEBOLLEN = create("cbb_oliebollen",
-            b -> b.require(com.simibubi.create.AllItems.DOUGH.get())
-                    .require(RFDTags.RFDFluidTags.OIL.tag, 100)
-                    .requiresHeat(HeatCondition.HEATED)
-                    .output(ItemRegistry.OLIEBOLLEN.get())
-                    .duration(100)
-                    .whenModLoaded("create_bic_bit"));
+                    .duration(200));
 
     public RFDFryingRecipeGen(PackOutput output) {
         super(output, RatatouilleFriedDelights.MOD_ID);
