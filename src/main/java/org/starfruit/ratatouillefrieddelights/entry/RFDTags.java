@@ -3,6 +3,7 @@ package org.starfruit.ratatouillefrieddelights.entry;
 import net.createmod.catnip.lang.Lang;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -12,7 +13,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import org.jetbrains.annotations.Nullable;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
+
+import static org.starfruit.ratatouillefrieddelights.entry.RFDTags.NameSpace.MOD;
 
 public class RFDTags {
     public static <T> TagKey<T> optionalTag(Registry<T> registry, ResourceLocation id) {
@@ -40,6 +46,14 @@ public class RFDTags {
             this.id = id;
             this.optionalDefault = optionalDefault;
             this.alwaysDatagenDefault = alwaysDatagenDefault;
+        }
+
+        public ResourceLocation id(String path) {
+            return ResourceLocation.fromNamespaceAndPath(this.id, path);
+        }
+
+        public ResourceLocation id(Enum<?> entry, @Nullable String pathOverride) {
+            return this.id(pathOverride != null ? pathOverride : Lang.asId(entry.name()));
         }
     }
 
@@ -144,6 +158,31 @@ public class RFDTags {
         }
 
         private static void init() {
+        }
+
+    }
+
+
+    public enum RFDFluidTags {
+
+        OIL(MOD);
+
+        public final TagKey<Fluid> tag;
+
+        RFDFluidTags() {
+            this(MOD);
+        }
+
+        RFDFluidTags(RFDTags.NameSpace namespace) {
+            this(namespace, null);
+        }
+
+        RFDFluidTags(RFDTags.NameSpace namespace, @Nullable String pathOverride) {
+            this.tag = TagKey.create(Registries.FLUID, namespace.id(this, pathOverride));
+        }
+
+        public boolean matches(FluidState state) {
+            return state.is(tag);
         }
 
     }

@@ -1,0 +1,18 @@
+{
+  "values": [
+    "ratatouille_fried_delights:flowing_sunflower_oil",
+    "ratatouille_fried_delights:sunflower_oil",
+    {
+      "id": "create_bic_bit:flowing_frying_oil",
+      "required": false
+    },
+    {
+      "id": "create_bic_bit:frying_oil",
+      "required": false
+    },
+    {
+      "id": "create_bic_bit:frying_oil",
+      "required": false
+    }
+  ]
+}
