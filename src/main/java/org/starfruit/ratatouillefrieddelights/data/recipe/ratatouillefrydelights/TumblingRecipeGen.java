@@ -54,10 +54,13 @@ public class TumblingRecipeGen extends StandardProcessingRecipeGen<TumblingRecip
                             .duration(100)
 
             ),
-            DOUGH_RING = create("dough_ring", b -> b
-                    .require(CRItems.SALTY_DOUGH.get())
-                    .require(RFDItems.BUTTER.get())
-                    .output(RFDItems.DOUGH_RING.get())
+            DOUGH_RING = this.create(
+                    "dough_ring",
+                    b -> b
+                            .require(CRItems.SALTY_DOUGH.get())
+                            .require(RFDItems.BUTTER.get())
+                            .output(RFDItems.DOUGH_RING.get())
+                            .duration(200)
             ),
             PASTA42 = this.create(
                     "pasta_42",
