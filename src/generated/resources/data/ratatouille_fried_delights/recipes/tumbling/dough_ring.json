@@ -8,6 +8,7 @@
       "item": "ratatouille_fried_delights:butter"
     }
   ],
+  "processingTime": 100,
   "results": [
     {
       "item": "ratatouille_fried_delights:dough_ring"
