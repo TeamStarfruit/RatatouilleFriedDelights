@@ -37,6 +37,8 @@ import org.starfruit.ratatouillefrieddelights.worldgen.tree.RFDTreeGrowers;
 
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
+import static org.starfruit.ratatouillefrieddelights.entry.RFDTags.AllBlockTags.STRIPPED_LOGS;
+import static org.starfruit.ratatouillefrieddelights.entry.RFDTags.AllBlockTags.STRIPPED_WOOD;
 
 public class RFDBlocks {
 
@@ -118,6 +120,7 @@ public class RFDBlocks {
                     .tag(BlockTags.LOGS)
                     .tag(BlockTags.LOGS_THAT_BURN)
                     .tag(BlockTags.OVERWORLD_NATURAL_LOGS)
+                    .tag(STRIPPED_LOGS.tag)
                     .initialProperties(() -> Blocks.OAK_LOG) // 拷贝属性
                     .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // 可以额外改
                     .blockstate((c, p) -> p.axisBlock(c.getEntry())) //原木state注册
@@ -134,6 +137,7 @@ public class RFDBlocks {
                     .tag(BlockTags.LOGS)
                     .tag(BlockTags.LOGS_THAT_BURN)
                     .tag(BlockTags.OVERWORLD_NATURAL_LOGS)
+                    .tag(STRIPPED_WOOD.tag)
                     .initialProperties(() -> Blocks.OAK_WOOD) // 拷贝属性
                     .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // 可以额外改
                     .transform(axeOnly())

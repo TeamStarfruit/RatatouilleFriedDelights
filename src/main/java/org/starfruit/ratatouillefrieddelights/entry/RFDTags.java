@@ -18,6 +18,7 @@ import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.Nullable;
 import org.starfruit.ratatouillefrieddelights.RatatouilleFriedDelights;
 
+import static org.starfruit.ratatouillefrieddelights.entry.RFDTags.NameSpace.COMMON;
 import static org.starfruit.ratatouillefrieddelights.entry.RFDTags.NameSpace.MOD;
 
 public class RFDTags {
@@ -110,8 +111,8 @@ public class RFDTags {
 
     public enum AllBlockTags {
 
-        LOGS,
-
+        STRIPPED_LOGS(COMMON),
+        STRIPPED_WOOD(COMMON),
         ;
 
         public final TagKey<Block> tag;
