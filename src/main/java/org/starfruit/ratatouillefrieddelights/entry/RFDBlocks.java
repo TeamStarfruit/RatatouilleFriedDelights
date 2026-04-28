@@ -115,6 +115,7 @@ public class RFDBlocks {
                     .tag(BlockTags.LOGS)
                     .tag(BlockTags.LOGS_THAT_BURN)
                     .tag(BlockTags.OVERWORLD_NATURAL_LOGS)
+                    .tag(RFDTags.RFDBlockTags.STRIPPED_LOGS.tag)
                     .initialProperties(() -> Blocks.OAK_LOG) // ?
                     .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // ?
                     .blockstate((c, p) -> p.axisBlock(c.getEntry())) //state
@@ -131,6 +132,7 @@ public class RFDBlocks {
                     .tag(BlockTags.LOGS)
                     .tag(BlockTags.LOGS_THAT_BURN)
                     .tag(BlockTags.OVERWORLD_NATURAL_LOGS)
+                    .tag(RFDTags.RFDBlockTags.STRIPPED_WOOD.tag)
                     .initialProperties(() -> Blocks.OAK_WOOD) // ?
                     .properties(p -> p.strength(2.0F).sound(SoundType.WOOD)) // ?
                     .transform(axeOnly())

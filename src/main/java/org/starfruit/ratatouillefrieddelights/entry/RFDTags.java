@@ -1,5 +1,6 @@
 package org.starfruit.ratatouillefrieddelights.entry;
 
+import static com.simibubi.create.AllTags.NameSpace.FORGE;
 import static org.starfruit.ratatouillefrieddelights.entry.RFDTags.NameSpace.MOD;
 import net.createmod.catnip.lang.Lang;
 import net.minecraft.core.Registry;
@@ -27,7 +28,7 @@ public class RFDTags {
     public enum NameSpace {
 
         MOD(RatatouilleFriedDelights.MOD_ID, false, true),
-        COMMON("c"),
+        FORGE("forge"),
         TIC("tconstruct"),
         QUARK("quark"),
         GS("galosphere"),
@@ -109,9 +110,8 @@ public class RFDTags {
     }
 
     public enum RFDBlockTags {
-
-        ,
-
+        STRIPPED_LOGS(NameSpace.FORGE),
+        STRIPPED_WOOD(NameSpace.FORGE),
         ;
 
         public final TagKey<Block> tag;
