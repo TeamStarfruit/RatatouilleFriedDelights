@@ -8,6 +8,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import com.simibubi.create.foundation.blockEntity.behaviour.inventory.InvManipulationBehaviour;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.sound.SoundScapes;
+import net.createmod.catnip.data.Pair;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -18,6 +19,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -34,6 +36,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.starfruit.ratatouillefrieddelights.entry.RFDBlockEntityTypes;
 import org.starfruit.ratatouillefrieddelights.entry.RFDRecipeTypes;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
@@ -152,7 +155,7 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
         if (timer > 0) {
             timer -= getProcessingSpeed();
 
-            if (level.isClientSide) {
+            if (level.isClientSide && lastRecipe != null) {
                 spawnParticles();
                 return;
             }
@@ -209,12 +212,30 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
             this.lastRecipe = recipe.get();
         }
 
-        ItemStack in0 = inputInv.getStackInSlot(0);
-        ItemStack in1 = inputInv.getStackInSlot(1);
-        in0.shrink(1);
-        in1.shrink(1);
-        inputInv.setStackInSlot(0, in0);
-        inputInv.setStackInSlot(1, in1);
+        List<Pair<Ingredient, MutableInt>> condensedIngredients =
+                ItemHelper.condenseIngredients(lastRecipe.getIngredients());
+
+        int[] extractedFromSlot = new int[inputInv.getSlots()];
+
+        for (Pair<Ingredient, MutableInt> pair : condensedIngredients) {
+            Ingredient ingredient = pair.getFirst();
+            int requiredCount = pair.getSecond().getValue();
+
+            for (int slot = 0; slot < inputInv.getSlots() && requiredCount > 0; slot++) {
+                ItemStack stack = inputInv.getStackInSlot(slot);
+                if (stack.isEmpty() || stack.getCount() <= extractedFromSlot[slot])
+                    continue;
+
+                if (ingredient.test(stack)) {
+                    int available = stack.getCount() - extractedFromSlot[slot];
+                    int toExtract = Math.min(requiredCount, available);
+
+                    ItemStack extracted = inputInv.extractItem(slot, toExtract, false);
+                    requiredCount -= extracted.getCount();
+                }
+            }
+        }
+
         this.lastRecipe.rollResults().forEach(stack -> {
             ItemHandlerHelper.insertItemStacked(this.outputInv, stack, false);
         });
@@ -320,6 +341,21 @@ public class DrumProcessorBlockEntity extends KineticBlockEntity {
                 return stack;
             if (!this.isItemValid(slot, stack))
                 return stack;
+
+            int firstFreeSlot = -1;
+
+            for (int i = 0; i < inputInv.getSlots(); i++) {
+                if (i != slot && ItemHandlerHelper.canItemStacksStack(stack, inputInv.getStackInSlot(i)))
+                    return stack;
+                if (inputInv.getStackInSlot(i)
+                        .isEmpty() && firstFreeSlot == -1)
+                    firstFreeSlot = i;
+            }
+
+            if (inputInv.getStackInSlot(slot)
+                    .isEmpty() && firstFreeSlot != slot)
+                return stack;
+
             return super.insertItem(slot, stack, simulate);
         }
 
