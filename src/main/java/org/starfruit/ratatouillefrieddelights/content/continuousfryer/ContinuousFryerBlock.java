@@ -32,6 +32,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -403,5 +404,14 @@ public class ContinuousFryerBlock extends HorizontalKineticBlock implements IBE<
                     : PlacementOffset.success(pos.relative(directions.get(0)), s ->
                     s.setValue(HORIZONTAL_FACING, state.getValue(OvenFanBlock.HORIZONTAL_FACING)));
         }
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState state = super.getStateForPlacement(context);
+        if (state == null) return null;
+
+        return state.setValue(HORIZONTAL_FACING,
+                state.getValue(HORIZONTAL_FACING).getClockWise());
     }
 }
